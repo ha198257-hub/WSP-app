@@ -603,6 +603,7 @@ body {
     </div>
     <div class="nav-row">
       <button class="nav-btn" onclick="prevSkill()">← 이전</button>
+      <button class="nav-btn" style="flex:0.6; color:var(--text-dim); font-size:12px" onclick="clearCurrentScore()">✕ 취소</button>
       <button class="nav-btn" onclick="nextSkill()">다음 →</button>
     </div>
   </div>
@@ -1374,7 +1375,17 @@ function updateScoreButtons() {
 }
 
 function setScore(s) {
-  state.scores[state.currentSkillId] = s;
+  if (state.scores[state.currentSkillId] === s) {
+    delete state.scores[state.currentSkillId]; // 같은 점수 다시 탭 → 취소
+  } else {
+    state.scores[state.currentSkillId] = s;
+  }
+  saveData();
+  updateScoreButtons();
+}
+
+function clearCurrentScore() {
+  delete state.scores[state.currentSkillId];
   saveData();
   updateScoreButtons();
 }
@@ -1569,252 +1580,450 @@ function drawOverlay() {
 function line(ctx, x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
 
 function drawLabel(ctx, text, x, y, color='#fff') {
-  ctx.fillStyle = 'rgba(0,0,0,0.55)';
-  const w = ctx.measureText(text).width + 10;
-  ctx.fillRect(x - w/2, y - 13, w, 18);
+  ctx.fillStyle = 'rgba(0,0,0,0.65)';
+  ctx.font = 'bold 12px "Share Tech Mono", monospace';
+  const w = ctx.measureText(text).width + 12;
+  ctx.fillRect(x - w/2, y - 14, w, 20);
   ctx.fillStyle = color;
-  ctx.font = 'bold 11px "Share Tech Mono", monospace';
   ctx.textAlign = 'center';
   ctx.fillText(text, x, y);
 }
 
+// 애니메이션 시간 기준 (0~1 반복)
+function anim(period=1500) { return (Date.now() % period) / period; }
+
+// 휠체어 아이콘 그리기
+function drawWheelchair(ctx, x, y, size=22, color='#00d4e0') {
+  ctx.save();
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2;
+  // 몸체
+  ctx.fillStyle = color + '99';
+  ctx.fillRect(x - size*0.4, y - size*0.7, size*0.8, size*0.6);
+  ctx.strokeRect(x - size*0.4, y - size*0.7, size*0.8, size*0.6);
+  // 뒷바퀴
+  ctx.beginPath(); ctx.arc(x - size*0.25, y + size*0.1, size*0.32, 0, Math.PI*2);
+  ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
+  // 앞바퀴(캐스터)
+  ctx.beginPath(); ctx.arc(x + size*0.3, y + size*0.05, size*0.14, 0, Math.PI*2);
+  ctx.lineWidth = 2; ctx.stroke();
+  ctx.restore();
+}
+
+// 방향 화살표 (애니메이션 펄스)
+function drawAnimArrow(ctx, x1, y1, x2, y2, color='#00d4e0', label='') {
+  const t = anim(1200);
+  const dx = x2-x1, dy = y2-y1;
+  const len = Math.sqrt(dx*dx+dy*dy);
+  const ux = dx/len, uy = dy/len;
+  const arrowSize = 14;
+
+  // 점선 경로
+  ctx.save();
+  ctx.strokeStyle = color + 'aa';
+  ctx.lineWidth = 2.5;
+  ctx.setLineDash([10, 6]);
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // 움직이는 점
+  const tx = x1 + dx * t, ty = y1 + dy * t;
+  ctx.fillStyle = color;
+  ctx.beginPath(); ctx.arc(tx, ty, 6, 0, Math.PI*2); ctx.fill();
+
+  // 화살촉
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - ux*arrowSize - uy*arrowSize*0.5, y2 - uy*arrowSize + ux*arrowSize*0.5);
+  ctx.lineTo(x2 - ux*arrowSize + uy*arrowSize*0.5, y2 - uy*arrowSize - ux*arrowSize*0.5);
+  ctx.closePath(); ctx.fill();
+
+  if (label) drawLabel(ctx, label, (x1+x2)/2, (y1+y2)/2 - 12, color);
+  ctx.restore();
+}
+
+// 펄싱 원 (목표 지점)
+function drawPulseCircle(ctx, x, y, r, color='#30d158', label='') {
+  const t = anim(1000);
+  ctx.save();
+  // 외곽 펄스
+  ctx.strokeStyle = color + Math.round((1-t)*180).toString(16).padStart(2,'0');
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(x, y, r + t*20, 0, Math.PI*2); ctx.stroke();
+  // 내부 원
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.stroke();
+  ctx.fillStyle = color + '33';
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+  if (label) drawLabel(ctx, label, x, y + r + 16, color);
+  ctx.restore();
+}
+
 function drawCorridor(ctx, cx, cy, W, H, ov, pxPerCm) {
   const wPx = (ov.widthM * 100) * pxPerCm;
-  const lenPx = (ov.lengthM * 100) * pxPerCm;
+  const lenPx = Math.min((ov.lengthM * 100) * pxPerCm, H * 0.85);
   const lx = cx - wPx/2, rx = cx + wPx/2;
   const top = cy - lenPx;
+  const isBack = ov.dir === 'bwd';
 
-  // Path fill
+  // 경로 배경
   ctx.fillStyle = 'rgba(0,212,224,0.06)';
   ctx.fillRect(lx, Math.max(top, 0), wPx, Math.min(lenPx, cy));
 
-  // Side lines
-  ctx.strokeStyle = '#00d4e0';
-  ctx.lineWidth = 2;
-  ctx.setLineDash([]);
+  // 측면 경계선
+  ctx.strokeStyle = '#00d4e0'; ctx.lineWidth = 2.5; ctx.setLineDash([]);
   line(ctx, lx, cy, lx, Math.max(top, 0));
   line(ctx, rx, cy, rx, Math.max(top, 0));
 
-  // Start line
-  ctx.strokeStyle = 'rgba(0,212,224,0.5)';
+  // 시작선
+  ctx.strokeStyle = 'rgba(0,212,224,0.5)'; ctx.lineWidth = 1.5;
   line(ctx, lx, cy, rx, cy);
 
-  // End / distance markers every 1m
+  // 거리 마커
   const n = Math.floor(ov.lengthM);
   for (let i = 1; i <= n; i++) {
     const y = cy - (i * 100) * pxPerCm;
-    if (y < 0) break;
-    ctx.strokeStyle = i === n ? '#ff9f0a' : 'rgba(0,212,224,0.35)';
+    if (y < 5) break;
+    ctx.strokeStyle = i === n ? '#ff9f0a' : 'rgba(0,212,224,0.3)';
     ctx.lineWidth = i === n ? 2.5 : 1;
     ctx.setLineDash(i === n ? [] : [5,5]);
     line(ctx, lx, y, rx, y);
     ctx.setLineDash([]);
-    drawLabel(ctx, `${i}m`, rx + 24, y + 4, i === n ? '#ff9f0a' : '#00d4e0');
+    drawLabel(ctx, `${i}m`, rx + 26, y + 4, i === n ? '#ff9f0a' : '#00d4e0');
   }
 
-  // Width label
-  ctx.strokeStyle = 'rgba(0,212,224,0.5)';
-  ctx.lineWidth = 1;
-  drawLabel(ctx, `${ov.widthM}m`, cx, cy - 10, '#00d4e0');
+  // 목표 도달 지점 펄스
+  const endY = Math.max(top + 10, 20);
+  drawPulseCircle(ctx, cx, endY, 18, '#ff9f0a', '정지!');
 
-  // Shoulder check markers (for #9)
-  if (ov.shoulderCheck) {
-    const y1 = cy - (1.5 * 100) * pxPerCm;
-    const y2 = cy - (3 * 100) * pxPerCm;
-    [y1, y2].forEach(y => {
-      if (y > 0) {
-        ctx.fillStyle = 'rgba(255,159,10,0.8)';
-        ctx.beginPath(); ctx.arc(lx - 10, y, 7, 0, Math.PI*2); ctx.fill();
-        ctx.beginPath(); ctx.arc(rx + 10, y, 7, 0, Math.PI*2); ctx.fill();
-        ctx.fillStyle = '#000';
-        ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'center';
-        ctx.fillText('확', lx - 10, y + 3);
-        ctx.fillText('확', rx + 10, y + 3);
+  // 움직임 방향 애니메이션 화살표
+  if (!isBack) {
+    drawAnimArrow(ctx, cx, cy - 30, cx, endY + 30, '#00d4e0', '전진');
+  } else {
+    drawAnimArrow(ctx, cx, endY + 30, cx, cy - 30, '#bf5af2', '후진');
+    // 어깨 확인 표시
+    if (ov.shoulderCheck) {
+      const t = anim(2000);
+      const checkY = cy - (2.5 * 100) * pxPerCm;
+      if (checkY > 0) {
+        ctx.save();
+        ctx.fillStyle = t < 0.5 ? '#ff9f0a' : '#ff9f0a44';
+        ctx.font = 'bold 18px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('👀', lx - 18, checkY);
+        ctx.fillText('👀', rx + 18, checkY);
+        drawLabel(ctx, '어깨 확인!', cx, checkY - 18, '#ff9f0a');
+        ctx.restore();
       }
-    });
+    }
   }
+
+  // 휠체어 아이콘 (시작 위치)
+  drawWheelchair(ctx, cx, cy - 20, 20, '#00d4e0');
+  drawLabel(ctx, `폭 ${ov.widthM}m`, cx, cy + 14, '#00d4e0');
 }
 
 function drawRotation(ctx, cx, cy, W, H, ov, pxPerCm) {
-  const colors = ['rgba(0,212,224,0.2)', 'rgba(0,102,255,0.6)', 'rgba(255,69,58,0.6)'];
+  const t = anim(2000);
+  const colors = ['rgba(0,212,224,0.25)', 'rgba(0,102,255,0.7)', 'rgba(255,69,58,0.8)'];
   const labels = ['0.5m', 'AP 1.0m', 'Pass 1.5m'];
-  const dashes = [[],[5,5],[]];
+
   ov.radiiM.forEach((r, i) => {
     const rPx = (r * 100) * pxPerCm;
-    ctx.strokeStyle = colors[i];
-    ctx.lineWidth = i === 2 ? 2.5 : 1.5;
-    ctx.setLineDash(dashes[i]);
-    ctx.beginPath(); ctx.arc(cx, cy, rPx, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = colors[i]; ctx.lineWidth = i===2 ? 2.5 : 1.5;
+    ctx.setLineDash(i===1 ? [5,5] : []);
+    ctx.beginPath(); ctx.arc(cx, cy, rPx, 0, Math.PI*2); ctx.stroke();
     ctx.setLineDash([]);
-    drawLabel(ctx, labels[i], cx + rPx + 2, cy - 5, i===2?'#ff453a':i===1?'#0066ff':'#00d4e0');
+    drawLabel(ctx, labels[i], cx + rPx + 4, cy, i===2?'#ff453a':i===1?'#0066ff':'#00d4e0');
   });
-  // Direction arrows
-  ctx.strokeStyle = 'rgba(0,212,224,0.4)';
-  ctx.lineWidth = 1;
-  const rInner = (0.4 * 100) * pxPerCm;
-  ctx.beginPath();
-  ctx.arc(cx, cy, rInner, -Math.PI/2, Math.PI, false);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(cx, cy, rInner, Math.PI/2, -Math.PI*2, false);
-  ctx.stroke();
+
+  // 회전 방향 애니메이션 (좌우 각각)
+  const r1Px = (ov.radiiM[0] * 100) * pxPerCm;
+  const r2Px = (ov.radiiM[1] * 100) * pxPerCm;
+  const midR = (r1Px + r2Px) / 2;
+
+  // 반시계(좌) 화살표
+  const angL = t * Math.PI * 2;
+  const ax1 = cx + midR * Math.cos(angL - 0.2);
+  const ay1 = cy + midR * Math.sin(angL - 0.2);
+  const ax2 = cx + midR * Math.cos(angL + 0.2);
+  const ay2 = cy + midR * Math.sin(angL + 0.2);
+  ctx.strokeStyle = '#30d158'; ctx.lineWidth = 3; ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(ax1, ay1); ctx.lineTo(ax2, ay2); ctx.stroke();
+
+  // 시계(우) 화살표
+  const angR = -t * Math.PI * 2;
+  const bx1 = cx + midR * Math.cos(angR + 0.2);
+  const by1 = cy + midR * Math.sin(angR + 0.2);
+  const bx2 = cx + midR * Math.cos(angR - 0.2);
+  const by2 = cy + midR * Math.sin(angR - 0.2);
+  ctx.strokeStyle = '#bf5af2'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(bx1, by1); ctx.lineTo(bx2, by2); ctx.stroke();
+
+  // 중심 + 레이블
+  drawWheelchair(ctx, cx, cy, 18, '#00d4e0');
+  drawLabel(ctx, '양방향 160° ↑', cx, cy + (ov.radiiM[2]*100)*pxPerCm + 22, '#ff453a');
+  drawLabel(ctx, '좌↺', cx - midR - 2, cy - 14, '#30d158');
+  drawLabel(ctx, '↻우', cx + midR + 2, cy - 14, '#bf5af2');
 }
 
 function drawPylon(ctx, cx, cy, W, H, ov, pxPerCm) {
-  // Pylon center (in front of wheelchair)
-  const pylonY = cy - (1.5 * 100) * pxPerCm;
-  const colors = ['rgba(0,102,255,0.7)', 'rgba(255,69,58,0.8)'];
+  const t = anim(2500);
+  const pylonY = cy - Math.min((1.5 * 100) * pxPerCm, H * 0.45);
+
+  // 반경 원
+  const colors = ['rgba(0,102,255,0.6)', 'rgba(255,69,58,0.7)'];
   const labels = ['AP 1.0m', 'Pass 1.5m'];
   ov.radiiM.forEach((r, i) => {
     const rPx = (r * 100) * pxPerCm;
-    ctx.strokeStyle = colors[i];
-    ctx.lineWidth = i === 1 ? 2.5 : 1.5;
+    ctx.strokeStyle = colors[i]; ctx.lineWidth = i===1?2.5:1.5;
     ctx.setLineDash(i===0?[5,5]:[]);
-    ctx.beginPath(); ctx.arc(cx, pylonY, rPx, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, pylonY, rPx, 0, Math.PI*2); ctx.stroke();
     ctx.setLineDash([]);
-    drawLabel(ctx, labels[i], cx + rPx + 2, pylonY - 5, colors[i].includes('255,69')? '#ff453a':'#0066ff');
+    drawLabel(ctx, labels[i], cx + rPx + 4, pylonY, i===1?'#ff453a':'#0066ff');
   });
-  // Pylon icon
+
+  // 파일런 아이콘
   ctx.fillStyle = '#ff9f0a';
-  ctx.beginPath(); ctx.arc(cx, pylonY, 7, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = '#000';
-  ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('콘', cx, pylonY + 3);
+  ctx.beginPath(); ctx.arc(cx, pylonY, 10, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#000'; ctx.font = 'bold 10px sans-serif'; ctx.textAlign='center';
+  ctx.fillText('콘', cx, pylonY + 4);
+
+  // 휠체어 움직임 (파일런 주위를 도는 애니메이션)
+  const midR = ((ov.radiiM[0]+ov.radiiM[1])/2 * 100) * pxPerCm;
+  // 우측 회전
+  const ang = t * Math.PI * 2 - Math.PI/2;
+  const wx = cx + midR * Math.cos(ang);
+  const wy = pylonY + midR * Math.sin(ang);
+  drawWheelchair(ctx, wx, wy, 16, '#00d4e0');
+
+  // 시작 위치 → 파일런 접근 화살표
+  drawAnimArrow(ctx, cx, cy - 20, cx, pylonY + midR + 20, '#00d4e0', '접근');
+  drawLabel(ctx, '최대 가깝게 회전', cx, pylonY + (ov.radiiM[1]*100)*pxPerCm + 22, '#ff453a');
 }
 
 function drawIncline(ctx, W, H, ov) {
-  // Draw angle indicator in corner
+  const t = anim(2000);
   const deg = ov.degrees;
-  const cx = 70, cy = H - 70, r = 55;
-  // Arc background
-  ctx.fillStyle = 'rgba(0,0,0,0.55)';
-  ctx.beginPath(); ctx.arc(cx, cy, r+10, 0, Math.PI*2); ctx.fill();
-  // Horizon line
-  ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 1;
-  line(ctx, cx - r, cy, cx + r, cy);
-  // Incline line
+  const isUp = ov.dir === 'up';
+
+  // 각도 인디케이터 (좌하단)
+  const cx2 = 65, cy2 = H - 65, r = 50;
+  ctx.fillStyle = 'rgba(0,0,0,0.6)';
+  ctx.beginPath(); ctx.arc(cx2, cy2, r+8, 0, Math.PI*2); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1;
+  line(ctx, cx2-r, cy2, cx2+r, cy2);
   const rad = deg * Math.PI / 180;
-  const endX = cx + r * Math.cos(-rad);
-  const endY = cy + r * Math.sin(-rad);
-  ctx.strokeStyle = '#00d4e0'; ctx.lineWidth = 3;
-  ctx.setLineDash([]);
-  line(ctx, cx, cy, endX, endY);
-  // Arc
-  ctx.strokeStyle = 'rgba(0,212,224,0.5)'; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.arc(cx, cy, 25, -Math.PI/2, -rad - Math.PI/2 + Math.PI/2, false); ctx.stroke();
-  // Label
-  ctx.fillStyle = '#00d4e0';
-  ctx.font = 'bold 18px "Share Tech Mono"'; ctx.textAlign = 'center';
-  ctx.fillText(deg + '°', cx, cy + 30);
-  // Direction
-  ctx.fillStyle = ov.dir === 'up' ? '#30d158' : '#ff9f0a';
-  ctx.font = 'bold 13px "Noto Sans KR"'; ctx.textAlign = 'center';
-  ctx.fillText(ov.dir === 'up' ? '▲ 오르기' : '▼ 내려가기', cx, cy - r - 5);
-  // 2.5m guide
+  const ex = cx2 + r * Math.cos(-rad), ey = cy2 + r * Math.sin(-rad);
+  ctx.strokeStyle = '#00d4e0'; ctx.lineWidth = 3; ctx.setLineDash([]);
+  line(ctx, cx2, cy2, ex, ey);
+  ctx.fillStyle = '#00d4e0'; ctx.font = 'bold 20px "Share Tech Mono"';
+  ctx.textAlign = 'center'; ctx.fillText(deg+'°', cx2, cy2+28);
+
+  // 경사로 배경
+  const slopeW = W * 0.7, slopeH = H * 0.35;
+  const sx = W*0.15, sy = H*0.55;
+  ctx.fillStyle = 'rgba(0,212,224,0.06)';
+  ctx.beginPath();
+  ctx.moveTo(sx, sy); ctx.lineTo(sx+slopeW, sy-slopeH);
+  ctx.lineTo(sx+slopeW, sy-slopeH+20); ctx.lineTo(sx, sy+20);
+  ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = '#00d4e0'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(sx, sy); ctx.lineTo(sx+slopeW, sy-slopeH); ctx.stroke();
+
+  // 움직이는 휠체어 on slope
+  const progress = isUp ? t : (1-t);
+  const wx = sx + slopeW * progress;
+  const wy = sy - slopeH * progress;
+  ctx.save(); ctx.translate(wx, wy);
+  ctx.rotate(isUp ? -Math.atan(slopeH/slopeW) : Math.atan(slopeH/slopeW));
+  drawWheelchair(ctx, 0, 0, 22, isUp ? '#30d158' : '#ff9f0a');
+  ctx.restore();
+
+  // 방향 화살표
+  if (isUp) {
+    drawAnimArrow(ctx, sx+50, sy-10, sx+slopeW-30, sy-slopeH+10, '#30d158', '오르기 ▲');
+  } else {
+    drawAnimArrow(ctx, sx+slopeW-30, sy-slopeH+10, sx+50, sy-10, '#ff9f0a', '내려가기 ▼');
+  }
+
+  // 2.5m 기준선
   if (state.pxPerCm) {
-    const gx = W / 2, gy = H * 0.65;
-    const lenPx = Math.min((2.5 * 100) * state.pxPerCm, H * 0.4);
-    ctx.strokeStyle = '#ff9f0a'; ctx.lineWidth = 2; ctx.setLineDash([8,4]);
-    line(ctx, gx - 20, gy, gx - 20, gy - lenPx);
+    const lenPx = Math.min((2.5*100)*state.pxPerCm, slopeW*0.6);
+    const markX = sx + slopeW*0.35;
+    ctx.strokeStyle = '#ff453a'; ctx.lineWidth = 2; ctx.setLineDash([6,4]);
+    ctx.beginPath(); ctx.moveTo(markX, sy); ctx.lineTo(markX+lenPx, sy - slopeH*(lenPx/slopeW)); ctx.stroke();
     ctx.setLineDash([]);
-    drawLabel(ctx, '2.5m', gx - 20, gy - lenPx - 8, '#ff9f0a');
+    drawLabel(ctx, '2.5m↑', markX+lenPx+18, sy-slopeH*(lenPx/slopeW), '#ff453a');
   }
 }
 
 function drawObstacle(ctx, cx, cy, ov, pxPerCm) {
-  const wPx = Math.max((ov.widthCm) * pxPerCm, 20);
-  const hPx = Math.max((ov.heightCm) * pxPerCm * 4, 10); // visual scale up for height
+  const t = anim(2000);
+  const wPx = Math.max(ov.widthCm * pxPerCm, 22);
+  const hPx = Math.max(ov.heightCm * pxPerCm * 5, 12);
   const obY = cy - (80) * pxPerCm;
 
-  // Approach line
-  ctx.strokeStyle = 'rgba(255,159,10,0.5)'; ctx.lineWidth = 2; ctx.setLineDash([6,4]);
-  line(ctx, cx, cy, cx, obY + hPx);
-  ctx.setLineDash([]);
+  // 접근 경로
+  ctx.strokeStyle = 'rgba(255,159,10,0.3)'; ctx.lineWidth = 40; ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx, obY+hPx); ctx.stroke();
 
-  // Obstacle
-  ctx.fillStyle = 'rgba(255,69,58,0.3)';
-  ctx.fillRect(cx - wPx/2, obY - hPx, wPx, hPx);
+  // 장애물
+  ctx.fillStyle = 'rgba(255,69,58,0.25)';
+  ctx.fillRect(cx-wPx/2, obY-hPx, wPx, hPx);
   ctx.strokeStyle = '#ff453a'; ctx.lineWidth = 3;
-  ctx.strokeRect(cx - wPx/2, obY - hPx, wPx, hPx);
+  ctx.strokeRect(cx-wPx/2, obY-hPx, wPx, hPx);
+  drawLabel(ctx, `높이 ${ov.heightCm}cm`, cx, obY-hPx-14, '#ff453a');
+  drawLabel(ctx, `폭 ${ov.widthCm}cm`, cx, obY+18, '#ff9f0a');
 
-  drawLabel(ctx, `H: ${ov.heightCm}cm`, cx, obY - hPx - 10, '#ff453a');
-  drawLabel(ctx, `W: ${ov.widthCm}cm`, cx, obY + 16, '#ff9f0a');
+  // 휠체어 → 장애물 → 넘기 애니메이션
+  const phase = t;
+  let wx = cx, wy;
+  if (phase < 0.45) {
+    wy = cy - (cy - obY - hPx - 20) * (phase / 0.45);
+    drawWheelchair(ctx, wx, wy, 20, '#00d4e0');
+    drawAnimArrow(ctx, cx, cy-20, cx, obY+hPx+30, '#00d4e0', '저속 접근');
+  } else if (phase < 0.55) {
+    wy = obY - hPx - 5;
+    drawWheelchair(ctx, wx, wy, 20, '#ff9f0a');
+    drawLabel(ctx, '넘는 중!', cx, wy-30, '#ff9f0a');
+  } else {
+    wy = obY - hPx - (cy - obY - hPx) * ((phase-0.55)/0.45);
+    drawWheelchair(ctx, wx, wy, 20, '#30d158');
+    drawLabel(ctx, '통과!', cx, wy-30, '#30d158');
+  }
 }
 
 function drawCurb(ctx, cx, cy, W, H, ov, pxPerCm) {
-  const hPx = Math.max((ov.heightCm) * pxPerCm * 3, 12);
-  const curbW = Math.min(W * 0.8, 300);
-  const curbY = cy - (ov.distM * 100) * pxPerCm;
+  const t = anim(2200);
+  const hPx = Math.max(ov.heightCm * pxPerCm * 4, 14);
+  const curbW = Math.min(W * 0.75, 280);
+  const curbY = cy - Math.min((ov.distM * 100) * pxPerCm, H*0.35);
+  const isUp = ov.dir === 'up';
 
+  // 연석
   ctx.fillStyle = 'rgba(255,69,58,0.2)';
-  ctx.fillRect(cx - curbW/2, curbY - hPx, curbW, hPx);
+  ctx.fillRect(cx-curbW/2, curbY-hPx, curbW, hPx);
   ctx.strokeStyle = '#ff453a'; ctx.lineWidth = 3;
-  ctx.strokeRect(cx - curbW/2, curbY - hPx, curbW, hPx);
+  ctx.strokeRect(cx-curbW/2, curbY-hPx, curbW, hPx);
+  drawLabel(ctx, `${ov.heightCm}cm 연석`, cx, curbY-hPx-14, '#ff453a');
 
-  // Arrows
-  if (ov.dir === 'up') {
-    ctx.fillStyle = '#30d158';
-    ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('▲', cx, curbY - hPx - 12);
+  // 휠체어 이동 애니메이션
+  if (isUp) {
+    const wy = isUp ? cy - (cy - curbY + hPx) * t : curbY - hPx - (cy - curbY) * t;
+    drawWheelchair(ctx, cx, cy - (cy - curbY + hPx*2) * t, 22, '#30d158');
+    drawAnimArrow(ctx, cx, cy-20, cx, curbY-hPx-20, '#30d158', '오르기 ▲');
   } else {
-    ctx.fillStyle = '#ff9f0a';
-    ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('▼', cx, curbY + 25);
+    drawWheelchair(ctx, cx, curbY - hPx - 20 + (cy - curbY + hPx) * t, 22, '#ff9f0a');
+    drawAnimArrow(ctx, cx, curbY-hPx-20, cx, cy-20, '#ff9f0a', '내려가기 ▼');
+    drawLabel(ctx, '멈추지 말고 계속!', cx, curbY + 30, '#ff453a');
   }
-  drawLabel(ctx, `${ov.heightCm}cm 연석`, cx, curbY - hPx - 25, '#ff453a');
 }
 
 function drawDoor(ctx, cx, cy, ov, pxPerCm) {
+  const t = anim(2500);
   const wPx = (ov.widthCm) * pxPerCm;
-  const doorH = Math.min(200, cy * 0.6);
-  const doorY = cy - (ov.distCm || 50) * pxPerCm;
+  const doorH = Math.min(180, cy * 0.55);
+  const doorY = cy - Math.min(60 * pxPerCm, H * 0.2);
 
-  ctx.strokeStyle = '#bf5af2'; ctx.lineWidth = 3;
-  line(ctx, cx - wPx/2, doorY, cx - wPx/2, doorY - doorH);
-  line(ctx, cx + wPx/2, doorY, cx + wPx/2, doorY - doorH);
-  ctx.strokeStyle = 'rgba(191,90,242,0.3)'; ctx.lineWidth = 1;
-  line(ctx, cx - wPx/2, doorY - doorH, cx + wPx/2, doorY - doorH);
+  // 문 프레임
+  ctx.strokeStyle = '#bf5af2'; ctx.lineWidth = 3; ctx.setLineDash([]);
+  line(ctx, cx-wPx/2, doorY, cx-wPx/2, doorY-doorH);
+  line(ctx, cx+wPx/2, doorY, cx+wPx/2, doorY-doorH);
+  line(ctx, cx-wPx/2, doorY-doorH, cx+wPx/2, doorY-doorH);
+  drawLabel(ctx, `문폭 ${ov.widthCm}cm`, cx, doorY-doorH-14, '#bf5af2');
 
-  drawLabel(ctx, `${ov.widthCm}cm`, cx, doorY - doorH - 10, '#bf5af2');
+  // 문 열림 애니메이션
+  const openAngle = t * Math.PI * 0.7;
+  const doorEndX = cx - wPx/2 + Math.cos(openAngle) * (wPx * 0.85);
+  const doorEndY = (doorY + doorY-doorH)/2 + Math.sin(openAngle) * (wPx * 0.85 * 0.5);
+  ctx.strokeStyle = 'rgba(191,90,242,0.5)'; ctx.lineWidth = 8;
+  line(ctx, cx-wPx/2, (doorY+doorY-doorH)/2, doorEndX, doorEndY);
+
+  // 통과 경로
+  drawAnimArrow(ctx, cx, cy-20, cx, doorY-doorH/2, '#bf5af2', '통과 →');
+
+  // 휠체어
+  const phase = t;
+  const wy = cy - 20 + (doorY - doorH/2 - cy + 20) * Math.min(phase*1.5, 1);
+  drawWheelchair(ctx, cx, wy, 20, '#00d4e0');
+
+  // 당기기 힌트
+  drawLabel(ctx, '한손=손잡이 한손=조이스틱', cx, cy+16, '#ff9f0a');
 }
 
 function drawSideways(ctx, cx, cy, W, H, ov, pxPerCm) {
-  const depthPx = (ov.widthM * 100) * pxPerCm;
-  const latPx = (ov.lateralCm || 10) * pxPerCm;
-  const targetX = cx + (W * 0.3);
+  const t = anim(3000);
+  const depthPx = Math.min((ov.widthM * 100) * pxPerCm, H * 0.4);
+  const targetX = cx + W * 0.28;
 
-  ctx.strokeStyle = '#bf5af2'; ctx.lineWidth = 2;
+  // 목표 구역
+  const latPx = Math.max((ov.lateralCm || 10) * pxPerCm, 15);
   ctx.fillStyle = 'rgba(191,90,242,0.15)';
-  ctx.fillRect(targetX - latPx/2, cy - depthPx, latPx, depthPx);
-  ctx.strokeRect(targetX - latPx/2, cy - depthPx, latPx, depthPx);
+  ctx.fillRect(targetX-latPx/2, cy-depthPx, latPx, depthPx);
+  ctx.strokeStyle = '#bf5af2'; ctx.lineWidth = 2;
+  ctx.strokeRect(targetX-latPx/2, cy-depthPx, latPx, depthPx);
+  drawLabel(ctx, '목표 ≤10cm', targetX, cy-depthPx-14, '#bf5af2');
 
-  ctx.strokeStyle = 'rgba(0,212,224,0.5)'; ctx.lineWidth = 1; ctx.setLineDash([5,5]);
-  line(ctx, cx, cy, targetX, cy);
+  // 4단계 사이클 애니메이션
+  const phase = t % 1;
+  let wx, wy;
+  if (phase < 0.25) { // 전진+회전
+    wx = cx + (targetX-cx-20) * (phase/0.25);
+    wy = cy - depthPx * 0.3 * (phase/0.25);
+    drawLabel(ctx, '①전진+근쪽회전', cx + (targetX-cx)/2, cy-depthPx*0.15-16, '#30d158');
+  } else if (phase < 0.5) { // 전진+정렬
+    wx = targetX - 20 + 20*(phase-0.25)/0.25;
+    wy = cy - depthPx*0.3 - depthPx*0.2*((phase-0.25)/0.25);
+    drawLabel(ctx, '②전진+원쪽정렬', targetX, cy-depthPx*0.45-16, '#00d4e0');
+  } else if (phase < 0.75) { // 후진+회전
+    wx = targetX - (targetX-cx-20)*((phase-0.5)/0.25);
+    wy = cy - depthPx*0.5 + depthPx*0.2*((phase-0.5)/0.25);
+    drawLabel(ctx, '③후진+근쪽회전', cx+(targetX-cx)/2, cy-depthPx*0.4-16, '#ff9f0a');
+  } else { // 후진+정렬
+    wx = cx + (targetX-cx-20)*((phase-0.75)/0.25);
+    wy = cy - depthPx*0.3 + depthPx*0.3*((phase-0.75)/0.25);
+    drawLabel(ctx, '④후진+원쪽정렬', targetX, cy-depthPx*0.2-16, '#bf5af2');
+  }
+  drawWheelchair(ctx, wx, wy, 20, '#00d4e0');
+
+  // 전후 이동 한계선
+  ctx.strokeStyle = '#ff453a'; ctx.lineWidth = 1.5; ctx.setLineDash([5,5]);
+  line(ctx, cx-20, cy-depthPx, targetX+latPx, cy-depthPx);
   ctx.setLineDash([]);
-
-  drawLabel(ctx, '≤10cm', targetX, cy - depthPx - 10, '#bf5af2');
-  drawLabel(ctx, '≤1.5m', cx + (targetX-cx)/2, cy - depthPx/2, '#00d4e0');
-  drawLabel(ctx, '목표', targetX, cy - depthPx/2, '#bf5af2');
+  drawLabel(ctx, '전후 1.5m 이내', cx+(targetX-cx)/2, cy-depthPx+16, '#ff453a');
 }
 
 function drawReach(ctx, cx, cy, W, H, pxPerCm) {
-  // Floor reach zone
-  ctx.fillStyle = 'rgba(48,209,88,0.2)';
-  const r = (50) * pxPerCm;
-  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
-  ctx.strokeStyle = '#30d158'; ctx.lineWidth = 2;
-  ctx.stroke();
-  drawLabel(ctx, '바닥 집기', cx, cy + r + 14, '#30d158');
+  const t = anim(1500);
 
-  // 1.5m height indicator (as bar on side)
-  const hPx = Math.min((150) * pxPerCm, H * 0.5);
-  ctx.strokeStyle = '#ff9f0a'; ctx.lineWidth = 2;
-  const bx = W - 40;
-  line(ctx, bx, H * 0.9, bx, H * 0.9 - hPx);
+  // 바닥 집기 존
+  const r = Math.max(45 * pxPerCm, 35);
+  drawPulseCircle(ctx, cx - W*0.18, cy - 15, r, '#30d158', '바닥 집기');
+
+  // 전원 OFF 표시
+  const t2 = anim(1000);
+  ctx.fillStyle = t2 < 0.5 ? '#ff453a' : '#ff453a55';
+  ctx.font = 'bold 13px "Noto Sans KR"'; ctx.textAlign = 'center';
+  ctx.fillText('⚡전원 OFF 필수!', cx - W*0.18, cy - r - 28);
+
+  // 1.5m 높이 목표
+  const hPx = Math.min((150) * pxPerCm, H * 0.55);
+  const bx = cx + W*0.2;
+  ctx.strokeStyle = '#ff9f0a'; ctx.lineWidth = 3; ctx.setLineDash([]);
+  line(ctx, bx - 15, H*0.88, bx + 15, H*0.88); // 바닥
+  line(ctx, bx, H*0.88, bx, H*0.88 - hPx);
+  drawPulseCircle(ctx, bx, H*0.88 - hPx, 16, '#ff9f0a', '1.5m 높이');
+
+  // 손 닿기 애니메이션
+  const armY = H*0.88 - hPx - 16 - Math.sin(t * Math.PI * 2) * 12;
   ctx.fillStyle = '#ff9f0a';
-  ctx.font = '10px var(--mono)'; ctx.textAlign = 'center';
-  ctx.fillText('1.5m', bx, H * 0.9 - hPx - 8);
-  ctx.fillText('높이', bx, H * 0.9 + 12);
+  ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('✋', bx, armY);
+
+  // 휠체어
+  drawWheelchair(ctx, cx, cy - 15, 22, '#00d4e0');
 }
 
 function drawTimerOverlay(ctx, cx, cy, W, H, ov) {
