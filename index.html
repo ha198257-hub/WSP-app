@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>WSP 전동휠체어 평가</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #080d18;
@@ -495,7 +495,7 @@ body {
   background: rgba(242,244,246,0.95); backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
-.landing-topbar h1 { font-size: 17px; font-weight: 800; letter-spacing: 3px; color: #0066ff; font-family: 'Noto Sans KR', sans-serif; }
+.landing-topbar h1 { font-size: 17px; font-weight: 900; letter-spacing: 4px; color: #00a040; font-family: 'Noto Sans KR', sans-serif; }
 .landing-topbar p { font-size: 10px; color: #8b95a1; font-family: 'Noto Sans KR', sans-serif; text-align: center; letter-spacing: 0; }
 .topbar-icon-btn {
   width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e2e8f0;
@@ -585,7 +585,7 @@ body {
       <!-- 로그인 전 -->
       <div id="login-form">
         <p style="font-size:13px; color:#8b95a1; margin-bottom:6px;">안녕하세요 👋</p>
-        <h2 style="font-size:26px; font-weight:900; color:#191919; margin-bottom:6px;">이름을 입력해주세요</h2>
+        <h2 style="font-size:26px; font-weight:900; color:#191919; margin-bottom:6px;">치료사 이름을 입력해주세요</h2>
         <p style="font-size:13px; color:#8b95a1; margin-bottom:20px;">WSP 전동휠체어 평가 도구</p>
         <input id="login-name-input" type="text" placeholder="예: 하재용"
           style="width:100%; background:#f8f9fa; border:1.5px solid #e8edf2; color:#191919;
@@ -644,59 +644,32 @@ body {
     </div>
 
     <!-- 도구 카드 (로그인 후만 보임) -->
-    <div id="tools-section" style="display:none; padding:20px 18px 0; background:#fff; margin-top:8px;">
-      <p style="font-size:11px; color:#8b95a1; font-weight:600; letter-spacing:1px;
-        text-transform:uppercase; margin-bottom:6px;">② 평가 도구</p>
-      <h3 style="font-size:22px; font-weight:900; color:#191919; margin-bottom:18px;">
-        평가를 더 <span style="color:#0066ff;">스마트</span>하게
-      </h3>
+    <!-- 개별 항목 평가 목록 (로그인 후만 보임) -->
+    <div id="tools-section" style="display:none; background:#f2f4f6; margin-top:8px; padding-bottom:24px;">
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-        <!-- 유튜브 -->
-        <div onclick="showSkillPickerForTab('vid')" style="background:#fff0f0; border-radius:20px; padding:18px 14px 16px;
-          border:1.5px solid #ffd6d6; position:relative; overflow:hidden; cursor:pointer;
-          transition:transform 0.15s;" onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="position:absolute; top:-16px; right:-16px; width:60px; height:60px;
-            border-radius:50%; background:rgba(255,0,0,0.06);"></div>
-          <div style="width:52px; height:52px; border-radius:16px; background:#ff0000;
-            display:flex; align-items:center; justify-content:center; margin:0 auto 12px;
-            box-shadow:0 6px 16px rgba(255,0,0,0.3);">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="white">
-              <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
-            </svg>
-          </div>
-          <div style="font-size:13px; font-weight:800; color:#cc0000; margin-bottom:5px; text-align:center;">유튜브 시범</div>
-          <div style="font-size:11px; color:#994444; line-height:1.7; text-align:center;">챕터별 바로보기<br>26개 기술 영상</div>
-        </div>
-
-        <!-- 애니메이션 -->
-        <div onclick="showSkillPickerForTab('ani')" style="background:#f0fff5; border-radius:20px; padding:18px 14px 16px;
-          border:1.5px solid #c0f0d0; position:relative; overflow:hidden; cursor:pointer;
-          transition:transform 0.15s;" onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="position:absolute; top:-16px; right:-16px; width:60px; height:60px;
-            border-radius:50%; background:rgba(0,200,80,0.08);"></div>
-          <div style="width:52px; height:52px; border-radius:16px; background:#00c853;
-            display:flex; align-items:center; justify-content:center; margin:0 auto 12px;
-            font-size:26px; box-shadow:0 6px 16px rgba(0,200,83,0.3);">🎮</div>
-          <div style="font-size:13px; font-weight:800; color:#00a040; margin-bottom:5px; text-align:center;">동작 애니</div>
-          <div style="font-size:11px; color:#3d8050; line-height:1.7; text-align:center;">26개 기술<br>고퀄 시뮬레이션</div>
-        </div>
+      <!-- 헤더 -->
+      <div style="padding:14px 18px 10px; background:#fff; border-bottom:1px solid #f0f0f0;">
+        <h3 style="font-size:18px; font-weight:900; color:#191919; margin-bottom:2px;">개별 항목 평가</h3>
+        <p style="font-size:12px; color:#8b95a1;">항목을 선택해서 영상·애니·채점을 바로 확인하세요</p>
       </div>
-    </div>
 
-    <!-- 시작하기 (로그인 후만 보임) -->
-    <div id="start-section" style="display:none; padding:20px 18px 0; background:#fff; margin-top:8px;">
-      <button id="landing-start-btn" onclick="landingStart()"
-        style="width:100%; padding:17px; border:none; border-radius:16px; font-size:17px;
-          font-weight:900; cursor:pointer; font-family:'Noto Sans KR';
-          background:#e8edf2; color:#b0b8c1; pointer-events:none;
-          display:flex; align-items:center; justify-content:center; gap:8px;
-          transition:all 0.25s;">
-        <span>시작하기</span>
-        <span style="font-size:18px;">→</span>
-      </button>
-      <p id="landing-start-hint" style="text-align:center; font-size:12px; color:#b0b8c1;
-        margin-top:10px; margin-bottom:0; padding-bottom:24px;">환자를 선택하면 활성화돼요</p>
+      <!-- 기술 목록 -->
+      <div id="board-list"></div>
+
+      <!-- 평가 요약 + 시작 버튼 -->
+      <div style="padding:16px 18px 0;">
+        <button id="landing-start-btn" onclick="landingStart()"
+          style="width:100%; padding:17px; border:none; border-radius:16px; font-size:17px;
+            font-weight:900; cursor:pointer; font-family:'Noto Sans KR';
+            background:#e8edf2; color:#b0b8c1; pointer-events:none;
+            display:flex; align-items:center; justify-content:center; gap:8px;
+            transition:all 0.25s;">
+          <span>전체 평가 시작하기</span>
+          <span style="font-size:18px;">→</span>
+        </button>
+        <p id="landing-start-hint" style="text-align:center; font-size:12px; color:#b0b8c1;
+          margin-top:10px; margin-bottom:0; padding-bottom:8px;">환자를 선택하면 활성화돼요</p>
+      </div>
     </div>
 
   </div>
@@ -708,18 +681,15 @@ body {
     <div style="display:flex; align-items:center; gap:10px;">
       <button onclick="goLanding()" style="width:32px; height:32px; border-radius:8px; background:var(--surface2);
         border:none; color:var(--text); cursor:pointer; font-size:16px;">←</button>
-      <div class="home-logo">
-        <div class="logo-icon">📋</div>
-        <div class="logo-text">
-          <h1>매뉴얼 평가</h1>
-          <p>WSP v5.4.3 · 26개 기술 평가</p>
-        </div>
+      <div class="logo-text">
+        <h1 style="font-size:16px; font-weight:800;">전체 평가</h1>
+        <p style="font-size:11px; color:var(--text-dim);">WSP v5.4.3 · 26개 기술</p>
       </div>
     </div>
-    <div class="home-meta" style="margin-top:8px;">
-      <span class="badge badge-accent">26개 기술</span>
-      <span class="badge badge-warn" id="calib-status-badge">미캘리브레이션</span>
-    </div>
+    <button onclick="saveEvalHistory()"
+      style="padding:7px 14px; background:rgba(0,212,224,0.15); color:var(--accent);
+        border:1px solid rgba(0,212,224,0.3); border-radius:20px; font-size:12px;
+        font-weight:700; cursor:pointer; font-family:'Noto Sans KR';">💾 저장</button>
   </div>
 
   <div class="score-summary-bar">
@@ -739,52 +709,30 @@ body {
 <!-- ═══════════════════════════ SKILL ═══════════════════════════ -->
 <div id="screen-skill" class="screen">
   <div class="skill-topbar">
-    <button class="back-btn" onclick="goHome()">←</button>
+    <button class="back-btn" onclick="goBackFromSkill()">←</button>
     <div class="skill-topbar-info">
       <div class="skill-topbar-num" id="sk-num"></div>
       <div class="skill-topbar-name" id="sk-name"></div>
     </div>
   </div>
 
-  <!-- 카메라 / 영상 / 애니메이션 토글 탭 -->
+  <!-- 영상 / 애니메이션 탭 -->
   <div style="display:flex; background:var(--surface); border-bottom:1px solid var(--border);">
-    <button id="tab-cam-btn" onclick="switchMediaTab('cam')"
-      style="flex:1; padding:8px 4px; border:none; background:rgba(0,212,224,0.15); color:var(--accent);
-             font-size:11px; font-weight:700; cursor:pointer; font-family:'Noto Sans KR';
-             border-bottom:2px solid var(--accent); line-height:1.4;">
-      📷 카메라<br><span style="font-size:9px; font-weight:400; opacity:0.8;">AR·녹화·AI분석</span>
-    </button>
     <button id="tab-vid-btn" onclick="switchMediaTab('vid')"
-      style="flex:1; padding:8px 4px; border:none; background:none; color:var(--text-dim);
-             font-size:11px; font-weight:500; cursor:pointer; font-family:'Noto Sans KR';
-             border-bottom:2px solid transparent; line-height:1.4;">
-      🎬 시범영상<br>
+      style="flex:1; padding:10px 4px; border:none; background:rgba(0,212,224,0.15); color:var(--accent);
+             font-size:12px; font-weight:700; cursor:pointer; font-family:'Noto Sans KR';
+             border-bottom:2px solid var(--accent); line-height:1.4;">
+      🎬 시범영상
       <span id="video-timestamp-badge" style="display:none; font-size:9px; color:var(--accent);
         font-family:var(--mono); background:rgba(0,212,224,0.15); padding:1px 5px;
-        border-radius:6px;"></span>
-      <span id="vid-tab-sub" style="font-size:9px; font-weight:400; opacity:0.7;">유튜브</span>
+        border-radius:6px; margin-left:3px;"></span>
     </button>
     <button id="tab-ani-btn" onclick="switchMediaTab('ani')"
-      style="flex:1; padding:8px 4px; border:none; background:none; color:var(--text-dim);
-             font-size:11px; font-weight:500; cursor:pointer; font-family:'Noto Sans KR';
+      style="flex:1; padding:10px 4px; border:none; background:none; color:var(--text-dim);
+             font-size:12px; font-weight:500; cursor:pointer; font-family:'Noto Sans KR';
              border-bottom:2px solid transparent; line-height:1.4;">
-      🎮 애니<br><span style="font-size:9px; font-weight:400; opacity:0.7;">동작 시뮬</span>
+      🎮 동작 애니
     </button>
-  </div>
-
-  <!-- 카메라 영역 -->
-  <div id="media-cam" class="camera-area" id="cam-area">
-    <video id="cam-video" autoplay playsinline muted class="rear"></video>
-    <canvas id="cam-canvas" class="camera-canvas"></canvas>
-    <div class="cam-off-placeholder" id="cam-placeholder">
-      <span class="icon">📷</span>
-      <p>카메라 비활성화<br><small>📷 버튼으로 시작</small></p>
-    </div>
-    <div class="cam-controls">
-      <button class="cam-btn cam-btn-secondary" onclick="flipCamera()" id="flip-btn" style="display:none">🔄</button>
-      <button class="cam-btn cam-btn-secondary" onclick="toggleCamera()" id="cam-toggle-btn">📷 켜기</button>
-    </div>
-    <div class="calib-badge" id="calib-badge-skill" style="display:none"></div>
   </div>
 
   <!-- 영상 영역 -->
@@ -1250,7 +1198,7 @@ const SKILLS = [
     }
   },
   {
-    id:15, name:'체중 이동 (압력 완화)', en:'Shifts weight', level:'실내', cat:'기본 주행', prereq:null,
+    id:15, name:'체중 이동', en:'Shifts weight', level:'실내', cat:'기본 주행', prereq:null,
     overlay:{type:'timer', seconds:15}, keyMeasure:'15초 이상 양쪽 좌골 완전 해제',
     howto:['틸트·리클라인·스탠드업 기능이 있으면 활용 (45° 이상 권장)', '기능 없으면 전방 또는 측방으로 상체를 충분히 기울임', '측방 기울이기: 한쪽씩, 양쪽 모두 완전 압력 제거 목표', '15초 이상 유지 (평가자가 말할 때까지)', '복귀 시 스스로 바로 앉을 수 있어야 함'],
     score_criteria:['①양쪽 좌골 완전 해제 (검사자 손 쉽게 들어갈 정도) ②15초 이상 유지 → 합격', '부분합격: 한쪽만, 불완전 해제, 또는 8~14초', '0점: 완전 해제 8초 미만'],
@@ -1267,7 +1215,7 @@ const SKILLS = [
     }
   },
   {
-    id:16, name:'수평 이동', en:'Performs level transfers', level:'실내', cat:'기본 주행', prereq:null,
+    id:16, name:'평면 이동 (transfer)', en:'Performs level transfers', level:'실내', cat:'기본 주행', prereq:null,
     overlay:null, keyMeasure:'양방향 transfer 독립·안전 수행',
     howto:['전원을 OFF', 'transfer 방향으로 컨트롤러 치우고, 팔걸이 올리거나 제거', '발판 치우고 발을 바닥에 지지', 'transfer 면에 최대한 가깝게 이동', '측방 transfer: 약한 팔 쪽 앞으로 리드, 머리와 엉덩이 반대 방향', 'transfer 후 발판 복구, 전원 ON 가능 상태로 복원'],
     score_criteria:['①휠체어 준비 ②목표 면으로 이동 ③복귀 ④휠체어 복원 → 4가지 모두 = 합격', '부분합격: 한 방향만 성공', '3점(AP): 전원 미차단 시 불가'],
@@ -1303,7 +1251,7 @@ const SKILLS = [
     }
   },
   {
-    id:18, name:'여닫이 문 통과', en:'Gets through hinged door', level:'실내', cat:'지역사회', prereq:null,
+    id:18, name:'여닫이 문 통과', en:'Gets through hinged door', level:'실내', cat:'기본 주행', prereq:null,
     overlay:{type:'door', widthCm:80}, keyMeasure:'양방향(밀기·당기기) 통과 후 완전히 닫기',
     howto:['밀리는 방향(push door): 문 정면에서 발판 또는 손으로 문 밀며 전진', '당겨지는 방향(pull door): 한 손 손잡이 + 다른 손 조이스틱, 후진하며 문 당김', '자동 닫힘 문: 한 손 손잡이, 다른 손 조이스틱 → 저항에 버틸 필요 없음', '문 통과 후 반드시 닫는다', '문·문틀에 손·팔꿈치가 긁히지 않도록 주의'],
     score_criteria:['양방향 모두: ①열기 ②통과 ③닫기 → 합격', '부분합격: 한 방향만, 또는 열기/닫기 중 하나만', '3점(AP): 일반 기준 준함', 'NP 불가'],
@@ -1354,7 +1302,7 @@ const SKILLS = [
     }
   },
   {
-    id:21, name:'급경사 오르기', en:'Ascends steep incline (10°)', level:'지역사회', cat:'지역사회', prereq:19,
+    id:21, name:'가파른 경사 오르기', en:'Ascends steep incline (10°)', level:'지역사회', cat:'지역사회', prereq:19,
     overlay:{type:'incline', degrees:10, dir:'up'}, keyMeasure:'10° 경사 · 선수기술 #19 합격 필요',
     howto:['선수 기술: 완만한 경사 오르기 합격 필요', '고토크 드라이브 모드로 전환', '경사 시작 지점 주의하며 접근', '경사 오르는 중 틸트를 전방으로 조정하여 시야 확보'],
     score_criteria:['19번과 동일 기준 적용 (10° 경사)', '부분합격: 1.5m 이상, 또는 7.5° 경사 성공', '선수기술 Fail/Partial → 자동 불합격'],
@@ -1371,7 +1319,7 @@ const SKILLS = [
     }
   },
   {
-    id:22, name:'급경사 내려가기', en:'Descends steep incline (10°)', level:'지역사회', cat:'지역사회', prereq:20,
+    id:22, name:'가파른 경사 내려가기', en:'Descends steep incline (10°)', level:'지역사회', cat:'지역사회', prereq:20,
     overlay:{type:'incline', degrees:10, dir:'down'}, keyMeasure:'10° 경사 · 선수기술 #20 합격 필요',
     howto:['선수 기술: 완만한 경사 내려가기 합격 필요', '전동휠체어는 자동 브레이킹 작동', '느린 속도로 시작하여 속도 유지', '급주행 방지: 필요 이상의 속도는 위험'],
     score_criteria:['20번과 동일 기준 적용 (10° 경사)', '부분합격: 1.5m 이상, 또는 7.5° 성공', '선수기술 Fail/Partial → 자동 불합격'],
@@ -1388,7 +1336,7 @@ const SKILLS = [
     }
   },
   {
-    id:23, name:'부드러운 노면 주행', en:'Rolls on soft surface', level:'지역사회', cat:'지역사회', prereq:null,
+    id:23, name:'부드러운 표면 이동', en:'Rolls on soft surface', level:'지역사회', cat:'지역사회', prereq:null,
     overlay:{type:'corridor', lengthM:2.5, widthM:1.5, dir:'fwd'}, keyMeasure:'부드러운 노면 2.5m (짐 매트 5cm 두께 권장)',
     howto:['고토크 드라이브 모드로 전환', '자세 보정(틸트·리클라인)으로 앞바퀴(캐스터) 부하 줄이기', '일정 속도 유지 (반복적 출발·정지 지양)', '모래·진흙: 구동 바퀴 헛돌기 방지 위해 신중한 속도 조절'],
     score_criteria:['①딱딱한 노면→부드러운 노면 완전 이동 ②선행 바퀴 축이 결승선 넘음 → 합격', '부분합격: 1.5m 이상', '불합격: 1.5m 미만'],
@@ -1485,15 +1433,6 @@ try {
   if (saved.videoUrls) state.videoUrls = saved.videoUrls;
 } catch(e) {}
 
-function saveData() {
-  try {
-    localStorage.setItem('wsp_data', JSON.stringify({
-      scores: state.scores,
-      pxPerCm: state.pxPerCm,
-      videoUrls: state.videoUrls
-    }));
-  } catch(e) {}
-}
 
 // ═══════════════════════════════════════════════════════
 //  HOME
@@ -1501,9 +1440,9 @@ function saveData() {
 const CATEGORIES = [
   { key:'장비 조작', label:'⚙ 장비 조작', ids:[1,2,3,4,5,6,7],
     color:'#bf5af2', bg:'rgba(191,90,242,0.12)', border:'rgba(191,90,242,0.4)', tag:'장비' },
-  { key:'기본 주행', label:'🚗 기본 주행', ids:[8,9,10,11,12,13,14,15,16],
+  { key:'기본 주행', label:'🚗 기본 주행', ids:[8,9,10,11,12,13,14,15,16,18],
     color:'#00d4e0', bg:'rgba(0,212,224,0.12)', border:'rgba(0,212,224,0.4)', tag:'주행' },
-  { key:'지역사회', label:'🌆 지역사회', ids:[17,18,19,20,21,22,23,24,25,26],
+  { key:'지역사회', label:'🌆 지역사회', ids:[17,19,20,21,22,23,24,25,26],
     color:'#ff9f0a', bg:'rgba(255,159,10,0.12)', border:'rgba(255,159,10,0.4)', tag:'지역사회' }
 ];
 
@@ -1534,7 +1473,7 @@ function renderHome() {
       const card = document.createElement('div');
       card.className = `skill-card`;
       card.style.borderLeft = `3px solid ${score ? (score==='0'?'var(--danger)':score==='1'?'var(--warn)':score==='NP'?'var(--text-dim)':score==='TE'?'var(--purple)':'var(--success)') : cat.color}`;
-      card.onclick = () => openSkill(id);
+      card.onclick = () => openSkillFromHome(id);
       card.innerHTML = `
         <div class="skill-num" style="color:${cat.color}">${id}</div>
         <div class="skill-info">
@@ -1567,7 +1506,7 @@ function updateHomeSummary() {
   const pct = maxPossible > 0 ? Math.round(total / maxPossible * 100) : 0;
   document.getElementById('home-pct').textContent = pct + '%';
   document.getElementById('home-score-label').textContent = `${total} / ${maxPossible}점 · ${done}개 완료`;
-  document.getElementById('home-score-bar').style.width = pct + '%';
+  const _sb=document.getElementById('home-score-bar'); if(_sb) _sb.style.width=pct+'%';
 }
 
 function updateCalibBadge() {
@@ -1606,7 +1545,34 @@ function openSkill(id) {
     const pre = SKILLS.find(s => s.id === sk.prereq);
     const preScore = state.scores[sk.prereq];
     const ok = preScore === '2' || preScore === '3';
-    prereqEl.innerHTML = `<span class="prereq-tag">선수기술 #${sk.prereq} ${pre.name}: ${preScore ? preScore : '미평가'}${!ok ? ' ⚠' : ' ✓'}</span>`;
+    const notDone = !preScore;
+    if (ok) {
+      prereqEl.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;
+          background:rgba(0,160,64,0.08);border-radius:10px;border:1px solid rgba(0,160,64,0.2);margin-bottom:6px;">
+          <span style="font-size:16px;">✅</span>
+          <span style="font-size:12px;color:#00a040;font-weight:600;">
+            선수기술 #${sk.prereq} ${pre.name} 통과 (${preScore}점)
+          </span>
+        </div>`;
+    } else {
+      prereqEl.innerHTML = `
+        <div style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;
+          background:rgba(255,69,58,0.08);border-radius:10px;border:1px solid rgba(255,69,58,0.3);margin-bottom:6px;">
+          <span style="font-size:16px;flex-shrink:0;">⚠️</span>
+          <div>
+            <div style="font-size:12px;color:#ff453a;font-weight:700;margin-bottom:2px;">
+              선수기술 미통과 — 주의!
+            </div>
+            <div style="font-size:11px;color:#ff453a;opacity:0.8;">
+              #${sk.prereq} ${pre.name} ${notDone ? '(미평가)' : `(${preScore}점 — 실패)`}
+            </div>
+            <div style="font-size:11px;color:#ff453a;opacity:0.7;margin-top:3px;">
+              WSP 원칙상 이 항목은 Fail 처리될 수 있어요
+            </div>
+          </div>
+        </div>`;
+    }
   } else { prereqEl.innerHTML = ''; }
 
   // Video — 저장된 URL 없으면 기본 영상 URL 사용
@@ -1617,13 +1583,12 @@ function openSkill(id) {
     const sec = parseInt(sk.videoUrl.split('t=')[1]) || 0;
     const min = Math.floor(sec/60), s = sec%60;
     const badge = document.getElementById('video-timestamp-badge');
-    badge.textContent = `${min}:${s.toString().padStart(2,'0')}`;
-    badge.style.display = 'inline';
-    // 영상 탭으로 자동 전환
+    if(badge){ badge.textContent = `${min}:${s.toString().padStart(2,'0')}`; badge.style.display = 'inline'; }
     switchMediaTab('vid');
   } else {
-    document.getElementById('video-timestamp-badge').style.display = 'none';
-    switchMediaTab('cam');
+    const badge = document.getElementById('video-timestamp-badge');
+    if(badge) badge.style.display = 'none';
+    switchMediaTab('ani');
   }
 
   if (savedUrl) { loadVideo(); } else { resetVideo(); }
@@ -1854,40 +1819,24 @@ function extractYouTubeId(url) {
 // ═══════════════════════════════════════════════════════
 // ── 미디어 탭 전환 (카메라 ↔ 영상 ↔ 애니메이션) ──
 function switchMediaTab(tab) {
-  const areas = { cam: 'media-cam', vid: 'media-vid', ani: 'media-ani' };
-  const btns = { cam: 'tab-cam-btn', vid: 'tab-vid-btn', ani: 'tab-ani-btn' };
-  const colors = { cam: 'var(--accent)', vid: 'var(--accent)', ani: '#30d158' };
-
-  Object.keys(areas).forEach(k => {
-    const area = document.getElementById(areas[k]);
-    const btn = document.getElementById(btns[k]);
-    if (!area || !btn) return;
-    if (k === tab) {
-      area.style.display = 'block';
-      btn.style.background = k==='ani' ? 'rgba(48,209,88,0.15)' : 'rgba(0,212,224,0.15)';
-      btn.style.color = colors[k];
-      btn.style.borderBottom = `2px solid ${colors[k]}`;
-      btn.style.fontWeight = '700';
-    } else {
-      area.style.display = 'none';
-      btn.style.background = 'none';
-      btn.style.color = 'var(--text-dim)';
-      btn.style.borderBottom = '2px solid transparent';
-      btn.style.fontWeight = '500';
-    }
-  });
+  const vidArea = document.getElementById('media-vid');
+  const aniArea = document.getElementById('media-ani');
+  const vidBtn = document.getElementById('tab-vid-btn');
+  const aniBtn = document.getElementById('tab-ani-btn');
 
   if (tab === 'vid') {
-    const url = document.getElementById('video-url-input').value;
+    if(vidArea) vidArea.style.display = 'block';
+    if(aniArea) aniArea.style.display = 'none';
+    if(vidBtn) { vidBtn.style.background='rgba(0,212,224,0.15)'; vidBtn.style.color='var(--accent)'; vidBtn.style.borderBottom='2px solid var(--accent)'; vidBtn.style.fontWeight='700'; }
+    if(aniBtn) { aniBtn.style.background='none'; aniBtn.style.color='var(--text-dim)'; aniBtn.style.borderBottom='2px solid transparent'; aniBtn.style.fontWeight='500'; }
+    const url = document.getElementById('video-url-input')?.value;
     if (url) loadVideo();
-  }
-  if (tab === 'ani') {
-    startAniLoop();
   } else {
-    stopAniLoop();
-  }
-  if (tab !== 'cam' && state.camActive) {
-    // 카메라 탭 떠날 때 오버레이만 멈춤
+    if(vidArea) vidArea.style.display = 'none';
+    if(aniArea) aniArea.style.display = 'block';
+    if(aniBtn) { aniBtn.style.background='rgba(48,209,88,0.15)'; aniBtn.style.color='#30d158'; aniBtn.style.borderBottom='2px solid #30d158'; aniBtn.style.fontWeight='700'; }
+    if(vidBtn) { vidBtn.style.background='none'; vidBtn.style.color='var(--text-dim)'; vidBtn.style.borderBottom='2px solid transparent'; vidBtn.style.fontWeight='500'; }
+    startAniLoop();
   }
 }
 
@@ -1912,8 +1861,8 @@ async function startCamera() {
     video.srcObject = stream;
     state.camStream = stream;
     state.camActive = true;
-    document.getElementById('cam-placeholder').style.display = 'none';
-    document.getElementById('flip-btn').style.display = 'flex';
+    document.getElementById('cam-placeholder')&&(document.getElementById('cam-placeholder').style.display='none');
+    document.getElementById('flip-btn')&&(document.getElementById('flip-btn').style.display='flex');
     updateSkillCalibBadge();
     video.onloadedmetadata = () => {
       resizeCanvas();
@@ -1932,8 +1881,8 @@ function stopCamera() {
   if (state.animFrame) { cancelAnimationFrame(state.animFrame); state.animFrame = null; }
   state.camActive = false;
   document.getElementById('cam-video').srcObject = null;
-  document.getElementById('cam-placeholder').style.display = 'flex';
-  document.getElementById('flip-btn').style.display = 'none';
+  document.getElementById('cam-placeholder')&&(document.getElementById('cam-placeholder').style.display='flex');
+  document.getElementById('flip-btn')&&(document.getElementById('flip-btn').style.display='none');
   const canvas = document.getElementById('cam-canvas');
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -2709,25 +2658,7 @@ function resetScores() {
 // ═══════════════════════════════════════════════════════
 //  NAVIGATION
 // ═══════════════════════════════════════════════════════
-function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  state.screen = name;
-}
 
-function goHome() {
-  if (state.screen === 'skill') stopCamera();
-  renderHome();
-  showScreen('home');
-}
-
-function goLanding() {
-  if (state.screen === 'skill') stopCamera();
-  showScreen('landing');
-}
-
-
-// ═══════════════════════════════════════════════════════
 //  ANIMATION ENGINE (고퀄리티 리뉴얼)
 // ═══════════════════════════════════════════════════════
 let aniT = 0, aniPlaying = true, aniSpeed = 1, aniRafId = null;
@@ -2989,13 +2920,96 @@ function doLogin() {
   showToast(`환영해요, ${masked} 치료사님! 👋`, 'success');
 }
 
+// ═══════════════════════════════════════════════════════
+//  게시판 스타일 기술 목록
+// ═══════════════════════════════════════════════════════
+
+function renderBoardList() {
+  const container = document.getElementById('board-list');
+  if (!container) return;
+
+  const CATS = [
+    { label:'⚙ 장비 조작', color:'#7c3aed', bg:'#f5f3ff', border:'#ede9fe', ids:[1,2,3,4,5,6,7] },
+    { label:'🚗 기본 주행', color:'#0284c7', bg:'#f0f9ff', border:'#e0f2fe', ids:[8,9,10,11,12,13,14,15,16,18] },
+    { label:'🌆 지역사회',  color:'#d97706', bg:'#fffbeb', border:'#fef3c7', ids:[17,19,20,21,22,23,24,25,26] },
+  ];
+
+  container.innerHTML = CATS.map((cat, ci) => {
+    const scored = cat.ids.filter(id => state.scores[id]).length;
+    return `
+    <div style="margin-top:8px;">
+      <!-- 카테고리 헤더 (누르면 접기/펼치기) -->
+      <div onclick="toggleCat(${ci})"
+        style="padding:13px 18px; background:#fff; display:flex; align-items:center; gap:10px;
+          cursor:pointer; border-bottom:1px solid #f2f4f6; user-select:none;"
+        onmousedown="this.style.background='#f8f9fa'"
+        onmouseup="this.style.background='#fff'"
+        ontouchstart="this.style.background='#f8f9fa'"
+        ontouchend="this.style.background='#fff'">
+        <span style="font-size:13px; font-weight:800; color:${cat.color}; flex:1;">${cat.label}</span>
+        <span style="font-size:11px; color:#8b95a1; font-family:'Share Tech Mono';">${scored}/${cat.ids.length}</span>
+        <svg id="cat-arrow-${ci}" width="10" height="10" viewBox="0 0 10 10" style="transition:transform 0.2s; transform:rotate(-90deg);">
+          <path d="M2 3.5l3 3 3-3" stroke="#c5cdd6" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <!-- 기술 목록 -->
+      <div id="cat-body-${ci}" style="background:#fff; display:none;">
+        ${cat.ids.map(id => {
+          const sk = SKILLS.find(s => s.id === id);
+          if (!sk) return '';
+          const score = state.scores[id];
+          const scoreColors = {'3':'#0066ff','2':'#00a040','1':'#d97706','0':'#cc0000','NP':'#8b95a1','TE':'#7c3aed'};
+          // 선수기술 체크
+          const prereqFail = sk.prereq && (() => {
+            const ps = state.scores[sk.prereq];
+            return !ps || (ps !== '2' && ps !== '3');
+          })();
+          return `
+            <div onclick="openSkillForEval(${id})"
+              style="display:flex; align-items:center; padding:13px 18px; gap:12px;
+                border-bottom:1px solid #f8f9fa; cursor:pointer; background:#fff;
+                transition:background 0.1s;"
+              onmousedown="this.style.background='#f8f9fa'"
+              onmouseup="this.style.background='#fff'"
+              ontouchstart="this.style.background='#f8f9fa'"
+              ontouchend="this.style.background='#fff'">
+              <div style="width:30px; height:30px; border-radius:8px; background:${cat.bg};
+                border:1.5px solid ${cat.border}; color:${cat.color};
+                display:flex; align-items:center; justify-content:center;
+                font-size:11px; font-weight:800; font-family:'Share Tech Mono'; flex-shrink:0;">${id}</div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:15px; font-weight:700; color:#191919;">${sk.name}</div>
+                ${prereqFail ? `<div style="font-size:10px;color:#ff453a;margin-top:2px;">⚠ 선수기술 #${sk.prereq} 미통과</div>` : ''}
+              </div>
+              <div style="width:8px; height:8px; border-radius:50%; flex-shrink:0;
+                background:${score ? (scoreColors[score]||'#8b95a1') : '#e8edf2'};"></div>
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+                <path d="M1 1l4 4-4 4" stroke="#c5cdd6" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCat(ci) {
+  const body = document.getElementById(`cat-body-${ci}`);
+  const arrow = document.getElementById(`cat-arrow-${ci}`);
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if (arrow) arrow.style.transform = isOpen ? 'rotate(-90deg)' : 'rotate(0deg)';
+}
+
+
 function showLoggedInUI() {
   document.getElementById('login-form').style.display = 'none';
   document.getElementById('welcome-section').style.display = 'block';
   document.getElementById('patient-section').style.display = 'block';
   document.getElementById('tools-section').style.display = 'block';
-  document.getElementById('start-section').style.display = 'block';
   updateHeroName();
+  renderBoardList();
 }
 
 function doLogout() {
@@ -3008,7 +3022,7 @@ function doLogout() {
   document.getElementById('welcome-section').style.display = 'none';
   document.getElementById('patient-section').style.display = 'none';
   document.getElementById('tools-section').style.display = 'none';
-  document.getElementById('start-section').style.display = 'none';
+  document.getElementById('start-section')&&(document.getElementById('start-section').style.display='none');
   const input = document.getElementById('login-name-input');
   if (input) input.value = '';
   document.getElementById('login-name-preview').textContent = '';
@@ -3093,13 +3107,18 @@ function showScreen(name) {
 }
 
 function goHome() { if(state.screen==='skill') stopCamera(); renderHome(); showScreen('home'); }
-function goLanding() { if(state.screen==='skill') stopCamera(); showScreen('landing'); }
+function goLanding() {
+  if(state.screen==='skill') stopCamera();
+  renderBoardList();
+  showScreen('landing');
+}
 function startManualMode() { renderHome(); showScreen('home'); }
 function startARMode() { startManualMode(); }
 
 function landingStart() {
   if (!state.currentPatientId) { showToast('환자를 먼저 선택해주세요', 'error'); return; }
-  startManualMode();
+  renderHome();
+  showScreen('home');
 }
 
 // ═══════════════════════════════════════════════════════
@@ -3137,33 +3156,132 @@ function showLandingPatientModal(patients) {
   if (modal) modal.remove();
   modal = document.createElement('div');
   modal.id = 'landing-picker-modal';
-  modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9999;display:flex;align-items:flex-end;justify-content:center;`;
+  modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;
+    display:flex;align-items:flex-end;justify-content:center;`;
+
   const listHtml = patients.length === 0
-    ? `<div style="text-align:center;padding:40px 20px;color:#8b95a1;"><div style="font-size:40px;margin-bottom:12px;opacity:0.3;">👤</div><p>등록된 환자가 없어요</p></div>`
+    ? `<div style="text-align:center;padding:40px 20px;color:#8b95a1;">
+        <div style="font-size:48px;margin-bottom:12px;opacity:0.3;">👤</div>
+        <p style="font-size:14px;font-weight:600;color:#c5cdd6;">등록된 환자가 없어요</p>
+        <p style="font-size:12px;color:#d0d5db;margin-top:4px;">아래 + 신규 등록으로 추가해주세요</p>
+      </div>`
     : patients.map(p => {
-        const color = p.latestPct>=60?'#00a040':p.latestPct>=40?'#cc7700':p.latestPct?'#cc0000':'#b0b8c1';
+        const pct = p.latestPct;
+        const color = pct>=60?'#00a040':pct>=40?'#d97706':pct!=null?'#cc0000':'#b0b8c1';
         const date = p.updatedAt?new Date(p.updatedAt).toLocaleDateString('ko-KR',{month:'2-digit',day:'2-digit'}):'─';
-        return `<div onclick="selectLandingPatient('${p.id}','${p.name||p.id}')"
-          style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:12px;cursor:pointer;">
-          <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,212,224,0.1);border:1px solid rgba(0,212,224,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">👤</div>
-          <div style="flex:1;min-width:0;"><div style="font-size:15px;font-weight:700;">${p.name||p.id}</div><div style="font-size:10px;color:#8b95a1;font-family:'Share Tech Mono';">${p.id}·${date}</div></div>
-          <div style="font-family:'Share Tech Mono';font-size:18px;font-weight:bold;color:${color};flex-shrink:0;">${p.latestPct!=null?p.latestPct+'%':'─'}</div>
-          <span style="color:#8b95a1;">›</span></div>`;
+        return `
+          <div onclick="selectLandingPatient('${p.id}','${p.name||p.id}')"
+            style="padding:14px 18px;border-bottom:1px solid #f8f9fa;display:flex;
+              align-items:center;gap:12px;cursor:pointer;background:#fff;transition:background 0.1s;"
+            onmousedown="this.style.background='#f8f9fa'"
+            onmouseup="this.style.background='#fff'"
+            ontouchstart="this.style.background='#f8f9fa'"
+            ontouchend="this.style.background='#fff'">
+            <div style="width:42px;height:42px;border-radius:12px;background:#f0f9ff;
+              border:1.5px solid #e0f2fe;display:flex;align-items:center;
+              justify-content:center;font-size:20px;flex-shrink:0;">👤</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:15px;font-weight:700;color:#191919;">${p.name||p.id}</div>
+              <div style="font-size:11px;color:#8b95a1;margin-top:2px;font-family:'Share Tech Mono';">${date}</div>
+            </div>
+            <div style="font-size:18px;font-weight:900;color:${color};
+              font-family:'Share Tech Mono';flex-shrink:0;">${pct!=null?pct+'%':'─'}</div>
+            <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+              <path d="M1 1l4 4-4 4" stroke="#c5cdd6" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>`;
       }).join('');
+
   modal.innerHTML = `
-    <div style="background:#111827;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:80vh;display:flex;flex-direction:column;border:1px solid rgba(0,212,224,0.2);">
-      <div style="padding:16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-        <div><div style="font-size:16px;font-weight:800;">환자 선택</div></div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <button onclick="showScreen('home');showSideMenu();document.getElementById('landing-picker-modal').remove();"
-            style="padding:6px 14px;background:rgba(0,212,224,0.15);color:#00d4e0;border:1px solid rgba(0,212,224,0.4);border-radius:20px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR';font-weight:700;">+ 신규</button>
-          <button onclick="document.getElementById('landing-picker-modal').remove()"
-            style="background:none;border:none;color:#8b95a1;font-size:22px;cursor:pointer;">✕</button>
-        </div>
+    <div style="background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:480px;
+      max-height:85vh;display:flex;flex-direction:column;
+      box-shadow:0 -4px 24px rgba(0,0,0,0.12);">
+
+      <!-- 핸들 -->
+      <div style="display:flex;justify-content:center;padding:12px 0 0;">
+        <div style="width:36px;height:4px;border-radius:2px;background:#e8edf2;"></div>
       </div>
+
+      <!-- 헤더 -->
+      <div style="padding:14px 18px 12px;border-bottom:1px solid #f2f4f6;
+        display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+        <div>
+          <div style="font-size:18px;font-weight:900;color:#191919;">환자 선택</div>
+          <div style="font-size:12px;color:#8b95a1;margin-top:2px;">${patients.length}명 등록됨</div>
+        </div>
+        <button onclick="document.getElementById('landing-picker-modal').remove()"
+          style="background:#f2f4f6;border:none;color:#8b95a1;width:32px;height:32px;
+            border-radius:50%;font-size:16px;cursor:pointer;display:flex;
+            align-items:center;justify-content:center;">✕</button>
+      </div>
+
+      <!-- 환자 목록 -->
       <div style="overflow-y:auto;flex:1;">${listHtml}</div>
+
+      <!-- 신규 등록 섹션 -->
+      <div style="padding:14px 18px;border-top:1px solid #f2f4f6;flex-shrink:0;">
+        <div id="new-patient-inline" style="display:none;margin-bottom:10px;">
+          <input id="new-patient-inline-input" type="text" placeholder="환자 이름 (예: 홍길동)"
+            style="width:100%;background:#f8f9fa;border:1.5px solid #e8edf2;color:#191919;
+              border-radius:12px;padding:12px 14px;font-size:14px;outline:none;
+              font-family:'Noto Sans KR';margin-bottom:6px;"
+            oninput="previewInlineName(this.value)"
+            onkeydown="if(event.key==='Enter')registerInlinePatient()">
+          <div id="inline-name-preview" style="font-size:11px;color:#0066ff;
+            text-align:center;margin-bottom:8px;font-family:'Share Tech Mono';min-height:16px;"></div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="registerInlinePatient()"
+              style="flex:1;padding:11px;background:#0066ff;color:#fff;border:none;
+                border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;
+                font-family:'Noto Sans KR';">등록</button>
+            <button onclick="document.getElementById('new-patient-inline').style.display='none';
+              document.getElementById('toggle-new-patient-btn').style.display='flex';"
+              style="padding:11px 16px;background:#f2f4f6;color:#8b95a1;border:none;
+                border-radius:12px;font-size:14px;cursor:pointer;font-family:'Noto Sans KR';">취소</button>
+          </div>
+        </div>
+        <button id="toggle-new-patient-btn"
+          onclick="document.getElementById('new-patient-inline').style.display='block';
+            this.style.display='none';
+            setTimeout(()=>document.getElementById('new-patient-inline-input').focus(),100);"
+          style="width:100%;padding:13px;background:#f0f9ff;color:#0066ff;
+            border:1.5px solid #e0f2fe;border-radius:14px;font-size:14px;font-weight:700;
+            cursor:pointer;font-family:'Noto Sans KR';display:flex;align-items:center;
+            justify-content:center;gap:8px;">
+          <span style="font-size:18px;">+</span> 신규 환자 등록
+        </button>
+      </div>
     </div>`;
+
   document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if(e.target===modal) modal.remove(); });
+}
+
+function previewInlineName(val) {
+  const el = document.getElementById('inline-name-preview');
+  if (!el) return;
+  el.textContent = val.trim().length >= 2 ? `→ "${maskName(val.trim())}" 으로 저장돼요` : '';
+}
+
+async function registerInlinePatient() {
+  const input = document.getElementById('new-patient-inline-input');
+  const raw = input?.value.trim();
+  if (!raw || raw.length < 2) { showToast('이름을 2글자 이상 입력하세요', 'error'); return; }
+  const masked = maskName(raw);
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const id = `PT-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+  if (!window._fbReady) { showToast('Firebase 연결 중...', 'error'); return; }
+  const {doc, setDoc} = window._fbFuncs;
+  try {
+    await setDoc(doc(window._db,'patients',id), {
+      name: masked, therapist: state.therapistName||'─',
+      createdAt: now.toISOString(), updatedAt: now.toISOString(), latestPct: null
+    });
+    showToast(`✓ ${masked} 등록 완료!`, 'success');
+    document.getElementById('landing-picker-modal')?.remove();
+    selectLandingPatient(id, masked);
+  } catch(e) { showToast('등록 실패: '+e.message, 'error'); }
 }
 
 function selectLandingPatient(id, name) {
@@ -3500,66 +3618,103 @@ async function generateReport(patientId,patientName) {
 }
 
 function showSkillPickerForTab(tab) {
-  // 환자 선택 안 됐어도 볼 수 있게
   let modal = document.getElementById('skill-picker-modal');
   if (modal) modal.remove();
   modal = document.createElement('div');
   modal.id = 'skill-picker-modal';
-  modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;
+  modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;
     display:flex;align-items:flex-end;justify-content:center;`;
 
   const CATS = [
-    { label:'⚙ 장비 조작', color:'#bf5af2', bg:'rgba(191,90,242,0.12)', ids:[1,2,3,4,5,6,7] },
-    { label:'🚗 기본 주행', color:'#00d4e0', bg:'rgba(0,212,224,0.12)', ids:[8,9,10,11,12,13,14,15,16] },
-    { label:'🌆 지역사회',  color:'#ff9f0a', bg:'rgba(255,159,10,0.12)', ids:[17,18,19,20,21,22,23,24,25,26] },
+    { label:'⚙ 장비 조작', color:'#7c3aed', bg:'#f5f3ff', border:'#ede9fe', ids:[1,2,3,4,5,6,7] },
+    { label:'🚗 기본 주행', color:'#0284c7', bg:'#f0f9ff', border:'#e0f2fe', ids:[8,9,10,11,12,13,14,15,16,18] },
+    { label:'🌆 지역사회',  color:'#d97706', bg:'#fffbeb', border:'#fef3c7', ids:[17,19,20,21,22,23,24,25,26] },
   ];
 
   const tabLabel = tab==='vid' ? '🎬 유튜브 시범' : '🎮 동작 애니';
-  const tabColor = tab==='vid' ? '#ff0000' : '#00c853';
+  const tabColor = tab==='vid' ? '#ff0000' : '#00a040';
 
   const listHtml = CATS.map(cat => `
-    <div style="margin-bottom:4px;">
-      <div style="padding:8px 16px 4px; font-size:11px; font-weight:700; color:${cat.color};
-        font-family:'Share Tech Mono';">${cat.label}</div>
+    <div style="margin-bottom:2px;">
+      <div style="padding:14px 18px 6px; font-size:11px; font-weight:800; color:${cat.color};
+        letter-spacing:0.5px;">${cat.label}</div>
       ${cat.ids.map(id => {
         const sk = SKILLS.find(s => s.id === id);
         if (!sk) return '';
         return `<div onclick="openSkillWithTab(${id},'${tab}')"
-          style="padding:11px 16px; display:flex; align-items:center; gap:12px; cursor:pointer;
-            border-bottom:1px solid rgba(255,255,255,0.04); active:background:rgba(255,255,255,0.05);">
-          <div style="width:28px; height:28px; border-radius:8px; background:${cat.bg};
-            color:${cat.color}; display:flex; align-items:center; justify-content:center;
-            font-size:12px; font-weight:700; font-family:'Share Tech Mono'; flex-shrink:0;">${id}</div>
+          style="padding:12px 18px; display:flex; align-items:center; gap:12px; cursor:pointer;
+            border-bottom:1px solid #f8f9fa; background:#fff; transition:background 0.1s;"
+          onmousedown="this.style.background='#f8f9fa'" onmouseup="this.style.background='#fff'"
+          ontouchstart="this.style.background='#f8f9fa'" ontouchend="this.style.background='#fff'">
+          <div style="width:32px; height:32px; border-radius:10px; background:${cat.bg};
+            border:1.5px solid ${cat.border}; color:${cat.color};
+            display:flex; align-items:center; justify-content:center;
+            font-size:12px; font-weight:800; font-family:'Share Tech Mono'; flex-shrink:0;">${id}</div>
           <div style="flex:1;">
-            <div style="font-size:14px; font-weight:600;">${sk.name}</div>
-            <div style="font-size:10px; color:#546e7a; font-family:'Share Tech Mono';">${sk.en}</div>
+            <div style="font-size:14px; font-weight:700; color:#191919;">${sk.name}</div>
+            <div style="font-size:11px; color:#8b95a1; margin-top:1px;">${sk.en}</div>
           </div>
-          <span style="color:#546e7a; font-size:16px;">›</span>
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none">
+            <path d="M1 1l5 5-5 5" stroke="#c5cdd6" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
         </div>`;
       }).join('')}
     </div>`).join('');
 
   modal.innerHTML = `
-    <div style="background:#111827; border-radius:20px 20px 0 0; width:100%; max-width:480px;
-      max-height:85vh; display:flex; flex-direction:column;
-      border:1px solid rgba(255,255,255,0.1);">
-      <div style="padding:16px 16px 12px; border-bottom:1px solid rgba(255,255,255,0.06);
-        display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
-        position:sticky; top:0; background:#111827; border-radius:20px 20px 0 0;">
+    <div style="background:#fff; border-radius:24px 24px 0 0; width:100%; max-width:480px;
+      max-height:85vh; display:flex; flex-direction:column; box-shadow:0 -4px 24px rgba(0,0,0,0.12);">
+      <!-- 핸들 -->
+      <div style="display:flex; justify-content:center; padding:12px 0 0;">
+        <div style="width:36px; height:4px; border-radius:2px; background:#e8edf2;"></div>
+      </div>
+      <!-- 헤더 -->
+      <div style="padding:14px 18px 12px; border-bottom:1px solid #f2f4f6;
+        display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
         <div>
-          <div style="font-size:16px; font-weight:800;">기술 선택</div>
-          <div style="font-size:11px; color:#546e7a; margin-top:2px;">
-            선택하면 <span style="color:${tabColor};">${tabLabel}</span>으로 바로 연결돼요
+          <div style="font-size:18px; font-weight:900; color:#191919;">기술 선택</div>
+          <div style="font-size:12px; color:#8b95a1; margin-top:2px;">
+            선택하면 <span style="color:${tabColor}; font-weight:700;">${tabLabel}</span>으로 바로 연결돼요
           </div>
         </div>
         <button onclick="document.getElementById('skill-picker-modal').remove()"
-          style="background:rgba(255,255,255,0.08); border:none; color:#e8edf8;
-          font-size:18px; cursor:pointer; width:32px; height:32px; border-radius:50%;
-          display:flex; align-items:center; justify-content:center;">✕</button>
+          style="background:#f2f4f6; border:none; color:#8b95a1; font-size:16px; cursor:pointer;
+          width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;">✕</button>
       </div>
-      <div style="overflow-y:auto; flex:1; padding:8px 0;">${listHtml}</div>
+      <!-- 목록 -->
+      <div style="overflow-y:auto; flex:1;">${listHtml}</div>
     </div>`;
   document.body.appendChild(modal);
+
+  // 배경 탭으로 닫기
+  modal.addEventListener('click', e => { if(e.target===modal) modal.remove(); });
+}
+
+function openSkillFromHome(skillId) {
+  state.prevScreen = 'home';
+  openSkill(skillId);
+  showScreen('skill');
+}
+
+function openSkillForEval(skillId) {
+  if (!state.currentPatientId) {
+    showToast('환자를 먼저 선택해주세요', 'error');
+    const dot = document.getElementById('patient-required-dot');
+    if (dot) { dot.style.transform='scale(1.5)'; setTimeout(()=>dot.style.transform='scale(1)',400); }
+    return;
+  }
+  state.prevScreen = 'landing';
+  openSkill(skillId);
+  showScreen('skill');
+}
+
+function goBackFromSkill() {
+  stopAniLoop();
+  if (state.prevScreen === 'home') {
+    renderHome(); showScreen('home');
+  } else {
+    renderBoardList(); showScreen('landing');
+  }
 }
 
 function openSkillWithTab(skillId, tab) {
