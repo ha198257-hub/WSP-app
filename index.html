@@ -8,533 +8,239 @@
 <title>WSP 전동휠체어 평가</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════
+   DESIGN SYSTEM
+═══════════════════════════════════════ */
 :root {
-  --bg: #f2f4f6;
-  --surface: #ffffff;
-  --surface2: #f2f4f6;
-  --surface3: #e8edf2;
-  --accent: #0066ff;
-  --accent2: #0052cc;
-  --success: #00a040;
-  --warn: #d97706;
-  --danger: #cc0000;
-  --purple: #7c3aed;
-  --text: #191919;
-  --text-dim: #8b95a1;
-  --border: #e8edf2;
+  /* Colors */
+  --c-bg:      #f0f2f5;
+  --c-surface: #ffffff;
+  --c-surface2:#f7f8fa;
+  --c-border:  #e4e8ef;
+  --c-text:    #111827;
+  --c-dim:     #6b7280;
+  --c-muted:   #9ca3af;
+  /* Accent */
+  --c-blue:    #2563eb;
+  --c-green:   #16a34a;
+  --c-amber:   #d97706;
+  --c-red:     #dc2626;
+  --c-purple:  #7c3aed;
+  /* Spacing */
+  --sp-xs: 8px; --sp-sm: 12px; --sp-md: 16px; --sp-lg: 24px; --sp-xl: 32px;
+  /* Radius */
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px; --r-full: 999px;
+  /* Shadow */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.09);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  /* Font */
+  --font-mono: 'Share Tech Mono', monospace;
+  /* Legacy aliases (코드 호환) */
+  --bg: #f0f2f5; --surface: #fff; --surface2: #f7f8fa; --surface3: #f0f2f5;
+  --border: #e4e8ef; --text: #111827; --text-dim: #6b7280;
+  --accent: #2563eb; --accent2: #1d4ed8;
+  --success: #16a34a; --warn: #d97706; --danger: #dc2626; --purple: #7c3aed;
   --mono: 'Share Tech Mono', monospace;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
 html, body { height: 100%; overflow: hidden; }
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.5;
-}
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--c-bg); color: var(--c-text); font-size: 14px; line-height: 1.5; }
 
-/* ─── SCREENS ─── */
+/* SCREENS */
 .screen { position: fixed; inset: 0; overflow-y: auto; display: none; flex-direction: column; -webkit-overflow-scrolling: touch; }
 .screen.active { display: flex; }
 
-/* ─── TOP BAR ─── */
-.topbar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 16px 10px;
-  background: rgba(8,13,24,0.95);
-  border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(12px);
-}
+/* BACK BTN */
+.back-btn { width: 36px; height: 36px; border-radius: var(--r-sm); background: var(--c-surface2); border: 1px solid var(--c-border); color: var(--c-text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; transition: background 0.12s; }
+.back-btn:active { background: var(--c-border); }
+
+/* GENERIC TOPBAR */
+.topbar { display: flex; align-items: center; gap: var(--sp-sm); padding: 14px var(--sp-md) 12px; background: var(--c-surface); border-bottom: 1px solid var(--c-border); position: sticky; top: 0; z-index: 100; }
 .topbar-title { font-size: 15px; font-weight: 700; flex: 1; }
-.back-btn {
-  width: 34px; height: 34px; border-radius: 8px;
-  background: var(--surface2); border: none; color: var(--text);
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
-}
-.back-btn:active { opacity: 0.7; }
 
-/* ─── HOME SCREEN ─── */
-#screen-home {
-  padding-bottom: 20px;
-}
-.home-header {
-  padding: 24px 16px 16px;
-  background: linear-gradient(135deg, #080d18 0%, #101e38 100%);
-  border-bottom: 1px solid var(--border);
-}
-.home-logo {
-  display: flex; align-items: center; gap: 12px; margin-bottom: 4px;
-}
-.logo-icon {
-  width: 42px; height: 42px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
-}
-.logo-text { }
-.logo-text h1 { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
-.logo-text p { font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
-.home-meta {
-  display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
-}
-.badge {
-  padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500;
-  font-family: var(--mono);
-}
-.badge-accent { background: rgba(0,212,224,0.15); color: var(--accent); border: 1px solid rgba(0,212,224,0.3); }
-.badge-warn { background: rgba(255,159,10,0.15); color: var(--warn); border: 1px solid rgba(255,159,10,0.3); }
-.badge-success { background: rgba(48,209,88,0.15); color: var(--success); border: 1px solid rgba(48,209,88,0.3); }
+/* LANDING */
+#screen-landing { background: var(--c-bg); overflow-y: hidden; }
+.landing-topbar { display: flex; align-items: center; justify-content: space-between; padding: 16px var(--sp-md) 14px; position: sticky; top: 0; z-index: 100; background: rgba(240,242,245,0.96); backdrop-filter: blur(16px); border-bottom: 1px solid var(--c-border); }
+.landing-topbar h1 { font-size: 18px; font-weight: 900; letter-spacing: 4px; color: var(--c-green); }
+.landing-topbar p { font-size: 10px; color: var(--c-muted); letter-spacing: 0.5px; }
+.topbar-icon-btn { width: 36px; height: 36px; border-radius: var(--r-sm); border: 1px solid var(--c-border); background: var(--c-surface); color: var(--c-text); display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; }
+#patient-section { margin: var(--sp-md) var(--sp-md) 0; background: var(--c-surface); border-radius: var(--r-lg); border: 1px solid var(--c-border); overflow: hidden; box-shadow: var(--shadow-sm); }
 
-.score-summary-bar {
-  margin: 12px 16px;
-  background: var(--surface); border-radius: 12px; padding: 12px 14px;
-  border: 1px solid var(--border);
-  display: flex; align-items: center; gap: 12px;
-}
-.score-total-pct {
-  font-family: var(--mono); font-size: 26px; font-weight: bold; color: var(--accent);
-}
+/* BOARD LIST */
+#tools-section { padding-bottom: var(--sp-xl); }
+
+/* HOME SCREEN */
+#screen-home { padding-bottom: var(--sp-lg); background: var(--c-bg); }
+.home-header { padding: var(--sp-lg) var(--sp-md) var(--sp-md); background: var(--c-surface); border-bottom: 1px solid var(--c-border); display: flex; align-items: center; gap: var(--sp-sm); }
+.logo-text h1 { font-size: 16px; font-weight: 800; }
+.logo-text p  { font-size: 11px; color: var(--c-dim); }
+.score-summary-bar { margin: var(--sp-md); background: var(--c-surface); border-radius: var(--r-lg); padding: var(--sp-md); border: 1px solid var(--c-border); display: flex; align-items: center; gap: var(--sp-md); box-shadow: var(--shadow-sm); }
+.score-total-pct { font-family: var(--font-mono); font-size: 28px; font-weight: bold; color: var(--c-blue); min-width: 64px; }
 .score-detail { flex: 1; }
-.score-detail p { font-size: 11px; color: var(--text-dim); margin-bottom: 4px; }
-.score-bar-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.score-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 3px; transition: width 0.6s ease; }
-
-.summary-btn {
-  padding: 7px 12px; background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); border-radius: 8px; font-size: 12px; cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-}
+.score-detail p { font-size: 11px; color: var(--c-dim); margin-bottom: 6px; }
+.score-bar-track { height: 5px; background: var(--c-border); border-radius: 4px; overflow: hidden; }
+.score-bar-fill { height: 100%; background: var(--c-blue); border-radius: 4px; transition: width 0.5s ease; }
+.summary-btn { padding: 8px 14px; background: var(--c-surface2); border: 1px solid var(--c-border); color: var(--c-text); border-radius: var(--r-sm); font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
 .summary-btn:active { opacity: 0.7; }
-
-.cat-section { padding: 4px 0 0; }
-.cat-header {
-  padding: 10px 16px 6px;
-  display: flex; align-items: center; gap: 8px;
-}
-.cat-label {
-  font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1px; color: var(--text-dim); font-family: var(--mono);
-}
-.cat-count { font-size: 11px; color: var(--text-dim); background: var(--surface2); padding: 1px 6px; border-radius: 10px; }
-
-.skill-list { padding: 0 16px; display: flex; flex-direction: column; gap: 6px; }
-
-.skill-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 12px 14px; display: flex; align-items: center; gap: 12px;
-  cursor: pointer; transition: all 0.15s;
-  position: relative; overflow: hidden;
-}
-.skill-card:active { background: var(--surface2); transform: scale(0.99); }
-.skill-card::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: var(--border); border-radius: 3px 0 0 3px;
-}
-.skill-card.has-score::before { background: var(--success); }
-.skill-card.score-0::before { background: var(--danger); }
-.skill-card.score-1::before { background: var(--warn); }
-.skill-card.score-np::before { background: var(--text-dim); }
-
-.skill-num {
-  font-family: var(--mono); font-size: 13px; color: var(--text-dim);
-  width: 22px; text-align: center; flex-shrink: 0;
-}
+.cat-section { padding: var(--sp-xs) 0 0; }
+.cat-header { padding: 12px var(--sp-md) 6px; display: flex; align-items: center; gap: var(--sp-xs); }
+.cat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-mono); }
+.cat-count { font-size: 11px; color: var(--c-dim); background: var(--c-surface2); padding: 1px 6px; border-radius: var(--r-full); }
+.skill-list { padding: 0 var(--sp-md); display: flex; flex-direction: column; gap: 6px; }
+.skill-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-md); padding: 12px 14px; display: flex; align-items: center; gap: var(--sp-sm); cursor: pointer; transition: all 0.12s; position: relative; overflow: hidden; }
+.skill-card:active { background: var(--c-surface2); }
+.skill-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--c-border); }
+.skill-card.has-score::before { background: var(--c-green); }
+.skill-card.score-0::before { background: var(--c-red); }
+.skill-card.score-1::before { background: var(--c-amber); }
+.skill-card.score-np::before { background: var(--c-dim); }
+.skill-num { font-family: var(--font-mono); font-size: 12px; color: var(--c-dim); width: 20px; text-align: center; flex-shrink: 0; }
 .skill-info { flex: 1; min-width: 0; }
-.skill-name { font-size: 14px; font-weight: 500; }
-.skill-en { font-size: 10px; color: var(--text-dim); font-family: var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.skill-name { font-size: 14px; font-weight: 600; }
+.skill-en { font-size: 10px; color: var(--c-muted); font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .skill-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.level-tag {
-  padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 600;
-}
-.level-indoor { background: rgba(0,102,255,0.15); color: var(--accent2); }
-.level-community { background: rgba(48,209,88,0.15); color: var(--success); }
-.score-chip {
-  width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 13px; font-weight: bold;
-  background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border);
-}
-.score-chip.s3 { background: rgba(0,212,224,0.15); color: var(--accent); border-color: var(--accent); }
-.score-chip.s2 { background: rgba(48,209,88,0.15); color: var(--success); border-color: var(--success); }
-.score-chip.s1 { background: rgba(255,159,10,0.15); color: var(--warn); border-color: var(--warn); }
-.score-chip.s0 { background: rgba(255,69,58,0.15); color: var(--danger); border-color: var(--danger); }
-.score-chip.snp { background: rgba(123,139,168,0.15); color: var(--text-dim); border-color: var(--text-dim); }
-.score-chip.ste { background: rgba(191,90,242,0.15); color: var(--purple); border-color: var(--purple); }
+.level-tag { padding: 2px 7px; border-radius: var(--r-full); font-size: 10px; font-weight: 600; }
+.level-indoor    { background: #eff6ff; color: var(--c-blue); }
+.level-community { background: #f0fdf4; color: var(--c-green); }
+.score-chip { width: 28px; height: 28px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 13px; font-weight: bold; background: var(--c-surface2); color: var(--c-dim); border: 1px solid var(--c-border); }
+.score-chip.s3 { background: #eff6ff; color: var(--c-blue);   border-color: #bfdbfe; }
+.score-chip.s2 { background: #f0fdf4; color: var(--c-green);  border-color: #bbf7d0; }
+.score-chip.s1 { background: #fffbeb; color: var(--c-amber);  border-color: #fde68a; }
+.score-chip.s0 { background: #fef2f2; color: var(--c-red);    border-color: #fecaca; }
+.score-chip.snp{ background: #f9fafb; color: var(--c-dim);    border-color: var(--c-border); }
+.score-chip.ste{ background: #f5f3ff; color: var(--c-purple); border-color: #ddd6fe; }
 
-/* ─── SKILL SCREEN ─── */
-#screen-skill { padding: 0; }
-
-.skill-topbar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 14px;
-  background: rgba(8,13,24,0.95);
-  border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100;
-  backdrop-filter: blur(12px);
-}
+/* SKILL SCREEN */
+#screen-skill { padding: 0; background: var(--c-bg); }
+.skill-topbar { display: flex; align-items: center; gap: var(--sp-sm); padding: 12px var(--sp-md); background: var(--c-surface); border-bottom: 2px solid var(--c-border); position: sticky; top: 0; z-index: 100; }
 .skill-topbar-info { flex: 1; min-width: 0; }
-.skill-topbar-num { font-family: var(--mono); font-size: 10px; color: var(--text-dim); }
-.skill-topbar-name { font-size: 15px; font-weight: 700; }
+.skill-topbar-num { font-family: var(--font-mono); font-size: 11px; color: var(--c-dim); margin-bottom: 1px; }
+.skill-topbar-name { font-size: 16px; font-weight: 700; }
 
-/* Camera area */
-.camera-area {
-  position: relative; background: #000;
-  width: 100%; aspect-ratio: 4/3;
-  overflow: hidden; flex-shrink: 0;
-}
-.camera-area video {
-  width: 100%; height: 100%; object-fit: cover;
-  transform: scaleX(-1); /* mirror for front cam; toggled for rear */
-}
+/* Camera area (유지) */
+.camera-area { position: relative; background: var(--c-surface2); width: 100%; aspect-ratio: 4/3; overflow: hidden; flex-shrink: 0; }
+.camera-area video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
 .camera-area video.rear { transform: scaleX(1); }
-.camera-canvas {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  pointer-events: none;
-}
+.camera-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .camera-canvas.tap-mode { pointer-events: auto; cursor: crosshair; }
-
-.cam-off-placeholder {
-  position: absolute; inset: 0; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 10px;
-  background: var(--surface);
-}
+.cam-off-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: var(--c-surface); }
 .cam-off-placeholder .icon { font-size: 40px; opacity: 0.3; }
-.cam-off-placeholder p { font-size: 13px; color: var(--text-dim); text-align: center; }
+.cam-off-placeholder p { font-size: 13px; color: var(--c-dim); text-align: center; }
+.cam-controls { position: absolute; bottom: 8px; left: 8px; right: 8px; display: flex; gap: 6px; justify-content: flex-end; }
+.cam-btn { padding: 5px 10px; border-radius: var(--r-sm); border: none; cursor: pointer; font-size: 12px; font-weight: 600; font-family: 'Noto Sans KR', sans-serif; }
+.cam-btn-primary { background: var(--c-blue); color: #fff; }
+.cam-btn-secondary { background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+.calib-badge { position: absolute; top: 8px; left: 8px; padding: 3px 9px; border-radius: var(--r-full); font-size: 10px; font-family: var(--font-mono); }
+.calib-badge.ok { background: var(--c-green); color: #fff; }
+.calib-badge.notok { background: var(--c-red); color: #fff; }
 
-.cam-controls {
-  position: absolute; bottom: 8px; left: 8px; right: 8px;
-  display: flex; gap: 6px; justify-content: flex-end;
-}
-.cam-btn {
-  padding: 5px 10px; border-radius: 8px; border: none; cursor: pointer;
-  font-size: 12px; font-weight: 600; font-family: 'Noto Sans KR', sans-serif;
-  backdrop-filter: blur(8px);
-}
-.cam-btn-primary { background: rgba(0,212,224,0.85); color: #000; }
-.cam-btn-secondary { background: rgba(16,22,36,0.85); color: var(--text); border: 1px solid var(--border); }
-.cam-btn:active { opacity: 0.7; }
+.measure-info-bar { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 10px var(--sp-md); display: flex; align-items: center; gap: var(--sp-sm); flex-wrap: wrap; }
+.measure-tag { background: #eff6ff; color: var(--c-blue); padding: 3px 10px; border-radius: var(--r-full); font-size: 11px; font-weight: 600; font-family: var(--font-mono); border: 1px solid #bfdbfe; }
+.prereq-tag { background: #fffbeb; color: var(--c-amber); padding: 3px 10px; border-radius: var(--r-full); font-size: 11px; font-weight: 600; border: 1px solid #fde68a; flex-shrink: 0; }
 
-.calib-badge {
-  position: absolute; top: 8px; left: 8px;
-  padding: 3px 9px; border-radius: 20px; font-size: 10px; font-family: var(--mono);
-  backdrop-filter: blur(8px);
-}
-.calib-badge.ok { background: rgba(48,209,88,0.85); color: #000; }
-.calib-badge.notok { background: rgba(255,69,58,0.8); color: #fff; }
-
-.measure-info-bar {
-  background: var(--surface); border-bottom: 1px solid var(--border);
-  padding: 8px 14px;
-  display: flex; align-items: center; gap: 10px;
-}
-.measure-tag {
-  background: rgba(0,212,224,0.12); color: var(--accent);
-  padding: 3px 9px; border-radius: 8px; font-size: 11px; font-family: var(--mono);
-  border: 1px solid rgba(0,212,224,0.25);
-}
-.prereq-tag {
-  background: rgba(255,159,10,0.12); color: var(--warn);
-  padding: 3px 9px; border-radius: 8px; font-size: 11px;
-  border: 1px solid rgba(255,159,10,0.25); flex-shrink: 0;
-}
-
-/* VIDEO AREA */
-.video-section {
-  margin: 10px 14px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  overflow: hidden;
-}
-.video-header {
-  padding: 8px 12px; background: var(--surface2);
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-}
+/* Video */
+.video-section { margin: var(--sp-md) var(--sp-md) 0; background: var(--c-surface); border-radius: var(--r-lg); border: 1px solid var(--c-border); overflow: hidden; box-shadow: var(--shadow-sm); }
+.video-header { padding: 10px var(--sp-sm); background: var(--c-surface2); border-bottom: 1px solid var(--c-border); display: flex; align-items: center; justify-content: space-between; }
 .video-header span { font-size: 12px; font-weight: 600; }
-.video-url-row {
-  padding: 8px 12px; display: flex; gap: 8px; align-items: center;
-}
-.video-url-input {
-  flex: 1; background: var(--bg); border: 1px solid var(--border);
-  color: var(--text); border-radius: 7px; padding: 6px 10px;
-  font-size: 12px; font-family: var(--mono); outline: none;
-}
-.video-url-input:focus { border-color: var(--accent); }
-.video-load-btn {
-  padding: 6px 12px; background: var(--accent2); color: #fff;
-  border: none; border-radius: 7px; font-size: 12px; cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.video-embed {
-  position: relative; padding-bottom: 56.25%; height: 0; display: none;
-}
+.video-url-row { padding: 10px var(--sp-sm); display: flex; gap: 8px; align-items: center; }
+.video-url-input { flex: 1; background: var(--c-surface2); border: 1.5px solid var(--c-border); color: var(--c-text); border-radius: var(--r-sm); padding: 8px 10px; font-size: 12px; font-family: var(--font-mono); outline: none; transition: border-color 0.15s; }
+.video-url-input:focus { border-color: var(--c-blue); }
+.video-load-btn { padding: 8px 14px; background: var(--c-blue); color: #fff; border: none; border-radius: var(--r-sm); font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+.video-embed { position: relative; padding-bottom: 133%; height: 0; display: none; }
 .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
-.video-placeholder {
-  padding: 20px; text-align: center; color: var(--text-dim); font-size: 12px;
-}
-.video-placeholder .icon { font-size: 32px; display: block; margin-bottom: 6px; opacity: 0.4; }
+.video-placeholder { padding: var(--sp-lg); text-align: center; color: var(--c-muted); font-size: 12px; }
+.video-placeholder .icon { font-size: 28px; display: block; margin-bottom: 6px; opacity: 0.4; }
 
-/* TABS */
-.info-tabs {
-  display: flex; background: var(--surface); border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border); overflow-x: auto;
-  scrollbar-width: none; flex-shrink: 0;
-}
+/* Tabs */
+.info-tabs { display: flex; background: var(--c-surface); border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border); overflow-x: auto; scrollbar-width: none; flex-shrink: 0; margin-top: var(--sp-md); }
 .info-tabs::-webkit-scrollbar { display: none; }
-.tab-btn {
-  padding: 10px 16px; font-size: 13px; font-weight: 500; color: var(--text-dim);
-  background: none; border: none; cursor: pointer; white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-.tab-content { display: none; padding: 12px 14px; }
+.tab-btn { padding: 11px 16px; font-size: 13px; font-weight: 500; color: var(--c-dim); background: none; border: none; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; font-family: 'Noto Sans KR', sans-serif; transition: all 0.15s; }
+.tab-btn.active { color: var(--c-blue); border-bottom-color: var(--c-blue); font-weight: 700; }
+.tab-content { display: none; padding: var(--sp-sm) var(--sp-md); }
 .tab-content.active { display: block; }
-
-.info-block {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-  padding: 10px 12px; margin-bottom: 8px;
-}
-.info-block h4 { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-.info-block p, .info-block li { font-size: 13px; line-height: 1.7; }
+.info-block { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-md); padding: 12px var(--sp-sm); margin-bottom: 8px; }
+.info-block h4 { font-size: 10px; color: var(--c-muted); margin-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+.info-block p, .info-block li { font-size: 13px; line-height: 1.75; color: var(--c-text); }
 .info-block ul, .info-block ol { padding-left: 16px; }
 .info-block li { margin-bottom: 3px; }
+.cue-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--r-sm); padding: 10px var(--sp-sm); margin: 4px 0; font-size: 13px; font-style: italic; color: #1d4ed8; line-height: 1.6; }
 
-.cue-box {
-  background: rgba(0,102,255,0.08); border: 1px solid rgba(0,102,255,0.2);
-  border-radius: 8px; padding: 8px 12px; margin: 4px 0;
-  font-size: 13px; font-style: italic; color: #aac4ff;
-}
-
-/* SCORE SECTION */
-.score-section {
-  padding: 10px 14px 20px; background: var(--bg);
-  position: sticky; bottom: 0;
-  border-top: 1px solid var(--border);
-  backdrop-filter: blur(8px);
-}
-.score-section-title { font-size: 11px; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; }
-.score-buttons {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
-}
-.score-btn {
-  padding: 10px 6px; border-radius: 10px; border: 2px solid var(--border);
-  background: var(--surface); color: var(--text-dim);
-  font-family: var(--mono); font-size: 16px; font-weight: bold;
-  cursor: pointer; text-align: center; transition: all 0.15s;
-}
-.score-btn small { display: block; font-size: 9px; font-family: 'Noto Sans KR', sans-serif; font-weight: 400; margin-top: 1px; }
+/* Score section */
+.score-section { padding: var(--sp-sm) var(--sp-md) var(--sp-lg); background: var(--c-surface); position: sticky; bottom: 0; border-top: 1px solid var(--c-border); box-shadow: 0 -4px 16px rgba(0,0,0,0.06); }
+.score-section-title { font-size: 11px; color: var(--c-muted); margin-bottom: var(--sp-sm); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.score-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.score-btn { padding: 11px 6px; border-radius: var(--r-sm); border: 1.5px solid var(--c-border); background: var(--c-surface2); color: var(--c-muted); font-family: var(--font-mono); font-size: 16px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.15s; }
+.score-btn small { display: block; font-size: 9px; font-family: 'Noto Sans KR', sans-serif; font-weight: 400; margin-top: 2px; color: inherit; opacity: 0.8; }
 .score-btn:active { transform: scale(0.96); }
-.score-btn.active-3 { background: #0066ff; color: #fff; border-color: #0066ff; box-shadow: 0 4px 12px rgba(0,102,255,0.35); transform: scale(1.05); }
-.score-btn.active-2 { background: #00a040; color: #fff; border-color: #00a040; box-shadow: 0 4px 12px rgba(0,160,64,0.35); transform: scale(1.05); }
-.score-btn.active-1 { background: #d97706; color: #fff; border-color: #d97706; box-shadow: 0 4px 12px rgba(217,119,6,0.35); transform: scale(1.05); }
-.score-btn.active-0 { background: #cc0000; color: #fff; border-color: #cc0000; box-shadow: 0 4px 12px rgba(204,0,0,0.35); transform: scale(1.05); }
-.score-btn.active-NP { background: #8b95a1; color: #fff; border-color: #8b95a1; box-shadow: 0 4px 12px rgba(139,149,161,0.35); transform: scale(1.05); }
-.score-btn.active-TE { background: #7c3aed; color: #fff; border-color: #7c3aed; box-shadow: 0 4px 12px rgba(124,58,237,0.35); transform: scale(1.05); }
+.score-btn.active-3 { background: var(--c-blue);   color: #fff; border-color: var(--c-blue);   box-shadow: 0 4px 16px rgba(37,99,235,0.35);  transform: scale(1.06); }
+.score-btn.active-2 { background: var(--c-green);  color: #fff; border-color: var(--c-green);  box-shadow: 0 4px 16px rgba(22,163,74,0.35);   transform: scale(1.06); }
+.score-btn.active-1 { background: var(--c-amber);  color: #fff; border-color: var(--c-amber);  box-shadow: 0 4px 16px rgba(217,119,6,0.35);   transform: scale(1.06); }
+.score-btn.active-0 { background: var(--c-red);    color: #fff; border-color: var(--c-red);    box-shadow: 0 4px 16px rgba(220,38,38,0.35);   transform: scale(1.06); }
+.score-btn.active-NP{ background: var(--c-dim);    color: #fff; border-color: var(--c-dim);    box-shadow: 0 4px 16px rgba(107,114,128,0.35); transform: scale(1.06); }
+.score-btn.active-TE{ background: var(--c-purple); color: #fff; border-color: var(--c-purple); box-shadow: 0 4px 16px rgba(124,58,237,0.35);  transform: scale(1.06); }
+.nav-row { display: flex; gap: 8px; margin-top: var(--sp-sm); }
+.nav-btn { flex: 1; padding: 10px; border-radius: var(--r-sm); border: 1.5px solid var(--c-border); background: var(--c-surface2); color: var(--c-text); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; transition: background 0.12s; }
+.nav-btn:active { background: var(--c-border); }
 
-.nav-row { display: flex; gap: 8px; margin-top: 8px; }
-.nav-btn {
-  flex: 1; padding: 9px; border-radius: 9px; border: 1px solid var(--border);
-  background: var(--surface); color: var(--text); font-size: 13px; cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.nav-btn:active { opacity: 0.7; }
-
-/* ─── CALIBRATION SCREEN ─── */
-#screen-calibration {}
-.calib-area {
-  position: relative; background: #000;
-  width: 100%; aspect-ratio: 4/3; overflow: hidden; flex-shrink: 0;
-}
-.calib-area video { width: 100%; height: 100%; object-fit: cover; }
-.calib-overlay-canvas {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  pointer-events: auto; cursor: crosshair;
-}
-.calib-instructions {
-  padding: 14px; background: var(--surface); border-bottom: 1px solid var(--border);
-}
-.calib-step {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
-}
-.step-num {
-  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; font-family: var(--mono);
-}
-.step-num.active { background: var(--accent); color: #000; }
-.step-num.done { background: var(--success); color: #000; }
-.step-num.pending { background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); }
-.step-text { font-size: 13px; }
-.step-text small { color: var(--text-dim); font-size: 11px; display: block; }
-
-.calib-manual {
-  padding: 0 14px 10px;
-}
-.calib-manual p { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; }
-.manual-row { display: flex; gap: 8px; align-items: center; }
-.manual-input {
-  flex: 1; background: var(--surface); border: 1px solid var(--border);
-  color: var(--text); border-radius: 8px; padding: 8px 12px;
-  font-size: 14px; font-family: var(--mono); outline: none;
-}
-.manual-input:focus { border-color: var(--accent); }
-.manual-set-btn {
-  padding: 8px 14px; background: var(--accent2); color: #fff;
-  border: none; border-radius: 8px; font-size: 13px; cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-.calib-result {
-  margin: 10px 14px; padding: 10px 14px;
-  background: var(--surface); border-radius: 10px; border: 1px solid var(--border);
-  font-family: var(--mono); font-size: 13px;
-}
-.calib-done-btn {
-  margin: 0 14px 14px; padding: 12px; background: var(--accent);
-  color: #000; border: none; border-radius: 10px; font-size: 15px;
-  font-weight: 700; cursor: pointer; width: calc(100% - 28px);
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-/* ─── SUMMARY SCREEN ─── */
-#screen-summary { padding-bottom: 20px; }
-
-.summary-header {
-  padding: 20px 16px;
-  background: linear-gradient(135deg, #080d18, #101e38);
-  border-bottom: 1px solid var(--border);
-  text-align: center;
-}
-.summary-pct-big {
-  font-family: var(--mono); font-size: 56px; font-weight: bold; color: var(--accent);
-  line-height: 1;
-}
-.summary-label { font-size: 13px; color: var(--text-dim); margin: 4px 0 12px; }
-.summary-bars {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px;
-}
-.summary-stat { text-align: center; }
-.summary-stat .val { font-family: var(--mono); font-size: 22px; font-weight: bold; }
-.summary-stat .lbl { font-size: 10px; color: var(--text-dim); }
-
-.summary-grid {
-  padding: 12px 16px;
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;
-}
-.summary-item {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-  padding: 10px; display: flex; align-items: center; gap: 10px;
-}
-.s-num { font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 18px; }
-.s-name { font-size: 12px; font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.s-score { font-family: var(--mono); font-size: 14px; font-weight: bold; }
-.s-score.s3 { color: var(--accent); }
-.s-score.s2 { color: var(--success); }
-.s-score.s1 { color: var(--warn); }
-.s-score.s0 { color: var(--danger); }
-.s-score.snp { color: var(--text-dim); }
-.s-score.ste { color: var(--purple); }
-.s-score.none { color: var(--border); }
-
-.export-btn {
-  margin: 0 16px; padding: 13px; background: var(--accent); color: #000;
-  border: none; border-radius: 12px; font-size: 15px; font-weight: 700;
-  cursor: pointer; width: calc(100% - 32px);
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.reset-btn {
-  margin: 8px 16px 0; padding: 11px; background: var(--surface); color: var(--danger);
-  border: 1px solid var(--danger); border-radius: 12px; font-size: 14px;
-  cursor: pointer; width: calc(100% - 32px);
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-/* ─── SCORE LEVEL CARDS ─── */
+/* Score level cards */
 .score-levels { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
-.score-level-card {
-  border-radius: 10px; border: 1px solid; padding: 10px 12px;
-  display: flex; gap: 10px; align-items: flex-start;
-}
-.score-level-card.lv3 { background: rgba(0,212,224,0.07); border-color: rgba(0,212,224,0.35); }
-.score-level-card.lv2 { background: rgba(48,209,88,0.07); border-color: rgba(48,209,88,0.35); }
-.score-level-card.lv1 { background: rgba(255,159,10,0.07); border-color: rgba(255,159,10,0.35); }
-.score-level-card.lv0 { background: rgba(255,69,58,0.07); border-color: rgba(255,69,58,0.35); }
-.score-level-card.lvNP { background: rgba(123,139,168,0.07); border-color: rgba(123,139,168,0.35); }
-.slv-badge {
-  width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 14px; font-weight: bold;
-}
-.lv3 .slv-badge { background: rgba(0,212,224,0.2); color: var(--accent); }
-.lv2 .slv-badge { background: rgba(48,209,88,0.2); color: var(--success); }
-.lv1 .slv-badge { background: rgba(255,159,10,0.2); color: var(--warn); }
-.lv0 .slv-badge { background: rgba(255,69,58,0.2); color: var(--danger); }
-.lvNP .slv-badge { background: rgba(123,139,168,0.2); color: var(--text-dim); }
+.score-level-card { border-radius: var(--r-md); border: 1px solid; padding: 10px var(--sp-sm); display: flex; gap: 10px; align-items: flex-start; }
+.score-level-card.lv3 { background: #eff6ff; border-color: #bfdbfe; }
+.score-level-card.lv2 { background: #f0fdf4; border-color: #bbf7d0; }
+.score-level-card.lv1 { background: #fffbeb; border-color: #fde68a; }
+.score-level-card.lv0 { background: #fef2f2; border-color: #fecaca; }
+.score-level-card.lvNP{ background: #f9fafb; border-color: var(--c-border); }
+.slv-badge { width: 30px; height: 30px; border-radius: var(--r-sm); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 14px; font-weight: bold; }
+.lv3 .slv-badge { background: #dbeafe; color: var(--c-blue); }
+.lv2 .slv-badge { background: #dcfce7; color: var(--c-green); }
+.lv1 .slv-badge { background: #fef3c7; color: var(--c-amber); }
+.lv0 .slv-badge { background: #fee2e2; color: var(--c-red); }
+.lvNP .slv-badge { background: #f3f4f6; color: var(--c-dim); }
 .slv-label { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
-.lv3 .slv-label { color: var(--accent); }
-.lv2 .slv-label { color: var(--success); }
-.lv1 .slv-label { color: var(--warn); }
-.lv0 .slv-label { color: var(--danger); }
-.lvNP .slv-label { color: var(--text-dim); }
-.slv-items { font-size: 12px; line-height: 1.7; color: var(--text); list-style: none; padding: 0; }
-.slv-items li::before { content: '· '; color: var(--text-dim); }
+.lv3 .slv-label { color: var(--c-blue); } .lv2 .slv-label { color: var(--c-green); }
+.lv1 .slv-label { color: var(--c-amber); } .lv0 .slv-label { color: var(--c-red); }
+.lvNP .slv-label { color: var(--c-dim); }
+.slv-items { font-size: 12px; line-height: 1.7; list-style: none; padding: 0; color: var(--c-text); }
+.slv-items li::before { content: '· '; color: var(--c-muted); }
 
-/* ─── LANDING SCREEN (토스 스타일) ─── */
-#screen-landing {
-  background: #fff;
-  color: #191919;
-}
-.landing-topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px 14px;
-  position: sticky; top: 0; z-index: 10;
-  background: rgba(242,244,246,0.95); backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-}
-.landing-topbar h1 { font-size: 17px; font-weight: 900; letter-spacing: 4px; color: #00a040; font-family: 'Noto Sans KR', sans-serif; }
-.landing-topbar p { font-size: 10px; color: #8b95a1; font-family: 'Noto Sans KR', sans-serif; text-align: center; letter-spacing: 0; }
-.topbar-icon-btn {
-  width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e2e8f0;
-  background: #fff; color: #191919; display: flex; align-items: center;
-  justify-content: center; font-size: 16px; cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-}
+/* SUMMARY SCREEN */
+#screen-summary { padding-bottom: var(--sp-lg); background: var(--c-bg); }
+.summary-header { padding: var(--sp-lg) var(--sp-md); background: var(--c-surface); border-bottom: 1px solid var(--c-border); text-align: center; }
+.summary-pct-big { font-family: var(--font-mono); font-size: 52px; font-weight: bold; color: var(--c-blue); line-height: 1; }
+.summary-label { font-size: 13px; color: var(--c-dim); margin: 6px 0 16px; }
+.summary-bars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.summary-stat { text-align: center; }
+.summary-stat .val { font-family: var(--font-mono); font-size: 20px; font-weight: bold; }
+.summary-stat .lbl { font-size: 10px; color: var(--c-dim); margin-top: 2px; }
+.summary-grid { padding: var(--sp-sm) var(--sp-md); display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.summary-item { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-md); padding: 10px; display: flex; align-items: center; gap: 8px; }
+.s-num { font-family: var(--font-mono); font-size: 11px; color: var(--c-muted); width: 18px; }
+.s-name { font-size: 12px; font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.s-score { font-family: var(--font-mono); font-size: 14px; font-weight: bold; }
+.s-score.s3 { color: var(--c-blue); } .s-score.s2 { color: var(--c-green); }
+.s-score.s1 { color: var(--c-amber); } .s-score.s0 { color: var(--c-red); }
+.s-score.snp { color: var(--c-dim); } .s-score.ste { color: var(--c-purple); }
+.s-score.none { color: var(--c-border); }
+.export-btn { margin: var(--sp-sm) var(--sp-md) 0; padding: 14px; background: var(--c-blue); color: #fff; border: none; border-radius: var(--r-lg); font-size: 15px; font-weight: 700; cursor: pointer; width: calc(100% - 32px); font-family: 'Noto Sans KR', sans-serif; }
+.reset-btn { margin: 8px var(--sp-md) 0; padding: 12px; background: var(--c-surface); color: var(--c-red); border: 1.5px solid var(--c-red); border-radius: var(--r-lg); font-size: 14px; cursor: pointer; width: calc(100% - 32px); font-family: 'Noto Sans KR', sans-serif; }
 
-/* 치료사 설정 모달 */
-.therapist-setup-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999;
-  display: flex; align-items: center; justify-content: center; padding: 20px;
-}
-.therapist-setup-box {
-  background: #fff; border-radius: 24px; padding: 32px 24px;
-  width: 100%; max-width: 340px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-  text-align: center;
-}
-.therapist-setup-box h2 { color: #191919; }
-.therapist-setup-box p { color: #8b95a1; }
-.therapist-setup-box input {
-  background: #f2f4f6 !important; border: 1.5px solid #e2e8f0 !important;
-  color: #191919 !important; border-radius: 12px !important;
-}
-.therapist-setup-box input:focus { border-color: #0066ff !important; }
-.therapist-setup-box button {
-  background: #0066ff !important; border-radius: 14px !important;
-}
+/* THERAPIST SETUP */
+.therapist-setup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: var(--sp-lg); }
+.therapist-setup-box { background: var(--c-surface); border-radius: var(--r-xl); padding: var(--sp-xl) var(--sp-lg); width: 100%; max-width: 340px; box-shadow: var(--shadow-lg); text-align: center; }
+.therapist-setup-box h2 { color: var(--c-text); }
+.therapist-setup-box p  { color: var(--c-dim); }
+.therapist-setup-box input { background: var(--c-surface2) !important; border: 1.5px solid var(--c-border) !important; color: var(--c-text) !important; border-radius: var(--r-md) !important; }
+.therapist-setup-box input:focus { border-color: var(--c-blue) !important; }
+.therapist-setup-box button { background: var(--c-blue) !important; border-radius: var(--r-md) !important; }
 
-/* scrollbar */
-::-webkit-scrollbar { width: 4px; }
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 2px; }
 
-/* utils */
-.mt8 { margin-top: 8px; }
-.flex { display: flex; }
-.gap8 { gap: 8px; }
+/* UTILS */
+.mt8 { margin-top: 8px; } .flex { display: flex; } .gap8 { gap: 8px; }
 </style>
 </head>
 <body>
@@ -578,7 +284,7 @@ body {
     <div style="width:36px;"></div>
   </div>
 
-  <div style="overflow-y:auto; flex:1; padding-bottom:0;">
+  <div style="overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch;">
 
     <!-- 로그인 / 환영 섹션 -->
     <div id="login-section" style="padding:32px 22px 24px; background:#fff; border-bottom:1px solid #f0f0f0;">
@@ -619,6 +325,34 @@ body {
               background:#f8f9fa; color:#8b95a1; font-size:11px; cursor:pointer;
               font-family:'Noto Sans KR';">변경</button>
         </div>
+      </div>
+    </div>
+
+    <!-- 모드 탭 (로그인 후만 보임) -->
+    <div id="mode-tab-section" style="display:none; padding:14px 16px 0; background:#f0f2f5;">
+      <div style="display:flex; gap:10px;">
+        <button id="mode-btn-powered" onclick="switchMode('powered')"
+          style="flex:1; padding:14px 10px; border:none; border-radius:16px;
+            background:linear-gradient(135deg,#2563eb,#1d4ed8);
+            color:#fff; font-size:14px; font-weight:800; cursor:pointer;
+            font-family:'Noto Sans KR'; box-shadow:0 4px 14px rgba(37,99,235,0.4);
+            display:flex; flex-direction:column; align-items:center; gap:6px;
+            transition:all 0.15s;">
+          
+          <span>전동 WSP</span>
+          <span style="font-size:10px; font-weight:500; opacity:0.85;">Powered</span>
+        </button>
+        <button id="mode-btn-manual" onclick="switchMode('manual')"
+          style="flex:1; padding:14px 10px; border:none; border-radius:16px;
+            background:#fff; border:2px solid #e4e8ef;
+            color:#9ca3af; font-size:14px; font-weight:800; cursor:pointer;
+            font-family:'Noto Sans KR'; box-shadow:0 2px 6px rgba(0,0,0,0.05);
+            display:flex; flex-direction:column; align-items:center; gap:6px;
+            transition:all 0.15s;">
+          
+          <span>수동 WST</span>
+          <span style="font-size:10px; font-weight:500;">Manual</span>
+        </button>
       </div>
     </div>
 
@@ -738,8 +472,8 @@ body {
   <!-- 영상 영역 -->
   <div id="media-vid" style="display:none; background:#000; width:100%;
     position:relative; overflow:hidden;">
-    <!-- 16:9 비율 유지 wrapper -->
-    <div style="position:relative; width:100%; padding-bottom:56.25%;">
+    <!-- 3:4 세로 비율 wrapper -->
+    <div style="position:relative; width:100%; padding-bottom:133%;">
       <div class="video-placeholder" id="video-placeholder"
         style="position:absolute; inset:0; display:flex; flex-direction:column;
           align-items:center; justify-content:center; gap:8px;">
@@ -793,11 +527,6 @@ body {
   <div class="measure-info-bar" id="measure-bar">
     <span class="measure-tag" id="measure-tag">─</span>
     <span id="prereq-info"></span>
-    <button onclick="openCalibration()" style="margin-left:auto; flex-shrink:0; padding:4px 10px;
-      background:rgba(0,212,224,0.1); border:1px solid rgba(0,212,224,0.3); border-radius:8px;
-      color:var(--accent); font-size:11px; cursor:pointer; font-family:'Share Tech Mono';">
-      📐 캘리브
-    </button>
   </div>
 
   <!-- 카드 탭 -->
@@ -835,7 +564,11 @@ body {
 
   <!-- Score -->
   <div class="score-section">
-    <div class="score-section-title">채점 결과 기록</div>
+    <div class="score-section-title">채점 결과 기록
+      <span id="score-patient-hint" style="display:none; color:#ff453a; font-weight:600; margin-left:6px;">
+        ← 환자 선택 필요
+      </span>
+    </div>
     <div class="score-buttons">
       <button class="score-btn" id="sbtn-3" onclick="setScore('3')"
         style="border-color:rgba(0,212,224,0.4); color:#00d4e4; background:rgba(0,212,224,0.07);">
@@ -865,100 +598,27 @@ body {
 </div>
 
 <!-- ═══════════════════════════ CALIBRATION ═══════════════════════════ -->
-<div id="screen-calibration" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="closeCalibration()">←</button>
-    <div class="topbar-title">📐 카메라 캘리브레이션</div>
-  </div>
-
-  <div class="calib-area">
-    <video id="calib-video" autoplay playsinline muted></video>
-    <canvas id="calib-canvas" class="calib-overlay-canvas"></canvas>
-  </div>
-
-  <div class="calib-instructions">
-    <div class="calib-step" id="calib-step-1">
-      <div class="step-num active" id="step-dot-1">1</div>
-      <div class="step-text">
-        A4 용지를 바닥에 놓아 카메라에 보이게 하세요
-        <small>용지 전체가 화면 안에 들어오도록</small>
-      </div>
-    </div>
-    <div class="calib-step" id="calib-step-2">
-      <div class="step-num pending" id="step-dot-2">2</div>
-      <div class="step-text">
-        A4의 <strong>첫 번째 모서리</strong>를 화면에서 탭하세요
-        <small id="calib-step2-sub">1단계 완료 후 활성화</small>
-      </div>
-    </div>
-    <div class="calib-step">
-      <div class="step-num pending" id="step-dot-3">3</div>
-      <div class="step-text">
-        <strong>반대편 대각선 모서리</strong>를 탭하세요
-        <small>A4 대각선 = 363.5mm 기준으로 계산</small>
-      </div>
-    </div>
-  </div>
-
-  <div class="calib-manual">
-    <p>— 또는 거치대 높이로 입력 (대략값) —</p>
-    <div class="manual-row">
-      <input type="number" class="manual-input" id="stand-height-input" placeholder="거치대 높이 (cm)" value="100">
-      <button class="manual-set-btn" onclick="setByHeight()">입력</button>
-    </div>
-  </div>
-
-  <div class="calib-result" id="calib-result" style="display:none"></div>
-  <button class="calib-done-btn" id="calib-done-btn" onclick="closeCalibration()" style="display:none">완료 — 평가로 돌아가기</button>
-</div>
-
-<!-- ═══════════════════════════ SUMMARY ═══════════════════════════ -->
-<div id="screen-summary" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="goHome()">←</button>
-    <div class="topbar-title">평가 결과 요약</div>
-  </div>
-
-  <div class="summary-header">
-    <div class="summary-pct-big" id="sum-pct">0%</div>
-    <div class="summary-label" id="sum-label">0 / 78점</div>
-    <div class="summary-bars">
-      <div class="summary-stat">
-        <div class="val" id="sum-cnt-3" style="color:var(--accent)">0</div>
-        <div class="lbl">우수합격</div>
-      </div>
-      <div class="summary-stat">
-        <div class="val" id="sum-cnt-2" style="color:var(--success)">0</div>
-        <div class="lbl">합격</div>
-      </div>
-      <div class="summary-stat">
-        <div class="val" id="sum-cnt-1" style="color:var(--warn)">0</div>
-        <div class="lbl">부분합격</div>
-      </div>
-      <div class="summary-stat">
-        <div class="val" id="sum-cnt-0" style="color:var(--danger)">0</div>
-        <div class="lbl">불합격</div>
-      </div>
-      <div class="summary-stat">
-        <div class="val" id="sum-cnt-np" style="color:var(--text-dim)">0</div>
-        <div class="lbl">NP</div>
-      </div>
-      <div class="summary-stat">
-        <div class="val" id="sum-cnt-te" style="color:var(--purple)">0</div>
-        <div class="lbl">TE</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="summary-grid" id="sum-grid"></div>
-  <button class="export-btn" onclick="exportResults()">📋 결과 텍스트 복사</button>
-  <button class="reset-btn" onclick="resetScores()">⚠ 점수 초기화</button>
-</div>
 
 <script>
 // ═══════════════════════════════════════════════════════
-//  DATA
+//  HOME
 // ═══════════════════════════════════════════════════════
+const state = {
+  screen: 'landing',
+  therapistName: null,
+  currentSkillId: null,
+  currentPatientId: null,
+  currentPatientName: null,
+  prevScreen: 'landing',
+  scores: {},
+  videoUrls: {},
+  pxPerCm: null,
+  camActive: false,
+  timerRunning: false,
+  timerSeconds: 0,
+  timerInterval: null,
+};
+
 const SKILLS = [
   // ─── 장비 조작 ───
   {
@@ -968,14 +628,7 @@ const SKILLS = [
     score_criteria:['두 동작(이동/복귀) 모두 안전하게 독립적으로 수행해야 합격', '전원 OFF 상태에서 시작·복귀 전 필수 확인', 'NP 부여 없음'],
     tip:['전원 OFF 상태에서만 연습 (급발진 방지)', '이동 → 복구 순서로 단계별 훈련', '색상 테이프로 힘을 가할 위치 표시'],
     spotter:['위치: 컨트롤러 있는 쪽 옆', '위험: 이동·복구 시 손가락·옷 끼임', '위험: 조이스틱 비의도적 작동에 의한 급발진'],
-    verbal:'"컨트롤러를 옆으로 치워 주세요." → "컨트롤러를 원래 위치로 되돌려 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=3s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함 (효율적·안전하게 첫 시도에 수행)'],
-      2: ['컨트롤러를 통상적인 조작 위치에서 벗어나게 이동', '컨트롤러를 원래 위치로 되돌림', '두 동작 모두 안전하게 독립적으로 수행'],
-      1: ['이동 또는 복귀 중 하나만 독립 수행 가능', '일부 지시 또는 보조 필요'],
-      0: ['두 동작 모두 수행 불가', '안전하지 않은 수행', '수행 거부'],
-    }
+    verbal:'"컨트롤러를 옆으로 치워 주세요." → "컨트롤러를 원래 위치로 되돌려 주세요."'
   },
   {
     id:2, name:'전원 켜기/끄기', en:'Turns power on and off', level:'실내', cat:'장비 조작', prereq:null,
@@ -984,15 +637,7 @@ const SKILLS = [
     score_criteria:['전원 켜기/끄기 두 동작 모두 안전하게 독립 수행 = 합격', 'NP 부여 불가'],
     tip:['조이스틱 중립 확인 후 전원 ON', '사용하지 않을 때 전원 OFF 습관화', '충전 중에는 전원 ON 불가'],
     spotter:['위치: 컨트롤러 쪽 옆', '위험: 조이스틱 비의도적 작동에 의한 급발진'],
-    verbal:'"전원을 켜 주세요." → "전원을 꺼 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=7s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['전원 켜기·끄기 두 동작 모두 안전하게 독립 수행'],
-      1: ['켜기 또는 끄기 중 하나만 수행', '일부 지시 필요'],
-      0: ['두 동작 모두 수행 불가 또는 안전하지 않음'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"전원을 켜 주세요." → "전원을 꺼 주세요."'
   },
   {
     id:3, name:'배터리 충전기 사용', en:'Operates battery charger', level:'실내', cat:'장비 조작', prereq:null,
@@ -1001,15 +646,7 @@ const SKILLS = [
     score_criteria:['연결·복구 두 동작 모두 독립·안전 수행 = 합격', '3점(우수합격): 충전기 연결 전 전원 꺼야 인정', '충전기 없는 경우 TE 부여'],
     tip:['충전기 연결 전 반드시 전원 OFF', '매일 저녁 충전 습관화 (배터리 50% 이하 방전 방지)', '충전 포트 위치에 색상 테이프·벨크로 표시'],
     spotter:['위치: 기울어지는 쪽 옆', '위험: 전기 충격 (습한 환경)', '위험: 기울기에 의한 낙상'],
-    verbal:'"배터리를 충전할 수 있도록 준비해 주세요." → "원래 상태로 복구해 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=93s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '충전기 연결 전 전원을 꺼야 우수합격 인정'],
-      2: ['배터리를 충전할 수 있도록 충전기 연결·설치 (연결 전 전원 OFF)', '휠체어를 원래 상태로 복원 (충전기 분리 포함)', '두 동작 모두 안전하게 독립 수행'],
-      1: ['연결 또는 분리 중 하나만 수행 가능', '일부 지시 필요'],
-      0: ['두 동작 모두 수행 불가 또는 안전하지 않음'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"배터리를 충전할 수 있도록 준비해 주세요." → "원래 상태로 복구해 주세요."'
   },
   {
     id:4, name:'모터 분리 및 결합', en:'Disengages and engages motors', level:'실내', cat:'장비 조작', prereq:null,
@@ -1018,15 +655,7 @@ const SKILLS = [
     score_criteria:['분리·결합 두 동작 모두 독립·안전 수행 = 합격', '분리 확인: 짧은 거리 굴릴 수 있어야 함', '결합 확인: 휠체어가 굴러가지 않아야 함'],
     tip:['전원 OFF 후 작업, 밀어서 분리·결합 반드시 확인', '경사로에서 모터 분리 절대 금지', '보호자: 발 사용 가능하나 기계 손상 방지 위해 부드럽게'],
     spotter:['위치: 기울어지는 쪽 옆', '위험: 모터 분리·결합 중 낙상'],
-    verbal:'"손으로 밀 수 있도록 모터를 분리해 주세요." → "모터를 다시 결합해 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=83s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['모터 분리: 짧은 거리 굴릴 수 있어야 함', '모터 결합: 휠체어가 굴러가지 않아야 함', '두 동작 모두 안전하게 독립 수행'],
-      1: ['분리 또는 결합 중 하나만 수행 가능'],
-      0: ['두 동작 모두 수행 불가'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"손으로 밀 수 있도록 모터를 분리해 주세요." → "모터를 다시 결합해 주세요."'
   },
   {
     id:5, name:'프로그램 모드 변경', en:'Changes program modes', level:'실내', cat:'장비 조작', prereq:null,
@@ -1035,14 +664,7 @@ const SKILLS = [
     score_criteria:['모든 모드 전환 + 각 상황 설명 가능해야 합격', '설명 없이 전환만 하면 합격 불가', '일부 모드만 수행 시 부분합격'],
     tip:['좁은 공간 → 실내 모드(저속·민감한 회전)', '장거리 야외 → 실외 모드(고속·완만한 감속)', '차량 진입 → 차량용 모드(저속·고토크)'],
     spotter:['위치: 컨트롤러 쪽 옆', '위험: 급발진'],
-    verbal:'"사용할 수 있는 드라이브 모드를 하나씩 보여 주세요." → "각 모드는 어떤 상황에서 사용하나요?"',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=17s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['모든 구동 모드를 전환·시연', '원래 설정으로 복귀', '각 모드가 어떤 상황에 적합한지 자신의 표현으로 설명 가능'],
-      1: ['일부 모드만 시연 가능', '또는 시연은 하나 설명 불가'],
-      0: ['모드 전환 불가 또는 설명 전혀 불가'],
-    }
+    verbal:'"사용 가능한 드라이브 모드를 하나씩 보여주세요." → "원래 드라이브 모드로 되돌려 주세요."'
   },
   {
     id:6, name:'속도 설정 변경', en:'Changes speed setting', level:'실내', cat:'장비 조작', prereq:null,
@@ -1051,14 +673,7 @@ const SKILLS = [
     score_criteria:['속도 전환·복귀 두 동작 모두 독립·안전 수행 = 합격', '한 동작만 가능하면 부분합격'],
     tip:['좁은 공간·혼잡 실내 → 낮은 속도', '넓은 야외·장거리 → 높은 속도', '현재 속도 상태를 시각·청각으로 확인 가능한지 검토'],
     spotter:['위치: 컨트롤러 쪽 옆', '위험: 급발진'],
-    verbal:'"속도 설정을 다른 레벨로 바꿔 주세요." → "원래 속도 설정으로 되돌려 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=17s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['다른 속도 설정으로 전환', '원래 속도 설정으로 복귀', '두 동작 모두 안전하게 독립 수행'],
-      1: ['전환 또는 복귀 중 하나만 수행 가능'],
-      0: ['속도 변경 전혀 불가'],
-    }
+    verbal:'"속도 설정을 다른 레벨로 바꿔 주세요." → "원래 속도 설정으로 되돌려 주세요."'
   },
   {
     id:7, name:'자세 조정 기능 조작', en:'Operates body positioning options', level:'실내', cat:'장비 조작', prereq:null,
@@ -1067,14 +682,7 @@ const SKILLS = [
     score_criteria:['사용 가능한 모든 옵션 시연해야 합격 (일부만 시연 시 합격 불가)', '복합 기능 순서 준수', '각 기능을 개별 채점 가능'],
     tip:['자세 변경 전 주변 공간 확인 필수', '틸트+리클라인 순서 준수 (틸트 먼저)', '극단적 위치에서 일부 기기는 속도 감속 또는 잠금 발생'],
     spotter:['위치: 휠체어 옆', '위험: 급발진, 전복, 기계 메커니즘에 의한 신체 손상'],
-    verbal:'"휠체어로 자세를 바꿀 수 있는 모든 방법을 보여 주세요." → "원래 자세로 돌아와 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=30s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['사용 가능한 모든 자세 조절 옵션(틸트·리클라인·다리거상·스탠드업 등) 시연', '원래 자세로 복원'],
-      1: ['일부 기능만 시연 가능', '또는 복합 기능 순서 오류'],
-      0: ['자세 변경 기능 조작 불가'],
-    }
+    verbal:'"휠체어로 자세를 바꿀 수 있는 방법을 보여주세요." → "원래 자세로 돌아와 주세요."'
   },
 
   // ─── 기본 주행 ───
@@ -1085,32 +693,16 @@ const SKILLS = [
     score_criteria:['①10m 전진 ②1.5m 폭 경로 내 유지 ③통제 방식 정지 → 3가지 모두 충족 = 합격', '2/3 충족 = 부분합격', '3점: 부분 낙상 또는 일시적 전복 없어야 함', 'NP 부여 불가'],
     tip:['조이스틱을 천천히 부드럽게 조작', '처음에는 낮은 속도 모드에서 시작 → 점진적 속도 향상', '전완부를 팔걸이에 안정적으로 올려놓고 조이스틱 조작'],
     spotter:['위치: 컨트롤러 쪽 옆', '체간 조절 어려운 대상: 정지 시 전방 어깨 앞에 손 준비', '위험: 급발진'],
-    verbal:'"(경계를 표시하며) 이 경로를 따라 앞으로 이동하여 종료 지점에서 멈춰 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=3s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '부분 낙상 또는 일시적 전복이 없어야 함'],
-      2: ['전방 10m 이동', '모든 바퀴가 폭 1.5m 경로 내 유지', '통제된 방식으로 정지 → 3가지 모두 충족'],
-      1: ['위 3가지 기준 중 2가지 충족'],
-      0: ['3가지 기준 중 2가지 미충족'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"(경계선을 가리키며) 경계선 안쪽에서 앞으로 이동하여 (지점 가리키며) 여기서 멈춰주세요."'
   },
   {
     id:9, name:'후진하기', en:'Rolls backward', level:'실내', cat:'기본 주행', prereq:null,
     overlay:{type:'corridor', lengthM:5, widthM:1.5, dir:'bwd', shoulderCheck:true}, keyMeasure:'5m 후진 · 폭 1.5m · 어깨 확인 각 1회',
-    howto:['조이스틱을 후방으로 당겨 후진', '이동 중 양쪽 어깨 확인(shoulder check) 각 1회 이상 수행', '후진 중 조이스틱 방향: "무릎이 가고 싶은 방향"', '정지 시 조이스틱을 천천히 중립으로 복귀'],
+    howto:['조이스틱을 후방으로 당겨 후진', '이동 중 양쪽 어깨 확인(shoulder check) 각 1회 이상 수행', '후진 중 조이스틱 방향: \"무릎이 가고 싶은 방향\"', '정지 시 조이스틱을 천천히 중립으로 복귀'],
     score_criteria:['①5m 후진 ②1.5m 폭 유지 ③통제 정지 ④양쪽 어깨 확인 각 1회 → 4가지 모두 충족 = 합격', '2/4 충족 = 부분합격', '⚠ 어깨 확인 빠뜨리면 Pass 불가'],
     tip:['천천히 후진, 어깨 확인 습관화', '후방 카메라·거울 활용 가능하나 어깨 확인 습관 병행', '무릎이 가고 싶은 방향으로 조이스틱 연상'],
     spotter:['위치: 후방 또는 옆', '위험: 후방 전복, 고정/이동 물체 충돌'],
-    verbal:'"(경계 표시하며) 이 경로를 따라 뒤로 이동하여 (목표 지점)에서 멈춰 주세요. 이동 전과 이동 중에 뒤를 확인해 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=130s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '정지 시 일시적 전복 없어야 함'],
-      2: ['후방 5m 이동', '모든 바퀴가 폭 1.5m 경로 내 유지', '통제된 방식으로 정지', '각 방향으로 최소 1회 어깨 확인 → 4가지 모두 충족'],
-      1: ['위 4가지 기준 중 2가지 충족'],
-      0: ['4가지 기준 중 2가지 미충족'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"(경계선을 가리키며) 경계선 안쪽에서 뒤로 이동하여 (지점 가리키며) 여기서 멈춰주세요."'
   },
   {
     id:10, name:'제자리 회전', en:'Turns in place', level:'실내', cat:'기본 주행', prereq:null,
@@ -1119,15 +711,7 @@ const SKILLS = [
     score_criteria:['①양방향 160° 이상 ②1.5m 반경 이내 → 합격', '3점(AP): 양방향 1.0m 이내', '부분합격: 한 방향만 160° 도달', '불합격: 1.5m 표시 밖으로 나가는 경우', 'NP 불가'],
     tip:['좁은 공간에서 속도 낮추기', '구동 방식에 따른 캐스터 스윙 방향 사전 파악', '3점 회전으로 공간 최소화'],
     spotter:['위치: 휠체어 가까이', '위험: 협소 공간에서 전복 (일반적으로 낮은 위험)'],
-    verbal:'"가능한 좁은 공간에서 반대 방향을 향하도록 회전해 주세요." → "반대 방향으로도 회전해 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=130s',
-    scoreDetail: {
-      3: ['양방향 모두 시작점 기준 1.0m 이내 유지'],
-      2: ['양방향(좌·우) 모두 최소 160° 이상 회전', '지면에 닿은 휠체어 어떤 부분도 1.5m 표시 밖으로 나가지 않음'],
-      1: ['한 방향에서만 최소 160° 도달'],
-      0: ['지면에 닿은 휠체어 일부가 1.5m 표시 밖으로 나감'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"가능한 한 좁은 공간에서 반대 방향을 향하도록 회전해 주세요." → "반대 방향으로도 회전해 주세요."'
   },
   {
     id:11, name:'측면 이동', en:'Maneuvers sideways', level:'실내', cat:'기본 주행', prereq:null,
@@ -1136,49 +720,25 @@ const SKILLS = [
     score_criteria:['양방향: ①측면 거리 <10cm ②각도 <20° ③전후방 <1.5m → 합격', '3점(AP): 전후방 <1.0m', '부분합격: 한 방향만 충족, 또는 양방향 부분 충족', 'NP 불가'],
     tip:['4단계 사이클 반복 훈련', '거울·카메라로 후방 위치 피드백', '엘리베이터 시뮬레이션 등 실생활 맥락 활용'],
     spotter:['위치: 휠체어 뒤', '위험: 후진 급정지 시 후방 전복'],
-    verbal:'"(측면 목표를 가리키며) 이 바퀴를 저 목표에 최대한 가깝게 이동해 주세요. 앞뒤 이동 공간은 최소로 사용해 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=130s',
-    scoreDetail: {
-      3: ['양방향 모두: 전후 최대 이동 거리 < 1.0m'],
-      2: ['양방향 모두: 측면 거리 목표물 기준 < 10cm (접촉 허용)', '휠체어와 측방 장벽 각도 < 20°', '전후 최대 이동 거리 < 1.5m'],
-      1: ['한 방향에서만 기준 충족', '또는 양방향에서 기준을 부분적으로 충족', '보호자에게 지시하여 수행 가능'],
-      0: ['어느 방향에서도 기준을 충족하지 못함'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"(목표 지점 가리키며) 이 목표물에 바퀴를 최대한 가깝게 붙여주세요. 앞뒤 이동을 최소화해 주세요."'
   },
   {
     id:12, name:'전진 중 회전', en:'Turns while moving forward', level:'실내', cat:'기본 주행', prereq:null,
     overlay:{type:'pylon', radiiM:[1.0,1.5]}, keyMeasure:'파일런 접촉 시 2cm↑ 이동 없음 · 반경 1.5m',
     howto:['전진하면서 조이스틱을 측면으로 조작하여 파일런 주변 회전', '가까운 쪽(near-side) 구동 바퀴가 장애물 통과 지점에 집중', '전륜 구동 기기: 후방 캐스터가 크게 스윙 → 원쪽 공간 확인', '충돌 위협 시 손·발로 막지 말 것 → 신체 보호 영역 내 유지', '양방향 모두 시연'],
     score_criteria:['양방향: ①파일런 접촉 허용하나 2cm↑ 이동 금지 ②앞 바퀴가 결승선 통과 시 완료 ③지면 접촉 부분 1.5m 표시 이내', '3점(AP): 1.0m 이내', '부분합격: 한 방향만 1.5m 충족'],
-    tip:['가까운 쪽 구동 바퀴가 장애물 넘어선 후 회전 시작', '"느리게, 확인하고, 회전" 순서', '전륜/후륜/중간 구동에 따른 경로 차이 사전 파악'],
+    tip:['가까운 쪽 구동 바퀴가 장애물 넘어선 후 회전 시작', '\"느리게, 확인하고, 회전\" 순서', '전륜/후륜/중간 구동에 따른 경로 차이 사전 파악'],
     spotter:['위치: 뒤에서 스포터 스트랩 또는 옆 대기', '위험: 전진 가속 시 후방 전복'],
-    verbal:'"(파일런을 가리키며) 이 파일런 주위를 최대한 가깝게 돌아오세요, 파일런을 건드리지 않도록 주의하세요." → 반대 방향도 반복',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=146s',
-    scoreDetail: {
-      3: ['양방향 회전 중 모든 부분이 1.0m 표시 이내 유지'],
-      2: ['양방향 모두: 파일런 접촉 허용하나 2cm 이상 이동 불가', '앞 바퀴가 결승선 통과 시 완료', '지면에 닿는 부분이 1.5m 표시 이내 유지'],
-      1: ['한 방향에서만 1.5m 기준 충족'],
-      0: ['양방향 회전 중 지면에 닿는 부분이 1.5m 표시 밖으로 나감'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"(고깔을 가리키며) 앞으로 고깔 주위를 최대한 가깝게 지나가 주세요."'
   },
   {
     id:13, name:'후진 중 회전', en:'Turns while moving backward', level:'실내', cat:'기본 주행', prereq:null,
     overlay:{type:'pylon', radiiM:[1.0,1.5]}, keyMeasure:'전진 중 회전과 동일 기준',
-    howto:['후진하면서 조이스틱을 측면으로 조작하여 파일런 주변 회전', '후진 중 회전 방향: "무릎(앞쪽)이 가고 싶은 방향"으로 조이스틱 조작', '안쪽 어깨를 넘겨 확인', '보호자 전방에서 후진 조작 시: 좌우 방향이 반대 → 사전 교육 필수', '양방향 모두 시연'],
+    howto:['후진하면서 조이스틱을 측면으로 조작하여 파일런 주변 회전', '후진 중 회전 방향: \"무릎(앞쪽)이 가고 싶은 방향\"으로 조이스틱 조작', '안쪽 어깨를 넘겨 확인', '보호자 전방에서 후진 조작 시: 좌우 방향이 반대 → 사전 교육 필수', '양방향 모두 시연'],
     score_criteria:['전진 중 회전의 합격 기준과 동일 적용', '양방향 파일런 2cm 미만 이동, 1.5m 이내'],
-    tip:['"무릎이 가고 싶은 방향으로 조이스틱" 연상', '안쪽 어깨 확인 습관화', '보호자 전방 조작 시 방향 반직관적 → 사전 충분한 교육'],
+    tip:['\"무릎이 가고 싶은 방향으로 조이스틱\" 연상', '안쪽 어깨 확인 습관화', '보호자 전방 조작 시 방향 반직관적 → 사전 충분한 교육'],
     spotter:['위치: 뒤 또는 옆', '위험: 정지 시 후방 전복, 충돌'],
-    verbal:'"이 파일런 주위를 뒤로 돌면서 최대한 가깝게 지나가 주세요." → 반대 방향도 반복',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=146s',
-    scoreDetail: {
-      3: ['양방향 회전 중 모든 부분이 1.0m 표시 이내 유지'],
-      2: ['양방향 모두: 파일런 접촉 시 2cm 이상 이동 없어야 함', '지면에 닿는 모든 부분이 1.5m 표시 이내 유지', '앞 바퀴가 결승선 통과 시 완료'],
-      1: ['한 방향에서만 1.5m 기준 충족'],
-      0: ['양방향 회전 중 지면에 닿는 부분이 1.5m 표시 밖으로 나감'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"(고깔을 가리키며) 뒤로 고깔 주위를 최대한 가깝게 지나가 주세요."'
   },
   {
     id:14, name:'물체 집기/닿기', en:'Reaches objects', level:'실내', cat:'기본 주행', prereq:null,
@@ -1187,49 +747,25 @@ const SKILLS = [
     score_criteria:['①바닥 물건 집어 검사자에게 건넴 ②머리 위 목표물에 손 닿음 → 두 과제 모두 = 합격', '부분합격: 두 과제 중 하나만', '0점: 발판에 발 올린 채 일어서려 하면 스포터 개입·불합격'],
     tip:['바닥 물체 집기 전 전원 OFF 필수', '전방 틸트 기능으로 더 쉽게 아래 닿기', '보조 도구(reaching aid) 항상 휴대 권장'],
     spotter:['위치: 기울어지는 쪽 옆', '위험: 전방·측방 전복 또는 낙상', '위험: 발판에 발 올린 채 일어서기 시도'],
-    verbal:'"저 물체를 바닥에서 집어서 저에게 주세요." → "(머리 위 목표를 가리키며) 저 목표물에 닿아 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=251s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '전동: 서서 수행 시 전원 OFF 및 발 지지대 정리 필요'],
-      2: ['바닥 물건 집어서 검사자에게 건넴', '머리 위 목표물(1.5m)에 손이 닿음', '어느 손·보조 도구 사용 가능', '발 지지대 등 부품 조정 허용 (독립 수행 시)'],
-      1: ['두 과제 중 하나만 성공', '서서 수행하려 하나 전원 OFF 또는 발 지지대 미정리'],
-      0: ['발판에 발 올린 채 일어서려 함 → 스포터 개입, 불합격', '손가락이 바퀴에 깔릴 위험 → 스포터 개입, 불합격'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"(물체 가리키며) 바닥에서 물체를 집어서 저에게 주세요." → "(머리 위 목표 가리키며) 저 목표물을 만져주세요."'
   },
   {
-    id:15, name:'체중 이동', en:'Shifts weight', level:'실내', cat:'기본 주행', prereq:null,
+    id:15, name:'체중 이동 (압력 완화)', en:'Shifts weight', level:'실내', cat:'기본 주행', prereq:null,
     overlay:{type:'timer', seconds:15}, keyMeasure:'15초 이상 양쪽 좌골 완전 해제',
     howto:['틸트·리클라인·스탠드업 기능이 있으면 활용 (45° 이상 권장)', '기능 없으면 전방 또는 측방으로 상체를 충분히 기울임', '측방 기울이기: 한쪽씩, 양쪽 모두 완전 압력 제거 목표', '15초 이상 유지 (평가자가 말할 때까지)', '복귀 시 스스로 바로 앉을 수 있어야 함'],
     score_criteria:['①양쪽 좌골 완전 해제 (검사자 손 쉽게 들어갈 정도) ②15초 이상 유지 → 합격', '부분합격: 한쪽만, 불완전 해제, 또는 8~14초', '0점: 완전 해제 8초 미만'],
     tip:['전동휠체어: 틸트·리클라인 기능 적극 활용', '매 25분마다 15초 이상 부분 체중 이동 권장', '전자 기기 알림으로 정기적 체중 이동 습관화'],
     spotter:['위치: 기울어지는 쪽 옆', '위험: 전방·측방 전복 또는 낙상'],
-    verbal:'"엉덩이 압력을 제거하는 방법을 보여주세요. 제가 멈추라고 할 때까지 유지해 주세요." (15초 후 신호)',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=282s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '전동: 서서 감압 시 전원 미차단 또는 발 지지대 미정리 시 우수합격 불가'],
-      2: ['양쪽 좌골 부위 체중 완전 해제 (검사자 손이 쉽게 들어갈 정도)', '최소 15초간 완전 해제 유지', '허용 방법: 한쪽 기울이기, 앞으로 기대기, 일어서기, 브리징', '기울인 후 스스로 자세 회복 가능', '※ 푸시업: 합격은 가능하나 우수합격은 아님'],
-      1: ['한쪽만 체중 해제', '체중을 완전히 해제하지 못함', '8~14초간 완전 해제', '틸트/리클라인: 최소 45° 이상이어야 부분합격'],
-      0: ['완전 해제 8초 미만', '또는 완전히 해제하지 못함'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"엉덩이의 압력을 제거하는 방법을 보여주세요. 멈추라고 할 때까지 자세를 유지해 주세요."'
   },
   {
-    id:16, name:'평면 이동 (transfer)', en:'Performs level transfers', level:'실내', cat:'기본 주행', prereq:null,
+    id:16, name:'수평 이동', en:'Performs level transfers', level:'실내', cat:'기본 주행', prereq:null,
     overlay:null, keyMeasure:'양방향 transfer 독립·안전 수행',
     howto:['전원을 OFF', 'transfer 방향으로 컨트롤러 치우고, 팔걸이 올리거나 제거', '발판 치우고 발을 바닥에 지지', 'transfer 면에 최대한 가깝게 이동', '측방 transfer: 약한 팔 쪽 앞으로 리드, 머리와 엉덩이 반대 방향', 'transfer 후 발판 복구, 전원 ON 가능 상태로 복원'],
     score_criteria:['①휠체어 준비 ②목표 면으로 이동 ③복귀 ④휠체어 복원 → 4가지 모두 = 합격', '부분합격: 한 방향만 성공', '3점(AP): 전원 미차단 시 불가'],
-    tip:['전원 OFF, 팔걸이·발판 치우기, transfer 면에 최대한 가깝게', '"머리와 엉덩이 반대 방향" 원칙', 'transfer 전 휠체어가 움직이지 않도록 전원 OFF 확인'],
+    tip:['전원 OFF, 팔걸이·발판 치우기, transfer 면에 최대한 가깝게', '\"머리와 엉덩이 반대 방향\" 원칙', 'transfer 전 휠체어가 움직이지 않도록 전원 OFF 확인'],
     spotter:['위치: 대상자 전방 및 약간 측면', '위험: 전방·측방 전복 또는 낙상', '위험: transfer 면 위에서 떨어짐'],
-    verbal:'"저기로 transfer해 주세요." → "다시 휠체어로 돌아와 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=295s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '전동: 전원 미차단 시 우수합격 불가 (복귀 중 위치 조정용은 허용)', '측방·스탠드업 transfer: 잠금장치 미적용 또는 발 지지대 미정리 시 우수합격 불가'],
-      2: ['휠체어 준비 (발 지지대 정리, 팔걸이 제거 등)', '같은 높이 목표 면으로 이동', '휠체어로 복귀', '휠체어를 원래 운전 가능 상태로 복원', '슬라이딩보드: 보조판에서 완전히 내릴 때까지 미완료'],
-      1: ['휠체어에서 나오기 또는 들어오기 중 하나만 성공'],
-      0: ['독립적 사용 불가한 고정 안전벨트 등이 있는 경우'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"(목표면 가리키며) 휠체어에서 저기로 이동해 주세요." → "다시 휠체어로 돌아와 주세요."'
   },
 
   // ─── 지역사회 ───
@@ -1240,32 +776,16 @@ const SKILLS = [
     score_criteria:['①휠체어→바닥 이동 ②바닥→휠체어 복귀 → 두 가지 모두 독립 수행 = 합격', '부분합격: 바닥 내려가나 복귀 불가', '수평 이동 불합격 시 자동 불합격'],
     tip:['좌석 쿠션을 바닥에 놓아 바닥 높이 높이기', '캐스터 전방 트레일링, 머리와 엉덩이 반대 방향 원칙', '좌석 높이 변경 기능 있으면 적극 활용'],
     spotter:['위치: 휠체어 가까이 (전복 방지 + 낙상 방지)', '위험: 후방·전방·측방 전복 또는 낙상'],
-    verbal:'"바닥으로 내려가 주세요." → "다시 휠체어로 올라와 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=619s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['휠체어→바닥 이동: 대상자가 바닥에 앉은 시점에 완료', '바닥→휠체어 복귀: 시트에 앉아 출발 준비 완료 시점', '외부 보조 도구(의자·받침대·리프트) 사용 불가', '쿠션 제거 기법 사용 가능 (다시 깔 필요 없음)'],
-      1: ['바닥으로 내려가나 휠체어로 복귀하지 못함'],
-      0: ['바닥으로 내려가지 못함', '수평 이동(#16) 불합격 시 자동 불합격'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"바닥으로 내려와 주세요." → "다시 휠체어로 올라와 주세요."'
   },
   {
-    id:18, name:'여닫이 문 통과', en:'Gets through hinged door', level:'실내', cat:'기본 주행', prereq:null,
+    id:18, name:'여닫이 문 통과', en:'Gets through hinged door', level:'실내', cat:'지역사회', prereq:null,
     overlay:{type:'door', widthCm:80}, keyMeasure:'양방향(밀기·당기기) 통과 후 완전히 닫기',
     howto:['밀리는 방향(push door): 문 정면에서 발판 또는 손으로 문 밀며 전진', '당겨지는 방향(pull door): 한 손 손잡이 + 다른 손 조이스틱, 후진하며 문 당김', '자동 닫힘 문: 한 손 손잡이, 다른 손 조이스틱 → 저항에 버틸 필요 없음', '문 통과 후 반드시 닫는다', '문·문틀에 손·팔꿈치가 긁히지 않도록 주의'],
     score_criteria:['양방향 모두: ①열기 ②통과 ③닫기 → 합격', '부분합격: 한 방향만, 또는 열기/닫기 중 하나만', '3점(AP): 일반 기준 준함', 'NP 불가'],
     tip:['당기는 문 → 조이스틱+문 손잡이 동시 조작 훈련', '자동 닫힘 문: 저항 불필요, 속도 조절로 충분', '문 폭이 좁은 경우 팔걸이 제거로 폭 줄이기 검토'],
     spotter:['위치: 기울어지는 쪽 옆', '위험: 당기기 중 후방·전방·측방 전복 또는 낙상', '위험: 손가락 문·문틀 사이 끼임'],
-    verbal:'"문을 열고 통과한 후 닫아 주세요." → "이번엔 반대 방향으로 다시 통과해 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=214s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['양방향 모두: 문 열기 → 통과 → 완전히 닫기', '어떤 기법(전진/후진)도 허용'],
-      1: ['한 방향에서만 성공', '또는 양방향으로 열 수 있으나 닫지 못함', '또는 통과·닫을 수 있으나 열지 못함'],
-      0: ['문과 문틀 사이에 손가락 끼일 가능성 → 스포터 개입'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"문을 열고 통과한 후 닫아주세요." → "반대 방향으로 다시 통과해 주세요."'
   },
   {
     id:19, name:'완만한 경사 오르기', en:'Ascends slight incline (5°)', level:'지역사회', cat:'지역사회', prereq:null,
@@ -1274,15 +794,7 @@ const SKILLS = [
     score_criteria:['①상단 플랫폼까지 모든 바퀴 완전 벗어남 (플랫폼 없으면 2.5m↑) ②측방 경계 이탈 없음 → 합격', '부분합격: 최소 1.5m 이상', '불합격: 1.5m 미만 또는 측방 이탈', 'NP 불가'],
     tip:['대부분 전동휠체어는 5° 충분히 오를 수 있음', '경사 오르기 시 틸트를 전방 조정', '발판이 경사 시작 지점에 걸리면 다리 거상 기능 활용'],
     spotter:['위치: 경사로 뒤에서 대기', '사이드 슬로프: 낮은 쪽(downhill)', '위험: 후방 전복, 발판 걸림에 의한 전방 전복'],
-    verbal:'"경사로를 올라가 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=510s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '의도치 않은 일시적 전복 발생 시 우수합격 불가'],
-      2: ['경사로 상단 플랫폼까지 모든 바퀴가 완전히 벗어남 (플랫폼 없으면 2.5m↑)', '바퀴가 경사로 측방 경계 밖으로 나가지 않음', '측면 가이드/레일 접촉: 감점 없음', '전진·후진 방향 모두 허용'],
-      1: ['최소 1.5m 이상 오름', '또는 더 낮은 경사도(예: 2.5°) 성공'],
-      0: ['1.5m 미만으로 오름', '또는 바퀴가 측방 경계 밖으로 나감'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"경사로를 올라가 주세요."'
   },
   {
     id:20, name:'완만한 경사 내려가기', en:'Descends slight incline (5°)', level:'지역사회', cat:'지역사회', prereq:null,
@@ -1291,66 +803,34 @@ const SKILLS = [
     score_criteria:['①하단 평면까지 모든 바퀴 완전 벗어남 ②통제 정지 ③측방 이탈 없음 → 합격', '부분합격: 통제 상태로 1.5m↑', '불합격: 1.5m 미만, 과속, 측방 이탈'],
     tip:['전동휠체어는 경사에서 자동 속도 제한 (모터 브레이킹)', '하강 시 틸트 조정으로 균형·시야 개선', '보호자: 모터 절대 분리하지 말 것'],
     spotter:['위치: 경사 전방(하강 방향)에서', '필요 시 2명: 뒤+측면', '위험: 제어 실패 시 급주행, 하부 전환 지점에서 전방 전복'],
-    verbal:'"경사로를 통제된 방식으로 내려가서 (목표 지점)에서 멈춰 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=520s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['하단에서 모든 바퀴가 경사로를 완전히 벗어남', '통제된 상태로 정지', '측면 가이드/레일 접촉 허용'],
-      1: ['통제된 상태로 최소 1.5m 내려옴', '또는 전체 내려오나 하단에서 완전히 멈추지 못함', '또는 더 낮은 경사도(2.5°) 성공'],
-      0: ['통제된 상태로 1.5m 미만', '과속으로 스포터 개입 필요', '바퀴가 측방 경계 밖으로 나감'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"경사로를 조절하며 내려가서 (지점 가리키며) 여기서 멈춰주세요."'
   },
   {
-    id:21, name:'가파른 경사 오르기', en:'Ascends steep incline (10°)', level:'지역사회', cat:'지역사회', prereq:19,
+    id:21, name:'급경사 오르기', en:'Ascends steep incline (10°)', level:'지역사회', cat:'지역사회', prereq:19,
     overlay:{type:'incline', degrees:10, dir:'up'}, keyMeasure:'10° 경사 · 선수기술 #19 합격 필요',
     howto:['선수 기술: 완만한 경사 오르기 합격 필요', '고토크 드라이브 모드로 전환', '경사 시작 지점 주의하며 접근', '경사 오르는 중 틸트를 전방으로 조정하여 시야 확보'],
     score_criteria:['19번과 동일 기준 적용 (10° 경사)', '부분합격: 1.5m 이상, 또는 7.5° 경사 성공', '선수기술 Fail/Partial → 자동 불합격'],
     tip:['고토크 모드 선택, 일정 속도 유지', '발판 걸림 방지: 다리 거상 기능 활용', '완만한 경사(5°) 충분히 익힌 후 시작'],
     spotter:['위치: 경사로 뒤', '사이드 슬로프: 낮은 쪽', '위험: 후방 전복 (더 높은 위험)'],
-    verbal:'"경사로를 올라가 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=527s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '의도치 않은 일시적 전복 발생 시 우수합격 불가'],
-      2: ['경사로 상단 플랫폼까지 모든 바퀴 완전히 벗어남 (플랫폼 없으면 2.5m↑)', '바퀴가 측방 경계 이탈 없음', '전진·후진 방향 모두 허용'],
-      1: ['최소 1.5m 이상 오름', '또는 더 낮은 경사도(7.5°) 성공'],
-      0: ['1.5m 미만', '또는 바퀴가 측방 경계 밖으로 나감'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"경사로를 올라가 주세요."'
   },
   {
-    id:22, name:'가파른 경사 내려가기', en:'Descends steep incline (10°)', level:'지역사회', cat:'지역사회', prereq:20,
+    id:22, name:'급경사 내려가기', en:'Descends steep incline (10°)', level:'지역사회', cat:'지역사회', prereq:20,
     overlay:{type:'incline', degrees:10, dir:'down'}, keyMeasure:'10° 경사 · 선수기술 #20 합격 필요',
     howto:['선수 기술: 완만한 경사 내려가기 합격 필요', '전동휠체어는 자동 브레이킹 작동', '느린 속도로 시작하여 속도 유지', '급주행 방지: 필요 이상의 속도는 위험'],
     score_criteria:['20번과 동일 기준 적용 (10° 경사)', '부분합격: 1.5m 이상, 또는 7.5° 성공', '선수기술 Fail/Partial → 자동 불합격'],
     tip:['전동휠체어: 자동 속도 제한 (브레이킹)', '낮은 컨트롤러 설정으로 시작', '완만한 경사(5°) 충분히 익힌 후 시작'],
     spotter:['위치: 경사 전방에서 필수 (급주행 방지)', '필요 시 2명', '위험: 제어 실패 시 급주행'],
-    verbal:'"경사로를 통제된 방식으로 내려가서 (목표 지점)에서 멈춰 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=535s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['하단에서 모든 바퀴가 경사로를 완전히 벗어남', '통제된 상태로 정지', '측면 가이드/레일 접촉 허용'],
-      1: ['통제된 상태로 최소 1.5m 내려옴', '또는 전체 내려오나 하단에서 완전히 멈추지 못함', '또는 더 낮은 경사도(7.5°) 성공'],
-      0: ['통제 상태로 1.5m 미만', '과속으로 스포터 개입', '바퀴가 측방 경계 밖으로 나감'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"경사로를 조절하며 내려가서 (지점 가리키며) 여기서 멈춰주세요."'
   },
   {
-    id:23, name:'부드러운 표면 이동', en:'Rolls on soft surface', level:'지역사회', cat:'지역사회', prereq:null,
+    id:23, name:'부드러운 노면 주행', en:'Rolls on soft surface', level:'지역사회', cat:'지역사회', prereq:null,
     overlay:{type:'corridor', lengthM:2.5, widthM:1.5, dir:'fwd'}, keyMeasure:'부드러운 노면 2.5m (짐 매트 5cm 두께 권장)',
     howto:['고토크 드라이브 모드로 전환', '자세 보정(틸트·리클라인)으로 앞바퀴(캐스터) 부하 줄이기', '일정 속도 유지 (반복적 출발·정지 지양)', '모래·진흙: 구동 바퀴 헛돌기 방지 위해 신중한 속도 조절'],
     score_criteria:['①딱딱한 노면→부드러운 노면 완전 이동 ②선행 바퀴 축이 결승선 넘음 → 합격', '부분합격: 1.5m 이상', '불합격: 1.5m 미만'],
     tip:['고토크 모드 + 일정 속도 유지', '자세 보정으로 구동 바퀴에 하중 집중', '중간 구동(mid-wheel drive): 캐스터 파고들기 위험 높음'],
     spotter:['위치: 옆에서 대기', '위험: 부드러운 표면 진입 시 전방 전복 (캐스터가 박힘)'],
-    verbal:'"(목표 지점을 가리키며) 저 위치까지 이동해 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=566s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['딱딱한 노면에서 부드러운 노면으로 완전히 이동', '선행 바퀴 축이 결승선을 넘음', '어떤 기법·방향 모두 허용'],
-      1: ['최소 1.5m 이상 이동'],
-      0: ['1.5m 미만으로 이동'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"(목표 지점 가리키며) 저 지점까지 이동해 주세요."'
   },
   {
     id:24, name:'장애물 넘기', en:'Gets over obstacle', level:'지역사회', cat:'지역사회', prereq:null,
@@ -1359,15 +839,7 @@ const SKILLS = [
     score_criteria:['①모든 바퀴가 장애물 완전 통과 → 합격', '부분합격: 선행 바퀴만 넘은 경우', '3점(AP): 과속 접근 불가'],
     tip:['저속 접근 + 지속적인 전진력으로 통과', '드라이브 모드를 고토크로 전환', '자세 보정(틸트)으로 발판 지면 간격 조정'],
     spotter:['위치: 뒤 + 한 손을 대상자 어깨 앞에 준비', '위험: 앞바퀴 걸릴 때 전방 전복', '위험: 뒷바퀴가 장애물 위에 있을 때 전방 전복'],
-    verbal:'"저 장애물을 넘어가 주세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=566s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함', '과속 접근으로 불필요한 충격 발생 시 우수합격 불가'],
-      2: ['휠체어의 모든 부분이 장애물을 완전히 통과', '어떤 기법·방향 모두 허용', '발 또는 서 있는 자세 활용 허용', '캐스터가 장애물 위에 착지해도 감점 없음'],
-      1: ['지면에 닿은 선행 바퀴만 장애물을 넘은 경우'],
-      0: ['장애물을 전혀 넘지 못함'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"장애물을 넘어가 주세요."'
   },
   {
     id:25, name:'낮은 연석 오르기', en:'Ascends low curb (5cm)', level:'지역사회', cat:'지역사회', prereq:null,
@@ -1376,15 +848,7 @@ const SKILLS = [
     score_criteria:['①모든 바퀴가 상단 면에 올라감 ②대상자 바르게 앉아 있음 → 합격', '부분합격: 전방-앞 바퀴만, 또는 후방-뒷 바퀴만', 'NP 불가'],
     tip:['낮은 연석(5cm)만 시도, 고토크 모드', '큰 구동 바퀴가 먼저 오르면 더 쉬움 (후방 접근 고려)', '연속적인 전진력으로 부드럽게 통과'],
     spotter:['위치: 뒤 + 측면에서 대기', '위험: 앞바퀴 연석 걸릴 때 전방 전복', '위험: 한쪽 바퀴 먼저 올라가면 측방 전복'],
-    verbal:'"저 턱을 올라가 보세요. 천천히 올라가세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=592s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['모든 바퀴가 상단 면에 올라감', '대상자가 바르게 앉아 있음', '전진·후진 방향 모두 허용', '발 지지대 제거·보조 장치 독립 사용 허용', '휠체어에서 내려서 수행 가능'],
-      1: ['전방 접근 시 앞 바퀴만 상단 면에 올라간 경우', '또는 후방 접근 시 뒷 바퀴만 올라간 경우', '또는 더 낮은 높이(2.5cm) 성공'],
-      0: ['모든 바퀴가 상단 면에 올라가지 못함'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"연석 위로 올라가 주세요."'
   },
   {
     id:26, name:'낮은 연석 내려가기', en:'Descends low curb (5cm)', level:'지역사회', cat:'지역사회', prereq:null,
@@ -1393,60 +857,26 @@ const SKILLS = [
     score_criteria:['①모든 바퀴 하단 면 ②바르게 앉아 있음 ③자유롭게 구를 수 있는 상태 → 합격', '부분합격: 2.5cm 연석 성공 시', '불합격: 바퀴가 연석에 직각 정렬 안 된 경우'],
     tip:['저속으로 통제된 roll-off / 후방 접근 시 멈추지 않고 계속 후진', '연속적이고 통제된 이동이 핵심', '후방 접근: 더 안전하나 어깨 확인 필수'],
     spotter:['위치: 낮은 면(하부)에서 (전방 전복·급주행 방지)', '위험: 전진 roll-off 시 전방 전복 (너무 빠른 속도)'],
-    verbal:'"저 턱을 내려가 주세요. 천천히 내려가세요."',
-    videoUrl: 'https://www.youtube.com/watch?v=AXjxxNKHvCw&t=610s',
-    scoreDetail: {
-      3: ['일반 채점 기준에 준함'],
-      2: ['모든 바퀴가 하단 면에 있음', '대상자가 바르게 앉아 있음', '휠체어가 자유롭게 구를 수 있는 상태 (발 지지대·전복 방지 장치에 걸리지 않음)', '전진·후진 방향 모두 허용'],
-      1: ['더 낮은 높이(2.5cm 연석) 성공 시'],
-      0: ['바퀴가 연석 가장자리에 직각으로 정렬되지 않은 경우 → 검사자가 중지·불합격 부여'],
-      NP: ['이 기술에는 NP 부여 불가'],
-    }
+    verbal:'"아래 단계로 내려가 주세요."'
   }
 ];
 
-// ═══════════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════════
-const state = {
-  screen: 'home',
-  currentSkillId: 1,
-  pxPerCm: null,
-  calibPoints: [],
-  calibStep: 1,
-  camStream: null,
-  camActive: false,
-  facing: 'environment',
-  scores: {}, // {id: '0'|'1'|'2'|'3'|'NP'|'TE'}
-  videoUrls: {}, // {id: url}
-  animFrame: null,
-  timerRunning: false,
-  timerSeconds: 0,
-  timerInterval: null
-};
-
-// Load persisted data
-try {
-  const saved = JSON.parse(localStorage.getItem('wsp_data') || '{}');
-  if (saved.scores) state.scores = saved.scores;
-  if (saved.pxPerCm) state.pxPerCm = saved.pxPerCm;
-  if (saved.videoUrls) state.videoUrls = saved.videoUrls;
-} catch(e) {}
-
-
-// ═══════════════════════════════════════════════════════
-//  HOME
-// ═══════════════════════════════════════════════════════
 const CATEGORIES = [
-  { key:'장비 조작', label:'⚙ 장비 조작', ids:[1,2,3,4,5,6,7],
-    color:'#bf5af2', bg:'rgba(191,90,242,0.12)', border:'rgba(191,90,242,0.4)', tag:'장비' },
-  { key:'기본 주행', label:'🚗 기본 주행', ids:[8,9,10,11,12,13,14,15,16,18],
-    color:'#00d4e0', bg:'rgba(0,212,224,0.12)', border:'rgba(0,212,224,0.4)', tag:'주행' },
-  { key:'지역사회', label:'🌆 지역사회', ids:[17,19,20,21,22,23,24,25,26],
-    color:'#ff9f0a', bg:'rgba(255,159,10,0.12)', border:'rgba(255,159,10,0.4)', tag:'지역사회' }
+  { key:'Indoor', label:'🏠 Indoor (장비조작·기본주행)', ids:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18],
+    color:'#2563eb', bg:'#eff6ff', border:'#bfdbfe', tag:'Indoor' },
+  { key:'Community', label:'🌆 Community (지역사회)', ids:[17,19,20,21,22,23,24,25,26],
+    color:'#d97706', bg:'#fffbeb', border:'#fde68a', tag:'Community' }
 ];
 
 function getCatBySkillId(id) {
+  if (appMode === 'manual') {
+    const manualCats = [
+      { key:'Indoor',    label:'🏠 Indoor',    color:'#0284c7', bg:'#f0f9ff', border:'#e0f2fe', ids:[1,2,3,4,5,6,7,8,9,10,13] },
+      { key:'Community', label:'🌆 Community', color:'#d97706', bg:'#fffbeb', border:'#fef3c7', ids:[11,12,14,15,16,17,18,19,20,21] },
+      { key:'Advanced',  label:'⭐ Advanced',  color:'#7c3aed', bg:'#f5f3ff', border:'#ede9fe', ids:[22,23,24,25,26,27,28,29,30] },
+    ];
+    return manualCats.find(c => c.ids.includes(id)) || manualCats[0];
+  }
   return CATEGORIES.find(c => c.ids.includes(id)) || CATEGORIES[0];
 }
 
@@ -1467,7 +897,7 @@ function renderHome() {
     container.appendChild(sec);
     const list = document.getElementById(safeId);
     cat.ids.forEach(id => {
-      const sk = SKILLS.find(s => s.id === id);
+      const sk = getCurrentSkills().find(s => s.id === id);
       const score = state.scores[id];
       const scoreClass = score ? (score==='NP'?'snp':score==='TE'?'ste':'s'+score) : '';
       const card = document.createElement('div');
@@ -1489,70 +919,79 @@ function renderHome() {
     });
   });
   updateHomeSummary();
-  updateCalibBadge();
+}
+
+function calcScore(scoresObj) {
+  const skills = getCurrentSkills();
+  let total = 0, npCount = 0, teCount = 0, done = 0;
+  skills.forEach(sk => {
+    const sc = scoresObj[sk.id];
+    if (!sc) return;
+    done++;
+    if (sc === 'NP') { npCount++; return; }
+    if (sc === 'TE') { teCount++; return; }
+    total += parseInt(sc);
+  });
+  const n = skills.length;
+  let pct = 0;
+  if (appMode === 'manual') {
+    const denom = (n - npCount - teCount) * 3;
+    pct = denom > 0 ? Math.round(total * 100 / denom) : 0;
+  } else {
+    const maxPossible = (n - npCount - teCount) * 3;
+    pct = maxPossible > 0 ? Math.round(total / maxPossible * 100) : 0;
+  }
+  return { total, npCount, teCount, done, pct, n };
 }
 
 function updateHomeSummary() {
-  const scores = Object.values(state.scores);
-  let total = 0, maxPossible = 0;
-  SKILLS.forEach(sk => {
-    const sc = state.scores[sk.id];
-    if (sc && sc !== 'NP' && sc !== 'TE') {
-      total += parseInt(sc);
-      maxPossible += 3;
-    }
-  });
-  const done = scores.filter(s => s).length;
-  const pct = maxPossible > 0 ? Math.round(total / maxPossible * 100) : 0;
+  const { total, npCount, teCount, done, pct, n } = calcScore(state.scores);
+  const maxPossible = (n - npCount - teCount) * 3;
   document.getElementById('home-pct').textContent = pct + '%';
   document.getElementById('home-score-label').textContent = `${total} / ${maxPossible}점 · ${done}개 완료`;
   const _sb=document.getElementById('home-score-bar'); if(_sb) _sb.style.width=pct+'%';
 }
 
-function updateCalibBadge() {
-  const badge = document.getElementById('calib-status-badge');
-  if (state.pxPerCm) {
-    badge.className = 'badge badge-success';
-    badge.textContent = `캘리브레이션 완료 (1cm=${state.pxPerCm.toFixed(1)}px)`;
-  } else {
-    badge.className = 'badge badge-warn';
-    badge.textContent = '미캘리브레이션';
-  }
-}
 
 // ═══════════════════════════════════════════════════════
 //  SKILL VIEW
 // ═══════════════════════════════════════════════════════
 function openSkill(id) {
-  const sk = SKILLS.find(s => s.id === id);
+  const sk = getCurrentSkills().find(s => s.id === id);
+  if (!sk) { console.warn('Skill not found:', id); return; }
   state.currentSkillId = id;
   showScreen('skill');
+
+  // 환자 없을 때 힌트 표시
+  const hint = document.getElementById('score-patient-hint');
+  if (hint) hint.style.display = state.currentPatientId ? 'none' : 'inline';
 
   const cat = getCatBySkillId(id);
 
   // 카테고리 색상 topbar에 적용
   const topbar = document.querySelector('.skill-topbar');
   topbar.style.borderBottom = `2px solid ${cat.color}`;
-  document.getElementById('sk-num').textContent = `기술 ${id} / 26 · ${sk.cat}`;
-  document.getElementById('sk-num').style.color = cat.color;
+  document.getElementById('sk-num').textContent = sk.en;
+  const _sn=document.getElementById('sk-num'); if(_sn) _sn.style.color=cat.color;
   document.getElementById('sk-name').textContent = sk.name;
-  document.getElementById('sk-name').style.color = cat.color;
+  const _snm=document.getElementById('sk-name'); if(_snm) _snm.style.color=cat.color;
 
   // Measure bar
   document.getElementById('measure-tag').textContent = sk.keyMeasure || '특수 측정 없음';
   const prereqEl = document.getElementById('prereq-info');
   if (sk.prereq) {
-    const pre = SKILLS.find(s => s.id === sk.prereq);
-    const preScore = state.scores[sk.prereq];
-    const ok = preScore === '2' || preScore === '3';
-    const notDone = !preScore;
+    const prereqs = Array.isArray(sk.prereq) ? sk.prereq : [sk.prereq];
+    const allSkills = getCurrentSkills();
+    const ok = prereqs.every(pid => { const ps = state.scores[pid]; return ps === '2' || ps === '3'; });
+    const notDone = prereqs.some(pid => !state.scores[pid]);
+    const prereqNames = prereqs.map(pid => { const p = allSkills.find(s=>s.id===pid); return p ? `#${pid} ${p.name}` : `#${pid}`; }).join(', ');
     if (ok) {
       prereqEl.innerHTML = `
         <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;
           background:rgba(0,160,64,0.08);border-radius:10px;border:1px solid rgba(0,160,64,0.2);margin-bottom:6px;">
           <span style="font-size:16px;">✅</span>
           <span style="font-size:12px;color:#00a040;font-weight:600;">
-            선수기술 #${sk.prereq} ${pre.name} 통과 (${preScore}점)
+            선수기술 통과 (${prereqNames})
           </span>
         </div>`;
     } else {
@@ -1565,7 +1004,7 @@ function openSkill(id) {
               선수기술 미통과 — 주의!
             </div>
             <div style="font-size:11px;color:#ff453a;opacity:0.8;">
-              #${sk.prereq} ${pre.name} ${notDone ? '(미평가)' : `(${preScore}점 — 실패)`}
+              ${prereqNames} ${notDone ? '(미평가)' : '(실패)'}
             </div>
             <div style="font-size:11px;color:#ff453a;opacity:0.7;margin-top:3px;">
               WSP 원칙상 이 항목은 Fail 처리될 수 있어요
@@ -1601,8 +1040,7 @@ function openSkill(id) {
   updateScoreButtons();
 
   // Calibration badge
-  updateSkillCalibBadge();
-
+  
   // If camera was on, restart overlay
   if (state.camActive) {
     requestAnimationFrame(() => drawOverlay());
@@ -1726,6 +1164,12 @@ function updateScoreButtons() {
 }
 
 function setScore(s) {
+  if (!state.currentPatientId) {
+    showToast('채점하려면 환자를 먼저 선택해주세요', 'error');
+    // 랜딩으로 돌아가서 환자 선택 유도
+    setTimeout(() => { goBackFromSkill(); }, 800);
+    return;
+  }
   if (state.scores[state.currentSkillId] === s) {
     delete state.scores[state.currentSkillId];
   } else {
@@ -1757,18 +1201,6 @@ function nextSkill() {
   if (idx < ids.length - 1) openSkill(ids[idx + 1]);
 }
 
-function updateSkillCalibBadge() {
-  const badge = document.getElementById('calib-badge-skill');
-  if (!state.camActive) { badge.style.display = 'none'; return; }
-  badge.style.display = 'block';
-  if (state.pxPerCm) {
-    badge.className = 'calib-badge ok';
-    badge.textContent = `캘리브 완료 · 1cm=${state.pxPerCm.toFixed(1)}px`;
-  } else {
-    badge.className = 'calib-badge notok';
-    badge.textContent = '캘리브 필요';
-  }
-}
 
 // ═══════════════════════════════════════════════════════
 //  VIDEO
@@ -1784,7 +1216,7 @@ function loadVideo() {
   if (!url) { resetVideo(); return; }
   const videoId = extractYouTubeId(url);
   if (!videoId) { resetVideo(); return; }
-  document.getElementById('video-placeholder').style.display = 'none';
+  document.getElementById('video-placeholder')&&(document.getElementById('video-placeholder').style.display='none');
   const embed = document.getElementById('video-embed');
   embed.style.display = 'block';
   // 타임스탬프 파싱
@@ -1795,8 +1227,8 @@ function loadVideo() {
 }
 
 function resetVideo() {
-  document.getElementById('video-placeholder').style.display = 'flex';
-  document.getElementById('video-embed').style.display = 'none';
+  document.getElementById('video-placeholder')&&(document.getElementById('video-placeholder').style.display='flex');
+  document.getElementById('video-embed')&&(document.getElementById('video-embed').style.display='none');
   document.getElementById('video-iframe').src = '';
 }
 
@@ -1863,8 +1295,7 @@ async function startCamera() {
     state.camActive = true;
     document.getElementById('cam-placeholder')&&(document.getElementById('cam-placeholder').style.display='none');
     document.getElementById('flip-btn')&&(document.getElementById('flip-btn').style.display='flex');
-    updateSkillCalibBadge();
-    video.onloadedmetadata = () => {
+        video.onloadedmetadata = () => {
       resizeCanvas();
       startOverlayLoop();
     };
@@ -1886,8 +1317,7 @@ function stopCamera() {
   const canvas = document.getElementById('cam-canvas');
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  updateSkillCalibBadge();
-}
+  }
 
 async function flipCamera() {
   state.facing = state.facing === 'environment' ? 'user' : 'environment';
@@ -1915,52 +1345,6 @@ function startOverlayLoop() {
 // ═══════════════════════════════════════════════════════
 //  OVERLAY DRAWING
 // ═══════════════════════════════════════════════════════
-function drawOverlay() {
-  const canvas = document.getElementById('cam-canvas');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  const sk = SKILLS.find(s => s.id === state.currentSkillId);
-  if (!sk || !sk.overlay) return;
-
-  const overlay = sk.overlay;
-  const W = canvas.width, H = canvas.height;
-  const cx = W / 2, cy = H * 0.65;
-  const pxPerCm = state.pxPerCm;
-
-  // Crosshair (always)
-  ctx.strokeStyle = 'rgba(0,212,224,0.6)';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([4, 4]);
-  ctx.beginPath(); ctx.moveTo(cx - 15, cy); ctx.lineTo(cx + 15, cy); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(cx, cy - 15); ctx.lineTo(cx, cy + 15); ctx.stroke();
-  ctx.setLineDash([]);
-
-  if (!pxPerCm) {
-    // Draw "needs calibration" message
-    ctx.fillStyle = 'rgba(255,159,10,0.85)';
-    ctx.font = '13px "Noto Sans KR", sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('캘리브레이션 후 측정선 표시', W / 2, 30);
-    drawScaleBar(ctx, W, H, null);
-    return;
-  }
-
-  switch (overlay.type) {
-    case 'corridor': drawCorridor(ctx, cx, cy, W, H, overlay, pxPerCm); break;
-    case 'rotation': drawRotation(ctx, cx, cy, W, H, overlay, pxPerCm); break;
-    case 'pylon': drawPylon(ctx, cx, cy, W, H, overlay, pxPerCm); break;
-    case 'incline': drawIncline(ctx, W, H, overlay); break;
-    case 'obstacle': drawObstacle(ctx, cx, cy, overlay, pxPerCm); break;
-    case 'curb': drawCurb(ctx, cx, cy, W, H, overlay, pxPerCm); break;
-    case 'door': drawDoor(ctx, cx, cy, overlay, pxPerCm); break;
-    case 'timer': drawTimerOverlay(ctx, cx, cy, W, H, overlay); break;
-    case 'sideways': drawSideways(ctx, cx, cy, W, H, overlay, pxPerCm); break;
-    case 'reach': drawReach(ctx, cx, cy, W, H, pxPerCm); break;
-  }
-
-  drawScaleBar(ctx, W, H, pxPerCm);
-}
 
 function line(ctx, x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
 
@@ -2045,147 +1429,8 @@ function drawPulseCircle(ctx, x, y, r, color='#30d158', label='') {
   ctx.restore();
 }
 
-function drawCorridor(ctx, cx, cy, W, H, ov, pxPerCm) {
-  const wPx = (ov.widthM * 100) * pxPerCm;
-  const lenPx = Math.min((ov.lengthM * 100) * pxPerCm, H * 0.85);
-  const lx = cx - wPx/2, rx = cx + wPx/2;
-  const top = cy - lenPx;
-  const isBack = ov.dir === 'bwd';
 
-  // 경로 배경
-  ctx.fillStyle = 'rgba(0,212,224,0.06)';
-  ctx.fillRect(lx, Math.max(top, 0), wPx, Math.min(lenPx, cy));
 
-  // 측면 경계선
-  ctx.strokeStyle = '#00d4e0'; ctx.lineWidth = 2.5; ctx.setLineDash([]);
-  line(ctx, lx, cy, lx, Math.max(top, 0));
-  line(ctx, rx, cy, rx, Math.max(top, 0));
-
-  // 시작선
-  ctx.strokeStyle = 'rgba(0,212,224,0.5)'; ctx.lineWidth = 1.5;
-  line(ctx, lx, cy, rx, cy);
-
-  // 거리 마커
-  const n = Math.floor(ov.lengthM);
-  for (let i = 1; i <= n; i++) {
-    const y = cy - (i * 100) * pxPerCm;
-    if (y < 5) break;
-    ctx.strokeStyle = i === n ? '#ff9f0a' : 'rgba(0,212,224,0.3)';
-    ctx.lineWidth = i === n ? 2.5 : 1;
-    ctx.setLineDash(i === n ? [] : [5,5]);
-    line(ctx, lx, y, rx, y);
-    ctx.setLineDash([]);
-    drawLabel(ctx, `${i}m`, rx + 26, y + 4, i === n ? '#ff9f0a' : '#00d4e0');
-  }
-
-  // 목표 도달 지점 펄스
-  const endY = Math.max(top + 10, 20);
-  drawPulseCircle(ctx, cx, endY, 18, '#ff9f0a', '정지!');
-
-  // 움직임 방향 애니메이션 화살표
-  if (!isBack) {
-    drawAnimArrow(ctx, cx, cy - 30, cx, endY + 30, '#00d4e0', '전진');
-  } else {
-    drawAnimArrow(ctx, cx, endY + 30, cx, cy - 30, '#bf5af2', '후진');
-    // 어깨 확인 표시
-    if (ov.shoulderCheck) {
-      const t = anim(2000);
-      const checkY = cy - (2.5 * 100) * pxPerCm;
-      if (checkY > 0) {
-        ctx.save();
-        ctx.fillStyle = t < 0.5 ? '#ff9f0a' : '#ff9f0a44';
-        ctx.font = 'bold 18px sans-serif'; ctx.textAlign = 'center';
-        ctx.fillText('👀', lx - 18, checkY);
-        ctx.fillText('👀', rx + 18, checkY);
-        drawLabel(ctx, '어깨 확인!', cx, checkY - 18, '#ff9f0a');
-        ctx.restore();
-      }
-    }
-  }
-
-  // 휠체어 아이콘 (시작 위치)
-  drawWheelchair(ctx, cx, cy - 20, 20, '#00d4e0');
-  drawLabel(ctx, `폭 ${ov.widthM}m`, cx, cy + 14, '#00d4e0');
-}
-
-function drawRotation(ctx, cx, cy, W, H, ov, pxPerCm) {
-  const t = anim(2000);
-  const colors = ['rgba(0,212,224,0.25)', 'rgba(0,102,255,0.7)', 'rgba(255,69,58,0.8)'];
-  const labels = ['0.5m', 'AP 1.0m', 'Pass 1.5m'];
-
-  ov.radiiM.forEach((r, i) => {
-    const rPx = (r * 100) * pxPerCm;
-    ctx.strokeStyle = colors[i]; ctx.lineWidth = i===2 ? 2.5 : 1.5;
-    ctx.setLineDash(i===1 ? [5,5] : []);
-    ctx.beginPath(); ctx.arc(cx, cy, rPx, 0, Math.PI*2); ctx.stroke();
-    ctx.setLineDash([]);
-    drawLabel(ctx, labels[i], cx + rPx + 4, cy, i===2?'#ff453a':i===1?'#0066ff':'#00d4e0');
-  });
-
-  // 회전 방향 애니메이션 (좌우 각각)
-  const r1Px = (ov.radiiM[0] * 100) * pxPerCm;
-  const r2Px = (ov.radiiM[1] * 100) * pxPerCm;
-  const midR = (r1Px + r2Px) / 2;
-
-  // 반시계(좌) 화살표
-  const angL = t * Math.PI * 2;
-  const ax1 = cx + midR * Math.cos(angL - 0.2);
-  const ay1 = cy + midR * Math.sin(angL - 0.2);
-  const ax2 = cx + midR * Math.cos(angL + 0.2);
-  const ay2 = cy + midR * Math.sin(angL + 0.2);
-  ctx.strokeStyle = '#30d158'; ctx.lineWidth = 3; ctx.setLineDash([]);
-  ctx.beginPath(); ctx.moveTo(ax1, ay1); ctx.lineTo(ax2, ay2); ctx.stroke();
-
-  // 시계(우) 화살표
-  const angR = -t * Math.PI * 2;
-  const bx1 = cx + midR * Math.cos(angR + 0.2);
-  const by1 = cy + midR * Math.sin(angR + 0.2);
-  const bx2 = cx + midR * Math.cos(angR - 0.2);
-  const by2 = cy + midR * Math.sin(angR - 0.2);
-  ctx.strokeStyle = '#bf5af2'; ctx.lineWidth = 3;
-  ctx.beginPath(); ctx.moveTo(bx1, by1); ctx.lineTo(bx2, by2); ctx.stroke();
-
-  // 중심 + 레이블
-  drawWheelchair(ctx, cx, cy, 18, '#00d4e0');
-  drawLabel(ctx, '양방향 160° ↑', cx, cy + (ov.radiiM[2]*100)*pxPerCm + 22, '#ff453a');
-  drawLabel(ctx, '좌↺', cx - midR - 2, cy - 14, '#30d158');
-  drawLabel(ctx, '↻우', cx + midR + 2, cy - 14, '#bf5af2');
-}
-
-function drawPylon(ctx, cx, cy, W, H, ov, pxPerCm) {
-  const t = anim(2500);
-  const pylonY = cy - Math.min((1.5 * 100) * pxPerCm, H * 0.45);
-
-  // 반경 원
-  const colors = ['rgba(0,102,255,0.6)', 'rgba(255,69,58,0.7)'];
-  const labels = ['AP 1.0m', 'Pass 1.5m'];
-  ov.radiiM.forEach((r, i) => {
-    const rPx = (r * 100) * pxPerCm;
-    ctx.strokeStyle = colors[i]; ctx.lineWidth = i===1?2.5:1.5;
-    ctx.setLineDash(i===0?[5,5]:[]);
-    ctx.beginPath(); ctx.arc(cx, pylonY, rPx, 0, Math.PI*2); ctx.stroke();
-    ctx.setLineDash([]);
-    drawLabel(ctx, labels[i], cx + rPx + 4, pylonY, i===1?'#ff453a':'#0066ff');
-  });
-
-  // 파일런 아이콘
-  ctx.fillStyle = '#ff9f0a';
-  ctx.beginPath(); ctx.arc(cx, pylonY, 10, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = '#000'; ctx.font = 'bold 10px sans-serif'; ctx.textAlign='center';
-  ctx.fillText('콘', cx, pylonY + 4);
-
-  // 휠체어 움직임 (파일런 주위를 도는 애니메이션)
-  const midR = ((ov.radiiM[0]+ov.radiiM[1])/2 * 100) * pxPerCm;
-  // 우측 회전
-  const ang = t * Math.PI * 2 - Math.PI/2;
-  const wx = cx + midR * Math.cos(ang);
-  const wy = pylonY + midR * Math.sin(ang);
-  drawWheelchair(ctx, wx, wy, 16, '#00d4e0');
-
-  // 시작 위치 → 파일런 접근 화살표
-  drawAnimArrow(ctx, cx, cy - 20, cx, pylonY + midR + 20, '#00d4e0', '접근');
-  drawLabel(ctx, '최대 가깝게 회전', cx, pylonY + (ov.radiiM[1]*100)*pxPerCm + 22, '#ff453a');
-}
 
 function drawIncline(ctx, W, H, ov) {
   const t = anim(2000);
@@ -2244,172 +1489,10 @@ function drawIncline(ctx, W, H, ov) {
   }
 }
 
-function drawObstacle(ctx, cx, cy, ov, pxPerCm) {
-  const t = anim(2000);
-  const wPx = Math.max(ov.widthCm * pxPerCm, 22);
-  const hPx = Math.max(ov.heightCm * pxPerCm * 5, 12);
-  const obY = cy - (80) * pxPerCm;
 
-  // 접근 경로
-  ctx.strokeStyle = 'rgba(255,159,10,0.3)'; ctx.lineWidth = 40; ctx.setLineDash([]);
-  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx, obY+hPx); ctx.stroke();
 
-  // 장애물
-  ctx.fillStyle = 'rgba(255,69,58,0.25)';
-  ctx.fillRect(cx-wPx/2, obY-hPx, wPx, hPx);
-  ctx.strokeStyle = '#ff453a'; ctx.lineWidth = 3;
-  ctx.strokeRect(cx-wPx/2, obY-hPx, wPx, hPx);
-  drawLabel(ctx, `높이 ${ov.heightCm}cm`, cx, obY-hPx-14, '#ff453a');
-  drawLabel(ctx, `폭 ${ov.widthCm}cm`, cx, obY+18, '#ff9f0a');
 
-  // 휠체어 → 장애물 → 넘기 애니메이션
-  const phase = t;
-  let wx = cx, wy;
-  if (phase < 0.45) {
-    wy = cy - (cy - obY - hPx - 20) * (phase / 0.45);
-    drawWheelchair(ctx, wx, wy, 20, '#00d4e0');
-    drawAnimArrow(ctx, cx, cy-20, cx, obY+hPx+30, '#00d4e0', '저속 접근');
-  } else if (phase < 0.55) {
-    wy = obY - hPx - 5;
-    drawWheelchair(ctx, wx, wy, 20, '#ff9f0a');
-    drawLabel(ctx, '넘는 중!', cx, wy-30, '#ff9f0a');
-  } else {
-    wy = obY - hPx - (cy - obY - hPx) * ((phase-0.55)/0.45);
-    drawWheelchair(ctx, wx, wy, 20, '#30d158');
-    drawLabel(ctx, '통과!', cx, wy-30, '#30d158');
-  }
-}
 
-function drawCurb(ctx, cx, cy, W, H, ov, pxPerCm) {
-  const t = anim(2200);
-  const hPx = Math.max(ov.heightCm * pxPerCm * 4, 14);
-  const curbW = Math.min(W * 0.75, 280);
-  const curbY = cy - Math.min((ov.distM * 100) * pxPerCm, H*0.35);
-  const isUp = ov.dir === 'up';
-
-  // 연석
-  ctx.fillStyle = 'rgba(255,69,58,0.2)';
-  ctx.fillRect(cx-curbW/2, curbY-hPx, curbW, hPx);
-  ctx.strokeStyle = '#ff453a'; ctx.lineWidth = 3;
-  ctx.strokeRect(cx-curbW/2, curbY-hPx, curbW, hPx);
-  drawLabel(ctx, `${ov.heightCm}cm 연석`, cx, curbY-hPx-14, '#ff453a');
-
-  // 휠체어 이동 애니메이션
-  if (isUp) {
-    const wy = isUp ? cy - (cy - curbY + hPx) * t : curbY - hPx - (cy - curbY) * t;
-    drawWheelchair(ctx, cx, cy - (cy - curbY + hPx*2) * t, 22, '#30d158');
-    drawAnimArrow(ctx, cx, cy-20, cx, curbY-hPx-20, '#30d158', '오르기 ▲');
-  } else {
-    drawWheelchair(ctx, cx, curbY - hPx - 20 + (cy - curbY + hPx) * t, 22, '#ff9f0a');
-    drawAnimArrow(ctx, cx, curbY-hPx-20, cx, cy-20, '#ff9f0a', '내려가기 ▼');
-    drawLabel(ctx, '멈추지 말고 계속!', cx, curbY + 30, '#ff453a');
-  }
-}
-
-function drawDoor(ctx, cx, cy, ov, pxPerCm) {
-  const t = anim(2500);
-  const wPx = (ov.widthCm) * pxPerCm;
-  const doorH = Math.min(180, cy * 0.55);
-  const doorY = cy - Math.min(60 * pxPerCm, H * 0.2);
-
-  // 문 프레임
-  ctx.strokeStyle = '#bf5af2'; ctx.lineWidth = 3; ctx.setLineDash([]);
-  line(ctx, cx-wPx/2, doorY, cx-wPx/2, doorY-doorH);
-  line(ctx, cx+wPx/2, doorY, cx+wPx/2, doorY-doorH);
-  line(ctx, cx-wPx/2, doorY-doorH, cx+wPx/2, doorY-doorH);
-  drawLabel(ctx, `문폭 ${ov.widthCm}cm`, cx, doorY-doorH-14, '#bf5af2');
-
-  // 문 열림 애니메이션
-  const openAngle = t * Math.PI * 0.7;
-  const doorEndX = cx - wPx/2 + Math.cos(openAngle) * (wPx * 0.85);
-  const doorEndY = (doorY + doorY-doorH)/2 + Math.sin(openAngle) * (wPx * 0.85 * 0.5);
-  ctx.strokeStyle = 'rgba(191,90,242,0.5)'; ctx.lineWidth = 8;
-  line(ctx, cx-wPx/2, (doorY+doorY-doorH)/2, doorEndX, doorEndY);
-
-  // 통과 경로
-  drawAnimArrow(ctx, cx, cy-20, cx, doorY-doorH/2, '#bf5af2', '통과 →');
-
-  // 휠체어
-  const phase = t;
-  const wy = cy - 20 + (doorY - doorH/2 - cy + 20) * Math.min(phase*1.5, 1);
-  drawWheelchair(ctx, cx, wy, 20, '#00d4e0');
-
-  // 당기기 힌트
-  drawLabel(ctx, '한손=손잡이 한손=조이스틱', cx, cy+16, '#ff9f0a');
-}
-
-function drawSideways(ctx, cx, cy, W, H, ov, pxPerCm) {
-  const t = anim(3000);
-  const depthPx = Math.min((ov.widthM * 100) * pxPerCm, H * 0.4);
-  const targetX = cx + W * 0.28;
-
-  // 목표 구역
-  const latPx = Math.max((ov.lateralCm || 10) * pxPerCm, 15);
-  ctx.fillStyle = 'rgba(191,90,242,0.15)';
-  ctx.fillRect(targetX-latPx/2, cy-depthPx, latPx, depthPx);
-  ctx.strokeStyle = '#bf5af2'; ctx.lineWidth = 2;
-  ctx.strokeRect(targetX-latPx/2, cy-depthPx, latPx, depthPx);
-  drawLabel(ctx, '목표 ≤10cm', targetX, cy-depthPx-14, '#bf5af2');
-
-  // 4단계 사이클 애니메이션
-  const phase = t % 1;
-  let wx, wy;
-  if (phase < 0.25) { // 전진+회전
-    wx = cx + (targetX-cx-20) * (phase/0.25);
-    wy = cy - depthPx * 0.3 * (phase/0.25);
-    drawLabel(ctx, '①전진+근쪽회전', cx + (targetX-cx)/2, cy-depthPx*0.15-16, '#30d158');
-  } else if (phase < 0.5) { // 전진+정렬
-    wx = targetX - 20 + 20*(phase-0.25)/0.25;
-    wy = cy - depthPx*0.3 - depthPx*0.2*((phase-0.25)/0.25);
-    drawLabel(ctx, '②전진+원쪽정렬', targetX, cy-depthPx*0.45-16, '#00d4e0');
-  } else if (phase < 0.75) { // 후진+회전
-    wx = targetX - (targetX-cx-20)*((phase-0.5)/0.25);
-    wy = cy - depthPx*0.5 + depthPx*0.2*((phase-0.5)/0.25);
-    drawLabel(ctx, '③후진+근쪽회전', cx+(targetX-cx)/2, cy-depthPx*0.4-16, '#ff9f0a');
-  } else { // 후진+정렬
-    wx = cx + (targetX-cx-20)*((phase-0.75)/0.25);
-    wy = cy - depthPx*0.3 + depthPx*0.3*((phase-0.75)/0.25);
-    drawLabel(ctx, '④후진+원쪽정렬', targetX, cy-depthPx*0.2-16, '#bf5af2');
-  }
-  drawWheelchair(ctx, wx, wy, 20, '#00d4e0');
-
-  // 전후 이동 한계선
-  ctx.strokeStyle = '#ff453a'; ctx.lineWidth = 1.5; ctx.setLineDash([5,5]);
-  line(ctx, cx-20, cy-depthPx, targetX+latPx, cy-depthPx);
-  ctx.setLineDash([]);
-  drawLabel(ctx, '전후 1.5m 이내', cx+(targetX-cx)/2, cy-depthPx+16, '#ff453a');
-}
-
-function drawReach(ctx, cx, cy, W, H, pxPerCm) {
-  const t = anim(1500);
-
-  // 바닥 집기 존
-  const r = Math.max(45 * pxPerCm, 35);
-  drawPulseCircle(ctx, cx - W*0.18, cy - 15, r, '#30d158', '바닥 집기');
-
-  // 전원 OFF 표시
-  const t2 = anim(1000);
-  ctx.fillStyle = t2 < 0.5 ? '#ff453a' : '#ff453a55';
-  ctx.font = 'bold 13px "Noto Sans KR"'; ctx.textAlign = 'center';
-  ctx.fillText('⚡전원 OFF 필수!', cx - W*0.18, cy - r - 28);
-
-  // 1.5m 높이 목표
-  const hPx = Math.min((150) * pxPerCm, H * 0.55);
-  const bx = cx + W*0.2;
-  ctx.strokeStyle = '#ff9f0a'; ctx.lineWidth = 3; ctx.setLineDash([]);
-  line(ctx, bx - 15, H*0.88, bx + 15, H*0.88); // 바닥
-  line(ctx, bx, H*0.88, bx, H*0.88 - hPx);
-  drawPulseCircle(ctx, bx, H*0.88 - hPx, 16, '#ff9f0a', '1.5m 높이');
-
-  // 손 닿기 애니메이션
-  const armY = H*0.88 - hPx - 16 - Math.sin(t * Math.PI * 2) * 12;
-  ctx.fillStyle = '#ff9f0a';
-  ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('✋', bx, armY);
-
-  // 휠체어
-  drawWheelchair(ctx, cx, cy - 15, 22, '#00d4e0');
-}
 
 function drawTimerOverlay(ctx, cx, cy, W, H, ov) {
   // Timer display in top center
@@ -2438,20 +1521,6 @@ function drawTimerOverlay(ctx, cx, cy, W, H, ov) {
   ctx.fillText(`목표: ${target}초`, tx, ty + r + 16);
 }
 
-function drawScaleBar(ctx, W, H, pxPerCm) {
-  if (!pxPerCm) return;
-  const barCm = 50, barPx = barCm * pxPerCm;
-  const x = W - 20 - Math.min(barPx, 150), y = H - 20;
-  const displayPx = Math.min(barPx, 150);
-  ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(x - 5, y - 15, displayPx + 10, 20);
-  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
-  ctx.setLineDash([]);
-  line(ctx, x, y, x + displayPx, y);
-  line(ctx, x, y - 5, x, y + 5);
-  line(ctx, x + displayPx, y - 5, x + displayPx, y + 5);
-  ctx.fillStyle = '#fff'; ctx.font = '10px "Share Tech Mono"'; ctx.textAlign = 'center';
-  ctx.fillText(`${barCm}cm`, x + displayPx/2, y - 3);
-}
 
 // Timer for weight shift
 let timerEl = null;
@@ -2473,123 +1542,9 @@ function toggleTimer() {
   }
 }
 
-// ═══════════════════════════════════════════════════════
-//  CALIBRATION
-// ═══════════════════════════════════════════════════════
-let calibCamStream = null;
-
-function openCalibration() {
-  showScreen('calibration');
-  state.calibStep = 1;
-  state.calibPoints = [];
-  updateCalibUI();
-  startCalibCamera();
-}
-
-async function startCalibCamera() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'environment', width: {ideal: 1280}, height: {ideal: 960} },
-      audio: false
-    });
-    const video = document.getElementById('calib-video');
-    video.srcObject = stream;
-    calibCamStream = stream;
-  } catch(e) {}
-}
-
-function closeCalibration() {
-  if (calibCamStream) {
-    calibCamStream.getTracks().forEach(t => t.stop());
-    calibCamStream = null;
-  }
-  document.getElementById('calib-video').srcObject = null;
-  showScreen('skill');
-  updateSkillCalibBadge();
-  updateCalibBadge();
-  if (state.camActive) { resizeCanvas(); }
-}
-
-function updateCalibUI() {
-  const dots = [1,2,3];
-  dots.forEach(n => {
-    const el = document.getElementById('step-dot-'+n);
-    if (!el) return;
-    const done = (n === 1 && state.calibStep > 1) || (n === 2 && state.calibStep > 2);
-    const active = state.calibStep === n;
-    el.className = 'step-num ' + (done ? 'done' : active ? 'active' : 'pending');
-    el.textContent = done ? '✓' : n;
-  });
-  const sub = document.getElementById('calib-step2-sub');
-  if (sub) sub.textContent = state.calibStep >= 2 ? '화면에서 첫 번째 모서리 탭' : '1단계 완료 후 활성화';
-}
-
-document.getElementById('calib-canvas').addEventListener('click', function(e) {
-  const rect = this.getBoundingClientRect();
-  const x = (e.clientX - rect.left) * (this.width / rect.width);
-  const y = (e.clientY - rect.top) * (this.height / rect.height);
-  const canvas = this;
-
-  // Resize canvas to match area
-  canvas.width = rect.width; canvas.height = rect.height;
-
-  if (state.calibStep === 1) {
-    state.calibStep = 2;
-    state.calibPoints = [{x: e.clientX - rect.left, y: e.clientY - rect.top}];
-    updateCalibUI();
-    // Draw first point
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    drawCalibPoint(ctx, e.clientX - rect.left, e.clientY - rect.top, '#ff453a', '1');
-  } else if (state.calibStep === 2) {
-    state.calibPoints.push({x: e.clientX - rect.left, y: e.clientY - rect.top});
-    // Calculate
-    const p1 = state.calibPoints[0], p2 = state.calibPoints[1];
-    const pixDist = Math.sqrt((p2.x-p1.x)**2 + (p2.y-p1.y)**2);
-    // A4 diagonal = sqrt(210^2 + 297^2) mm = 363.5mm = 36.35cm
-    const pxPerCm = pixDist / 36.35;
-    state.pxPerCm = pxPerCm;
-    saveData();
-
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    drawCalibPoint(ctx, p1.x, p1.y, '#ff453a', '1');
-    drawCalibPoint(ctx, e.clientX-rect.left, e.clientY-rect.top, '#30d158', '2');
-    ctx.strokeStyle = '#00d4e0'; ctx.lineWidth = 1.5; ctx.setLineDash([5,5]);
-    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(e.clientX-rect.left, e.clientY-rect.top); ctx.stroke();
-    ctx.setLineDash([]);
-
-    state.calibStep = 3;
-    updateCalibUI();
-    const resultEl = document.getElementById('calib-result');
-    resultEl.style.display = 'block';
-    resultEl.innerHTML = `✅ 캘리브레이션 완료!<br>픽셀 거리: ${pixDist.toFixed(1)}px<br>1cm = ${pxPerCm.toFixed(2)}px`;
-    document.getElementById('calib-done-btn').style.display = 'block';
-  }
-});
-
-function drawCalibPoint(ctx, x, y, color, label) {
-  ctx.fillStyle = color;
-  ctx.beginPath(); ctx.arc(x, y, 12, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = '#fff'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText(label, x, y + 4);
-}
-
-function setByHeight() {
-  const h = parseFloat(document.getElementById('stand-height-input').value);
-  if (!h || h < 20 || h > 300) { alert('유효한 높이를 입력하세요 (20~300cm)'); return; }
-  // Approximation: at 100cm height, typical phone FOV shows ~120cm width in ~1280px
-  // pxPerCm ≈ (1280 / 120) * (100/h) ≈ 10.67 * (100/h)
-  // More generalized: assume 60° FOV, width seen = 2*h*tan(30°) ≈ 1.155*h
-  const cmWidth = 2 * h * Math.tan(30 * Math.PI / 180); // cm visible at that height
-  const screenPxW = 800; // typical display width
-  state.pxPerCm = screenPxW / cmWidth;
-  saveData();
-  const resultEl = document.getElementById('calib-result');
-  resultEl.style.display = 'block';
-  resultEl.innerHTML = `📐 높이 기반 추정 완료<br>거치대 높이: ${h}cm<br>1cm ≈ ${state.pxPerCm.toFixed(2)}px (대략값)`;
-  document.getElementById('calib-done-btn').style.display = 'block';
-}
+function openCalibration() {}
+function closeCalibration() { goBackFromSkill(); }
+function setByHeight() {}
 
 // ═══════════════════════════════════════════════════════
 //  SUMMARY
@@ -2600,17 +1555,13 @@ function showSummary() {
 }
 
 function renderSummary() {
-  let total = 0, maxPossible = 0;
+  const { total, npCount, teCount, pct, n } = calcScore(state.scores);
+  const maxPossible = (n - npCount - teCount) * 3;
   let cnt = {3:0, 2:0, 1:0, 0:0, NP:0, TE:0};
-  SKILLS.forEach(sk => {
+  getCurrentSkills().forEach(sk => {
     const sc = state.scores[sk.id];
-    if (sc && sc !== 'NP' && sc !== 'TE') {
-      total += parseInt(sc);
-      maxPossible += 3;
-    }
     if (sc) cnt[sc] = (cnt[sc] || 0) + 1;
   });
-  const pct = maxPossible > 0 ? Math.round(total/maxPossible*100) : 0;
   document.getElementById('sum-pct').textContent = pct + '%';
   document.getElementById('sum-label').textContent = `${total} / ${maxPossible}점`;
   document.getElementById('sum-cnt-3').textContent = cnt[3]||0;
@@ -2621,7 +1572,7 @@ function renderSummary() {
   document.getElementById('sum-cnt-te').textContent = cnt['TE']||0;
 
   const grid = document.getElementById('sum-grid');
-  grid.innerHTML = SKILLS.map(sk => {
+  grid.innerHTML = getCurrentSkills().map(sk => {
     const sc = state.scores[sk.id];
     const cls = sc ? (sc==='NP'?'snp':sc==='TE'?'ste':'s'+sc) : 'none';
     return `<div class="summary-item">
@@ -2635,14 +1586,14 @@ function renderSummary() {
 function exportResults() {
   let text = 'WSP 전동휠체어 평가 결과\n';
   text += '='.repeat(30) + '\n';
-  let total = 0, max = 0;
-  SKILLS.forEach(sk => {
+  const { total, pct, n, npCount, teCount } = calcScore(state.scores);
+  const max = (n - npCount - teCount) * 3;
+  getCurrentSkills().forEach(sk => {
     const sc = state.scores[sk.id];
     text += `[${sk.id.toString().padStart(2,'0')}] ${sk.name.padEnd(16)} : ${sc || '─'}\n`;
-    if (sc && sc !== 'NP' && sc !== 'TE') { total += parseInt(sc); max += 3; }
   });
   text += '='.repeat(30) + '\n';
-  text += `총점: ${total}/${max}점 (${max>0?Math.round(total/max*100):0}%)\n`;
+  text += `총점: ${total}/${max}점 (${pct}%)\n`;
   text += `평가일: ${new Date().toLocaleDateString('ko-KR')}\n`;
   navigator.clipboard.writeText(text).then(() => alert('결과가 클립보드에 복사되었습니다!')).catch(() => alert(text));
 }
@@ -2897,8 +1848,179 @@ const ANI_DRAWS = {
 };
 
 // ═══════════════════════════════════════════════════════
-//  LOGIN (베타 - 이름만)
+//  WST 수동 휠체어 기술 목록 (30개)
 // ═══════════════════════════════════════════════════════
+const SKILLS_MANUAL = [
+  { id:1,  name:'전진하기',                    en:'Rolls forward',                              cat:'기본 기술', prereq:null,
+    howto:['평탄한 바닥에서 출발선에 정지', '10m 전진 후 정지선에 멈춤', '폭 1.5m 이내 유지'],
+    score_criteria:['Pass: 10m 전진, 1.5m 폭 유지, 통제된 정지','AP: 직선로에서 효율적으로'], tip:['균형잡힌 밀기 동작','리듬감 있게'], spotter:['뒤에서 스포터 스트랩 잡기', '가속 시 후방 전복 주의'],
+    verbal:'"빨간 선 밖을 넘어가지 말고 전방에 있는 빨간 선까지 이동해서 멈추세요."', videoUrl:'', scoreDetail:{3:['효율적·안전하게'],2:['10m 전진, 1.5m 이내'],1:['부분 수행'],0:['수행 불가']}},
+  { id:2,  name:'후진하기',                    en:'Rolls backward',                             cat:'기본 기술', prereq:null,
+    howto:['출발선에서 후진 5m','어깨 확인 필수','폭 1.5m 이내'],
+    score_criteria:['Pass: 5m 후진, 어깨 확인'], tip:['양쪽 번갈아 어깨 확인'], spotter:['뒤에서 스포터 스트랩 잡기', '정지 시 후방 전복 주의'],
+    verbal:'"빨간 선 밖을 넘어가지 말고 후방에 있는 빨간 선까지 이동해서 멈추세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['5m 후진'],1:['부분'],0:['불가']}},
+  { id:3,  name:'제자리 회전',                 en:'Turns in place',                             cat:'기본 기술', prereq:null,
+    howto:['제자리에서 160° 이상 회전','양방향 모두'],
+    score_criteria:['Pass: 1.5m 반경','AP: 1.0m 반경'], tip:['한손 앞, 한손 뒤로 밀기'], spotter:['휠체어 옆에서 대기', '측방 전복 주의'],
+    verbal:'"가능한 한 좁은 원을 그리면서 휠체어를 180도 회전시켜보세요."', videoUrl:'', scoreDetail:{3:['1.0m'],2:['1.5m'],1:['부분'],0:['불가']}},
+  { id:4,  name:'전진 중 회전',                en:'Turns while moving forward',                 cat:'기본 기술', prereq:null,
+    howto:['슬라럼 코스 전진','파일런 사이 통과'],
+    score_criteria:['Pass: 1.5m 이내'], tip:['속도 조절'], spotter:['휠체어 옆에서 대기', '측방 전복 주의'],
+    verbal:'"앞으로 최대한 고깔에 가깝게 돌아서(8자 모양) 제자리로 돌아오세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['통과'],1:['부분'],0:['불가']}},
+  { id:5,  name:'후진 중 회전',                en:'Turns while moving backward',                cat:'기본 기술', prereq:null,
+    howto:['슬라럼 코스 후진','어깨 확인'],
+    score_criteria:['Pass: 1.5m 이내'], tip:['어깨 확인 필수'], spotter:['휠체어 옆에서 대기', '측방 전복 주의'],
+    verbal:'"뒤로 최대한 고깔에 가깝게 돌아서(8자 모양) 제자리로 돌아오세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['통과'],1:['부분'],0:['불가']}},
+  { id:6,  name:'측면 이동',                   en:'Maneuvers sideways',                         cat:'기본 기술', prereq:null,
+    howto:['옆으로 1.5m 이동','양방향'],
+    score_criteria:['Pass: 1.5m 폭'], tip:['양쪽 모두 연습'], spotter:['휠체어 옆, 기울어지는 쪽', '측방 전복 주의'],
+    verbal:'"반대편 빨간 선에 바퀴를 붙여보세요. 최대한 앞뒤로 움직임이 적게 해보세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:7,  name:'물체 집기/닿기',              en:'Reaches objects',                            cat:'기본 기술', prereq:null,
+    howto:['바닥에서 물체 집기','바닥+1.5m 높이'],
+    score_criteria:['Pass: 두 위치 모두'], tip:['균형 유지하며'], spotter:['앞, 약간 옆에서 대기', '전방 전복·낙상 주의', '대상 표면 전복 주의'],
+    verbal:'"바닥에 있는 물건을 집어서 저에게 주세요." → "벽에 표시되어 있는 붉은 부분을 만지세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:8,  name:'자세 조절 기능 조작',          en:'Operates body positioning options',          cat:'기본 기술', prereq:null,
+    howto:['등받이/발판 조절','각도 변경'],
+    score_criteria:['Pass: 독립적 조작'], tip:['익숙해질 때까지 반복'], spotter:['휠체어 옆에서 대기', '자세 변경 시 측방 전복 주의'],
+    verbal:'\"주로 전동휠체어에서만 평가합니다.\"', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:9,  name:'체중 이동',                   en:'Shifts weight',                              cat:'기본 기술', prereq:null,
+    howto:['15초 이상 체중 이동 유지','압력 완화 목적'],
+    score_criteria:['Pass: 15초 이상'], tip:['규칙적으로 시행'], spotter:['옆, 기울어지는 쪽', '전방 낙상 주의'],
+    verbal:'"엉덩이에 가해지는 압력을 낮추는 방법을 보여주세요. "정지"할 때까지 멈춰주세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['15초↑'],1:['부분'],0:['불가']}},
+  { id:10, name:'평면 이동 (transfer)',         en:'Performs level transfers',                   cat:'기본 기술', prereq:null,
+    howto:['평면 이동 (침대↔휠체어)','양방향'],
+    score_criteria:['Pass: 양방향 독립'], tip:['발판 먼저 올리기'], spotter:['앞에서 대기 (단일 스포터)', '2인 시: 1명은 환자, 1명은 대상 표면 담당', '전방·측방 전복 주의'],
+    verbal:'"MAT로 몸을 옮겨 앉으시고 다시 휠체어로 돌아오세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
+  { id:11, name:'휠체어 접기/펴기',             en:'Folds and unfolds wheelchair',               cat:'기본 기술', prereq:null,
+    howto:['휠체어 접기','다시 펴기'],
+    score_criteria:['Pass: 독립적 접기/펴기'], tip:['순서 익히기'], spotter:['옆, 기울어지는 쪽 (단일 스포터)', '2인 시: 1명은 휠체어, 1명은 휠체어 전복 방지', '부품 낙하·하지 부상 주의'],
+    verbal:'"휠체어를 접고 부품들을 최대한 분해하였다가 다시 조립해 주세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:12, name:'바닥 이동',                    en:'Performs ground transfers',                  cat:'기본 기술', prereq:10,
+    howto:['바닥으로 내려가기','다시 올라오기'],
+    score_criteria:['Pass: 양방향 독립'], tip:['#10 통과 후 시행'], spotter:['휠체어 옆, 기울어지는 쪽', '전방 낙상 주의', '부품 낙하 주의'],
+    verbal:'"휠체어에서 바닥으로 내려왔다가 다시 올라오세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
+  { id:13, name:'여닫이 문 통과',               en:'Gets through hinged door',                   cat:'기본 기술', prereq:null,
+    howto:['여닫이 문 열고 통과','양방향'],
+    score_criteria:['Pass: 양방향 독립'], tip:['문 잡으며 진입'], spotter:['휠체어 옆에서 대기', '문 통과 시 측방 전복 주의'],
+    verbal:'"문을 통과하고 닫아주세요. 다시 문을 열고 돌아오세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
+  { id:14, name:'완만한 경사 오르기',           en:'Ascends slight incline',                     cat:'경사로', prereq:null,
+    howto:['5° 경사 오르기','2.5m 이상'],
+    score_criteria:['Pass: 독립적 오르기'], tip:['앞으로 기울기'], spotter:['뒤에서 스트랩 잡기, 측면 경사 시 낮은 쪽', '가속 시 후방 전복 주의', '경사 하단 전방 전복 주의'],
+    verbal:'"경사로를 올라가서 중간 쯤에서 멈춰주세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:15, name:'완만한 경사 내려가기',         en:'Descends slight incline',                    cat:'경사로', prereq:null,
+    howto:['5° 경사 내려가기','통제된 속도'],
+    score_criteria:['Pass: 통제된 하강'], tip:['뒤로 내려가기 권장'], spotter:['뒤에서 스트랩 잡기 (단일 스포터)', '2인 시: 1명 뒤, 1명 앞 아래에서 대기', '측면 경사 시 낮은 쪽', '후방·전방 전복 주의'],
+    verbal:'"휠체어를 조절해서 경사로를 내려간 후 멈춰주세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:16, name:'가파른 경사 오르기',           en:'Ascends steep incline',                      cat:'경사로', prereq:14,
+    howto:['10° 경사 오르기'],
+    score_criteria:['Pass: 독립적 오르기','선수기술: #14 2점↑'], tip:['체중 이동'], spotter:['뒤에서 스트랩 잡기, 측면 경사 시 낮은 쪽', '가속 시 후방 전복 주의', '경사 하단 전방 전복 주의'],
+    verbal:'"경사로를 올라가서 중간 쯤에서 멈춰주세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:17, name:'가파른 경사 내려가기',         en:'Descends steep incline',                     cat:'경사로', prereq:15,
+    howto:['10° 경사 내려가기'],
+    score_criteria:['Pass: 통제된 하강','선수기술: #15 2점↑'], tip:['뒤로 내려가기'], spotter:['뒤에서 스트랩 잡기 (단일 스포터)', '2인 시: 1명 뒤, 1명 앞 아래에서 대기', '측면 경사 시 낮은 쪽', '후방·전방 전복 주의'],
+    verbal:'"휠체어를 조절해서 경사로를 내려간 후 멈춰주세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:18, name:'부드러운 표면 이동',           en:'Rolls on soft surface',                      cat:'지역사회', prereq:null,
+    howto:['잔디/카펫 등 부드러운 표면','2.5m 이상'],
+    score_criteria:['Pass: 2.5m 이상'], tip:['강하게 밀기'], spotter:['뒤에서 스트랩 잡기', '가속 시 후방 전복 주의', '장애물 충돌 주의'],
+    verbal:'"마지막 지점까지 이동하세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:19, name:'장애물 넘기',                  en:'Gets over obstacle',                         cat:'지역사회', prereq:null,
+    howto:['3.8cm 높이 장애물 넘기'],
+    score_criteria:['Pass: 모든 바퀴 통과'], tip:['앞바퀴 들기'], spotter:['뒤, 양손 push-handle 근처', '2인 시: 1명 뒤, 1명 장애물 옆', '후방 전복 주의', '전방 전복·낙상 주의'],
+    verbal:'"문턱을 넘어가세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:20, name:'낮은 연석 오르기',             en:'Ascends low curb',                           cat:'지역사회', prereq:null,
+    howto:['5cm 연석 오르기'],
+    score_criteria:['Pass: 독립적 오르기'], tip:['앞바퀴 들어 올리기'], spotter:['뒤, 양손 push-handle 근처', '2인 시: 1명 뒤, 1명 연석 옆', '후방 전복 주의', '전방 전복·낙상 주의'],
+    verbal:'"연석을 올라가세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:21, name:'낮은 연석 내려가기',           en:'Descends low curb',                          cat:'지역사회', prereq:null,
+    howto:['5cm 연석 내려가기'],
+    score_criteria:['Pass: 통제된 하강'], tip:['뒤로 내려가기'], spotter:['전진 시: 뒤, 또는 낮은 쪽', '후진 시: 낮은 쪽에서 push-handle 근처', '전방·후방 전복 주의'],
+    verbal:'"연석을 내려가세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:22, name:'높은 연석 오르기',             en:'Ascends high curb',                          cat:'지역사회', prereq:20,
+    howto:['15cm 연석 오르기'],
+    score_criteria:['Pass: 독립적 오르기','선수기술: #20 2점↑'], tip:['휠리 자세로'], spotter:['뒤, 양손 push-handle 또는 rigidizer bar 근처', '2인 시: 1명 뒤, 1명 연석 옆 아래', '후방 전복 주의', '전방 전복·낙상 주의'],
+    verbal:'"연석을 올라가세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:23, name:'높은 연석 내려가기',           en:'Descends high curb',                         cat:'지역사회', prereq:21,
+    howto:['15cm 연석 내려가기'],
+    score_criteria:['Pass: 통제된 하강','선수기술: #21 2점↑'], tip:['앞바퀴 들고 내려가기'], spotter:['전진 시: 뒤에서 대기', '후진 시: 낮은 쪽에서 push-handle 근처', '2인 시: 연석 옆에도 배치', '전방·후방 전복 주의'],
+    verbal:'"연석을 내려가세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:24, name:'정지 휠리',                    en:'Performs stationary wheelie',                cat:'휠리 기술', prereq:null,
+    howto:['앞바퀴 들고 정지 유지','3초 이상'],
+    score_criteria:['Pass: 3초 이상 유지'], tip:['무게중심 뒤로'], spotter:['뒤에서 스트랩 잡기 (기본)', '또는 앞·옆에서 크라우칭 자세로 하방 압력 준비', '후방 전복 주의'],
+    verbal:'"멈추라고 할 때까지 휠라이 자세를 유지하세요. 최대한 시작지점에 위치하도록 노력하세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['3초↑'],1:['부분'],0:['불가']}},
+  { id:25, name:'휠리 자세 회전',               en:'Turns in place in wheelie position',         cat:'휠리 기술', prereq:24,
+    howto:['앞바퀴 든 채 회전'],
+    score_criteria:['Pass: 독립적 회전','선수기술: #24 2점↑'], tip:['균형 유지'], spotter:['#24 정지 휠리와 동일한 위치', '후방·측방 전복 주의'],
+    verbal:'"휠라이 자세를 취한 후 최대한 좁은 범위 내에서 180도 회전하세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:26, name:'휠리 자세 전진/후진',          en:'Rolls forward and backward in wheelie position', cat:'휠리 기술', prereq:24,
+    howto:['앞바퀴 든 채 전진/후진'],
+    score_criteria:['Pass: 양방향','선수기술: #24 2점↑'], tip:['속도 조절'], spotter:['#24 정지 휠리와 동일한 위치', '후방 전복 주의'],
+    verbal:'"휠라이 자세를 취한 후 멈추라고 할 때까지 앞으로 이동하세요. 다시 멈추라고 할 때까지 뒤로 이동하세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:27, name:'휠리 자세로 높은 연석 내려가기', en:'Descends high curb in wheelie position',   cat:'휴리 기술', prereq:[24,26],
+    howto:['휠리 자세로 15cm 연석 하강'],
+    score_criteria:['Pass: 통제된 하강','선수기술: #26 2점↑'], tip:['앞바퀴 든 채 유지'], spotter:['뒤, 양손 push-handle 근처', '2인 시: 1명 뒤, 1명 연석 옆 아래', '후방·전방 전복 주의'],
+    verbal:'"휠라이 자세를 취한 후 연석을 내려가세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:28, name:'휠리 자세로 가파른 경사 내려가기', en:'Descends steep incline in wheelie position', cat:'휠리 기술', prereq:null,
+    howto:['휠리 자세로 10° 경사 하강'],
+    score_criteria:['Pass: 통제된 하강'], tip:['앞바퀴 든 채 천천히'], spotter:['#24 정지 휠리 및 경사 내려가기와 동일한 위치', '후방·전방 전복 주의'],
+    verbal:'"휠라이 자세를 취한 후 경사로를 내려가서 멈추세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:29, name:'계단 오르기',                  en:'Ascends stairs',                             cat:'휠리 기술', prereq:[10,12],
+    howto:['계단 오르기 (휠체어 밖 또는 안)'],
+    score_criteria:['Pass: 독립적 오르기','선수기술: #10, #12 2점↑'], tip:['안전 최우선'], spotter:['최소 1명은 계단 아래쪽', '1명 아래 (wheelchair 고정), 1명 위 (push-handle 담당)', '전방·후방·측방 전복 및 계단 추락 주의'],
+    verbal:'"휠체어를 가지고 계단을 올라가세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:30, name:'계단 내려가기',                en:'Descends stairs',                            cat:'휠리 기술', prereq:[10,12],
+    howto:['계단 내려가기'],
+    score_criteria:['Pass: 통제된 하강','선수기술: #10, #12 2점↑'], tip:['안전 최우선'], spotter:['#29 계단 오르기와 동일', '후진 하강 시: 뒤에서 push-handle 담당', '전방 휠리로 하강 시: 최소 2명 스포터 필요', '전방·후방·측방 전복 및 추락 주의'],
+    verbal:'"휠체어를 가지고 계단을 내려가세요."', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+];
+
+// 현재 모드 (전동/수동)
+let appMode = 'powered'; // 'powered' | 'manual'
+
+function getCurrentSkills() {
+  return appMode === 'manual' ? SKILLS_MANUAL : SKILLS;
+}
+
+function switchMode(mode) {
+  if (appMode === mode) return;
+  appMode = mode;
+  // 점수 초기화 여부 확인
+  state.scores = {};
+  state.currentPatientId = null;
+  state.currentPatientName = null;
+
+  // UI 업데이트
+  const pwdBtn = document.getElementById('mode-btn-powered');
+  const manBtn = document.getElementById('mode-btn-manual');
+  if (pwdBtn && manBtn) {
+    const pwdImg = pwdBtn.querySelector('img');
+    const mnImg  = manBtn.querySelector('img');
+    if (mode === 'powered') {
+      pwdBtn.style.background='linear-gradient(135deg,#2563eb,#1d4ed8)'; pwdBtn.style.color='#fff'; pwdBtn.style.border='none'; pwdBtn.style.boxShadow='0 4px 14px rgba(37,99,235,0.4)';
+      if(pwdImg){ pwdImg.style.filter='none'; pwdImg.style.opacity='1'; }
+      manBtn.style.background='#fff'; manBtn.style.color='#9ca3af'; manBtn.style.border='2px solid #e4e8ef'; manBtn.style.boxShadow='0 2px 6px rgba(0,0,0,0.05)';
+      if(mnImg){ mnImg.style.filter='none'; mnImg.style.opacity='0.5'; }
+    } else {
+      manBtn.style.background='linear-gradient(135deg,#16a34a,#15803d)'; manBtn.style.color='#fff'; manBtn.style.border='none'; manBtn.style.boxShadow='0 4px 14px rgba(22,163,74,0.4)';
+      if(mnImg){ mnImg.style.filter='none'; mnImg.style.opacity='1'; }
+      pwdBtn.style.background='#fff'; pwdBtn.style.color='#9ca3af'; pwdBtn.style.border='2px solid #e4e8ef'; pwdBtn.style.boxShadow='0 2px 6px rgba(0,0,0,0.05)';
+      if(pwdImg){ pwdImg.style.filter='none'; pwdImg.style.opacity='0.5'; }
+    }
+  }
+
+  // 환자 선택 초기화
+  const dot = document.getElementById('patient-required-dot');
+  if (dot) dot.style.background = '#ff453a';
+  const startBtn = document.getElementById('landing-start-btn');
+  if (startBtn) { startBtn.style.background = '#e8edf2'; startBtn.style.color = '#b0b8c1'; startBtn.style.pointerEvents = 'none'; }
+  document.getElementById('landing-patient-label').innerHTML = `<span style="width:36px;height:36px;border-radius:10px;background:#e8edf2;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">👤</span><span>환자를 선택해주세요</span>`;
+
+  renderBoardList();
+  showToast(mode === 'manual' ? '🦽 수동 WST 모드' : '⚡ 전동 WSP 모드', 'info');
+  const vEl = document.getElementById('side-version-text');
+  if (vEl) vEl.textContent = mode === 'manual' ? '🦽 수동 WST v5.4 · Dalhousie University' : '⚡ 전동 WSP v5.4.3 · Dalhousie University';
+}
+
+
 function previewLoginName(val) {
   const preview = document.getElementById('login-name-preview');
   if (!preview) return;
@@ -2928,7 +2050,11 @@ function renderBoardList() {
   const container = document.getElementById('board-list');
   if (!container) return;
 
-  const CATS = [
+  const CATS = appMode === 'manual' ? [
+    { label:'🏠 Indoor',    color:'#0284c7', bg:'#f0f9ff', border:'#e0f2fe', ids:[1,2,3,4,5,6,7,8,9,10,13] },
+    { label:'🌆 Community', color:'#d97706', bg:'#fffbeb', border:'#fef3c7', ids:[11,12,14,15,16,17,18,19,20,21] },
+    { label:'⭐ Advanced',  color:'#7c3aed', bg:'#f5f3ff', border:'#ede9fe', ids:[22,23,24,25,26,27,28,29,30] },
+  ] : [
     { label:'⚙ 장비 조작', color:'#7c3aed', bg:'#f5f3ff', border:'#ede9fe', ids:[1,2,3,4,5,6,7] },
     { label:'🚗 기본 주행', color:'#0284c7', bg:'#f0f9ff', border:'#e0f2fe', ids:[8,9,10,11,12,13,14,15,16,18] },
     { label:'🌆 지역사회',  color:'#d97706', bg:'#fffbeb', border:'#fef3c7', ids:[17,19,20,21,22,23,24,25,26] },
@@ -2955,14 +2081,17 @@ function renderBoardList() {
       <!-- 기술 목록 -->
       <div id="cat-body-${ci}" style="background:#fff; display:none;">
         ${cat.ids.map(id => {
-          const sk = SKILLS.find(s => s.id === id);
+          const sk = getCurrentSkills().find(s => s.id === id);
           if (!sk) return '';
           const score = state.scores[id];
           const scoreColors = {'3':'#0066ff','2':'#00a040','1':'#d97706','0':'#cc0000','NP':'#8b95a1','TE':'#7c3aed'};
-          // 선수기술 체크
+          // 선수기술 체크 (배열도 처리)
           const prereqFail = sk.prereq && (() => {
-            const ps = state.scores[sk.prereq];
-            return !ps || (ps !== '2' && ps !== '3');
+            const prereqs = Array.isArray(sk.prereq) ? sk.prereq : [sk.prereq];
+            return prereqs.some(pid => {
+              const ps = state.scores[pid];
+              return !ps || (ps !== '2' && ps !== '3');
+            });
           })();
           return `
             <div onclick="openSkillForEval(${id})"
@@ -2981,8 +2110,11 @@ function renderBoardList() {
                 <div style="font-size:15px; font-weight:700; color:#191919;">${sk.name}</div>
                 ${prereqFail ? `<div style="font-size:10px;color:#ff453a;margin-top:2px;">⚠ 선수기술 #${sk.prereq} 미통과</div>` : ''}
               </div>
-              <div style="width:8px; height:8px; border-radius:50%; flex-shrink:0;
-                background:${score ? (scoreColors[score]||'#8b95a1') : '#e8edf2'};"></div>
+              <div style="flex-shrink:0; font-size:11px;">
+                ${state.currentPatientId
+                  ? `<div style="width:8px;height:8px;border-radius:50%;background:${score?(scoreColors[score]||'#8b95a1'):'#e8edf2'};"></div>`
+                  : `<span style="color:#c5cdd6;">👁</span>`}
+              </div>
               <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
                 <path d="M1 1l4 4-4 4" stroke="#c5cdd6" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
@@ -3006,6 +2138,7 @@ function toggleCat(ci) {
 function showLoggedInUI() {
   document.getElementById('login-form').style.display = 'none';
   document.getElementById('welcome-section').style.display = 'block';
+  document.getElementById('mode-tab-section').style.display = 'block';
   document.getElementById('patient-section').style.display = 'block';
   document.getElementById('tools-section').style.display = 'block';
   updateHeroName();
@@ -3021,6 +2154,7 @@ function doLogout() {
   document.getElementById('login-form').style.display = 'block';
   document.getElementById('welcome-section').style.display = 'none';
   document.getElementById('patient-section').style.display = 'none';
+  document.getElementById('mode-tab-section').style.display = 'none';
   document.getElementById('tools-section').style.display = 'none';
   document.getElementById('start-section')&&(document.getElementById('start-section').style.display='none');
   const input = document.getElementById('login-name-input');
@@ -3364,7 +2498,7 @@ async function saveEvalHistory() {
   if (!window._fbReady||!state.currentPatientId) { showToast('환자를 먼저 선택해주세요','info'); return; }
   const {collection,addDoc,doc,updateDoc}=window._fbFuncs;
   let total=0,max=0;
-  SKILLS.forEach(sk=>{const sc=state.scores[sk.id];if(sc&&sc!=='NP'&&sc!=='TE'){total+=parseInt(sc);max+=3;}});
+  getCurrentSkills().forEach(sk=>{const sc=state.scores[sk.id];if(sc&&sc!=='NP'&&sc!=='TE'){total+=parseInt(sc);max+=3;}});
   const pct=max>0?Math.round(total/max*100):0;
   try {
     await addDoc(collection(window._db,'patients',state.currentPatientId,'evaluations'),{scores:{...state.scores},total,max,pct,therapist:state.therapistName||'─',evaluatedAt:new Date().toISOString()});
@@ -3381,67 +2515,239 @@ async function selectPatient(id,name) { selectLandingPatient(id,name); }
 // ═══════════════════════════════════════════════════════
 function showSideMenu() {
   let overlay = document.getElementById('side-menu-overlay');
-  if (overlay) { overlay.style.display='flex'; loadSidePatientList(); return; }
+  if (overlay) { overlay.style.display='flex'; setSideTab(appMode); loadSidePatientList(); return; }
   overlay = document.createElement('div');
   overlay.id = 'side-menu-overlay';
-  overlay.style.cssText = `position:fixed;inset:0;z-index:9998;display:flex;`;
+  overlay.style.cssText = `position:fixed;inset:0;z-index:9998;display:flex;align-items:stretch;`;
   overlay.innerHTML = `
-    <div onclick="closeSideMenu()" style="flex:1;background:rgba(0,0,0,0.4);"></div>
-    <div id="side-menu-panel" style="width:82%;max-width:320px;background:#fff;height:100%;overflow-y:auto;display:flex;flex-direction:column;border-right:1px solid #f0f0f0;order:-1;box-shadow:4px 0 24px rgba(0,0,0,0.12);">
-      <div style="padding:20px 16px 16px;background:#fff;border-bottom:1px solid #f2f4f6;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <span style="font-size:18px;font-weight:900;color:#0066ff;letter-spacing:2px;">WSP</span>
-          <button onclick="closeSideMenu()" style="background:#f2f4f6;border:none;color:#8b95a1;font-size:16px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;">✕</button>
+    <div id="side-menu-panel" style="width:80%;max-width:300px;background:#fff;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,0.15);overflow:hidden;">
+      <div style="padding:18px 14px 12px;border-bottom:1px solid #f0f2f5;display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#eff6ff;border:2px solid #bfdbfe;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">👤</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:700;color:#111827;">${state.therapistName||'치료사'}</div>
+          <div style="font-size:11px;color:#9ca3af;">작업치료사</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;background:#f8f9fa;border-radius:14px;padding:12px;">
-          <div style="width:40px;height:40px;border-radius:50%;background:#e8f0fe;border:2px solid #d0e2ff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">👤</div>
-          <div style="flex:1;min-width:0;"><div style="font-size:15px;font-weight:700;color:#191919;">${state.therapistName||'치료사'}</div><div style="font-size:11px;color:#8b95a1;">작업치료사</div></div>
-          <button onclick="showTherapistSetup();closeSideMenu();" style="padding:5px 12px;background:#fff;border:1px solid #e2e8f0;color:#0066ff;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR';font-weight:600;flex-shrink:0;">변경</button>
-        </div>
+        <button onclick="logout()" style="padding:5px 10px;border-radius:8px;background:#fef2f2;border:1px solid #fecaca;color:#dc2626;font-size:11px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR';flex-shrink:0;">로그아웃</button>
+        <button onclick="closeSideMenu()" style="width:28px;height:28px;border-radius:8px;background:#f7f8fa;border:1px solid #e4e8ef;color:#6b7280;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
       </div>
-      <div style="padding:16px 16px 8px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-          <span style="font-size:13px;font-weight:700;color:#191919;">👤 환자 목록</span>
-          <button onclick="showNewPatientForm()" style="padding:5px 14px;background:#0066ff;color:#fff;border:none;border-radius:20px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR';font-weight:700;">+ 신규</button>
-        </div>
-        <div id="side-patient-list" style="display:flex;flex-direction:column;gap:8px;"><div style="text-align:center;color:#8b95a1;font-size:12px;padding:16px 0;">불러오는 중...</div></div>
-      </div>
-      <div style="height:1px;background:#f2f4f6;margin:8px 16px;"></div>
-      <div style="padding:8px 16px;">
-        <div style="font-size:13px;font-weight:700;color:#191919;margin-bottom:8px;">📋 평가 지침</div>
-        ${['setup:⚙ 환경 셋업 체크리스트:평탄하고 미끄럽지 않은 경질 바닥 확보|전진/후진/회전 구역: 10m×1.5m 경로|경사로: 완만(5°)·급경사(10°)|파일런(콘) 4개 이상|바닥 테이프·줄자·각도기|기록지·필기도구·타이머',
-          'wc:🔋 전동휠체어 사전 확인:배터리 잔량 50% 이상|조이스틱 정상 작동 확인|속도: 평가 시작 시 최저(1단계)|자세 조절 기능 장착 여부(NP 해당)|모터 분리 레버/버튼 위치 파악|휠체어 폭·길이 측정 후 기록',
-          'stop:⚠ 즉시 평가 중단 기준:낙상 또는 낙상 임박 징후|휠체어 제어 불능 상태|환자가 통증·호흡곤란·어지러움 호소|배터리 부족 경고등 점등|기계적 이상 소음 발생',
-          'score:🎯 채점 원칙:채점은 수행 능력(Capacity) 기준|한 번의 시도로 채점 (TE 시 재시도 허용)|NP: 기계적 불가능 시에만|선수기술 Fail → 해당 기술 자동 Fail|양방향 수행 기술: 양방향 모두 채점'].map(g => {
-          const [key,title,items] = g.split(':');
-          const isStop = key==='stop';
-          return `<div onclick="toggleGuide('${key}')" style="background:${isStop?'#fff5f5':'#f8f9fa'};border:1px solid ${isStop?'#ffd6d3':'#e8edf2'};border-radius:12px;padding:10px 12px;margin-bottom:6px;cursor:pointer;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span style="font-size:13px;font-weight:600;color:${isStop?'#cc0000':'#191919'};">${title}</span>
-              <span id="guide-arrow-${key}" style="color:#8b95a1;">▼</span>
-            </div>
-            <div id="guide-${key}" style="display:none;margin-top:8px;">
-              ${items.split('|').map(item=>`<div style="display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid ${isStop?'#ffe0de':'#f0f0f0'};"><span style="color:${isStop?'#cc0000':'#0066ff'};font-size:12px;flex-shrink:0;">${isStop?'•':'→'}</span><span style="font-size:12px;line-height:1.5;color:${isStop?'#8b2020':'#3d4a5c'};">${item}</span></div>`).join('')}
-            </div>
-          </div>`;}).join('')}
-      </div>
-      <div style="padding:16px;margin-top:auto;border-top:1px solid #f2f4f6;">
-        <div style="text-align:center;line-height:1.8;">
-          <div style="font-size:10px;color:#c5cdd6;font-family:'Share Tech Mono';margin-bottom:6px;">WSP v5.4.3 · Dalhousie University</div>
-          <div style="height:1px;background:#f2f4f6;margin:8px 0;"></div>
-          <div style="font-size:10px;color:#c5cdd6;line-height:2;">Designed & Developed by <span style="color:#b0b8c1;font-weight:600;">하재용 OT</span><br>자료 정리와 교육에 고생하신<br><span style="color:#b0b8c1;font-weight:600;">한희선, 김홍규</span> 선생님께 감사드립니다 🙏</div>
-          <div style="height:1px;background:#f2f4f6;margin:8px 0;"></div>
-          <div id="fb-side-status" style="font-family:'Share Tech Mono';font-size:10px;color:#ff453a;">● Firebase 연결 중...</div>
+      <div style="padding:12px 14px;border-bottom:1px solid #f0f2f5;background:#f7f8fa;">
+        <div style="display:flex;gap:8px;">
+          <button id="smtab-powered" onclick="setSideTab('powered')"
+            style="flex:1;padding:12px 8px;border-radius:12px;border:1.5px solid #bfdbfe;
+              background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;
+              font-size:13px;font-weight:800;cursor:pointer;font-family:'Noto Sans KR';
+              display:flex;flex-direction:column;align-items:center;gap:3px;
+              box-shadow:0 3px 10px rgba(37,99,235,0.35);transition:all 0.15s;">
+            <span style="font-size:20px;">⚡</span>
+            <span>전동 WSP</span>
+          </button>
+          <button id="smtab-manual" onclick="setSideTab('manual')"
+            style="flex:1;padding:12px 8px;border-radius:12px;border:1.5px solid #e4e8ef;
+              background:#fff;color:#9ca3af;
+              font-size:13px;font-weight:800;cursor:pointer;font-family:'Noto Sans KR';
+              display:flex;flex-direction:column;align-items:center;gap:3px;
+              box-shadow:0 2px 6px rgba(0,0,0,0.05);transition:all 0.15s;">
+            <span style="font-size:20px;">🦽</span>
+            <span>수동 WST</span>
+          </button>
         </div>
       </div>
-    </div>`;
+      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;">
+        <div style="padding:10px 14px;border-bottom:1px solid #f0f2f5;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <div style="font-size:12px;font-weight:700;color:#111827;">👤 환자 목록</div>
+            <button onclick="showNewPatientForm()" style="padding:3px 10px;background:#2563eb;color:#fff;border:none;border-radius:20px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR';font-weight:700;">+ 신규</button>
+          </div>
+          <div id="side-patient-list" style="display:flex;flex-direction:column;gap:6px;"><div style="text-align:center;color:#9ca3af;font-size:12px;padding:10px 0;">불러오는 중...</div></div>
+        </div>
+        <div id="sm-tab-content" style="padding:8px 14px 16px;"></div>
+      </div>
+      <div style="padding:12px 14px;border-top:1px solid #f0f2f5;">
+        <div style="font-size:10px;color:#9ca3af;font-family:'Share Tech Mono';margin-bottom:8px;padding:7px 10px;background:#f7f8fa;border-radius:8px;border:1px solid #e4e8ef;text-align:center;">
+          <span id="side-version-text">⚡ 전동 WSP v5.4.3 · Dalhousie University</span>
+        </div>
+        <div style="text-align:center;margin-top:4px;">
+          <div style="font-size:10px;color:#d1d5db;font-family:'Share Tech Mono';">WSP · Dalhousie University</div>
+          <div style="font-size:10px;color:#d1d5db;line-height:1.8;margin-top:4px;">
+            Designed & Developed by <span style="color:#9ca3af;font-weight:700;">하재용</span><br>
+            자료 정리와 교육에 고생하신<br>
+            <span style="color:#9ca3af;font-weight:700;">김홍규, 양성필, 한희선</span> 선생님께 감사드립니다 🙏
+          </div>
+          <div id="fb-side-status" style="font-family:'Share Tech Mono';font-size:10px;color:#ff453a;margin-top:3px;">● Firebase 연결 중...</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;background:rgba(0,0,0,0.4);" onclick="closeSideMenu()"></div>`;
   document.body.appendChild(overlay);
+  setSideTab(appMode);
   loadSidePatientList();
 }
 
+function setSideTab(tab) {
+  const pw = document.getElementById('smtab-powered');
+  const mn = document.getElementById('smtab-manual');
+  if (pw) {
+    if (tab==='powered') {
+      pw.style.background='linear-gradient(135deg,#2563eb,#1d4ed8)'; pw.style.color='#fff'; pw.style.border='1.5px solid #bfdbfe'; pw.style.boxShadow='0 3px 10px rgba(37,99,235,0.35)';
+      mn.style.background='#fff'; mn.style.color='#9ca3af'; mn.style.border='1.5px solid #e4e8ef'; mn.style.boxShadow='0 2px 6px rgba(0,0,0,0.05)';
+    } else {
+      mn.style.background='linear-gradient(135deg,#16a34a,#15803d)'; mn.style.color='#fff'; mn.style.border='1.5px solid #bbf7d0'; mn.style.boxShadow='0 3px 10px rgba(22,163,74,0.35)';
+      pw.style.background='#fff'; pw.style.color='#9ca3af'; pw.style.border='1.5px solid #e4e8ef'; pw.style.boxShadow='0 2px 6px rgba(0,0,0,0.05)';
+    }
+  }
+  const vEl = document.getElementById('side-version-text');
+  if (vEl) vEl.textContent = tab === 'manual' ? '🦽 수동 WST v5.4 · Dalhousie University' : '⚡ 전동 WSP v5.4.3 · Dalhousie University';
+  const content = document.getElementById('sm-tab-content');
+  if (!content) return;
+
+  const parts = tab === 'powered' ? [
+    { label:'PART 1\n준비', color:'#2563eb', bg:'#eff6ff', border:'#bfdbfe', sections:[
+      { icon:'⚙', title:'환경 셋업 체크리스트', items:['평탄하고 미끄럽지 않은 경질 바닥 (시작 기준)','전진/후진/회전 기술용 10m×1.5m 경로 확보','경사로: 완만(1:12, 약 5°), 급경사(1:6, 약 10°) 각각 / 양쪽 끝 평탄면 최소 2m','연석: 낮은 연석(약 5cm) — 독립 접근 가능하게','여닫이 문: 표준 폭(최소 80cm), 손잡이 조작 가능 여부 확인','파일런(콘) 4개 이상 (직경 <10cm, 높이 ≥10cm)','장애물(높이 2cm 이하 문턱용 합판/블록)','측면 경사 및 연질 노면(카펫, 잔디 매트) 구역 준비','바닥 컬러 테이프, 줄자, 각도기 또는 스마트폰 기울기 앱','기록지, 필기도구, 타이머(선택)'] },
+      { icon:'💡', title:'환경 셋업 팁', items:[
+        '【공간 효율적 배치 순서】',
+        '① 전진/후진/회전/측방이동 구역 먼저 완료 (10m×3m, 바닥 테이프로 경로 표시)',
+        '② 파일런 2개로 전진·후진 회전 기술 동일 공간 활용 → 이동 최소화',
+        '③ 문 통과 → 경사로 → 단차 순으로 이동하며 평가 → 난이도 순 배치 권장',
+        '④ 연질 노면 구역: 회전 구역 옆에 2m×1.5m 배치 → 이동 동선 단축',
+        '【바닥 마킹 팁】',
+        '컬러 테이프 2가지 색상: 경로 경계선(파란색), 정지 목표선(빨간색)',
+        '제자리 회전 마커: 십자선 중심에서 0.5/1.0/1.5m 표시점 색깔 구분',
+        '측방이동 마커: 시작 위치(흰색)와 목표 위치(노란색) 구분',
+        '경사로 시작점·끝점 테이프 표시 — 평탄면/경사면 경계 명확히',
+        '마킹은 평가 전날 완료 → 접착제 건조·평탄화 확보',
+        '【장비 준비 팁】',
+        '파일런(콘)은 플라스틱 컵(직경 <10cm)으로 대체 가능 — 충돌 시 2cm 이내 변위 허용',
+        '경사도 확인: 스마트폰 나침반/수평기 앱 활용 (오차 ±1° 이내)',
+      ] },
+      { icon:'🔋', title:'전동휠체어 사전 확인', items:['배터리 잔량 충분한지 확인 (평가 전 최소 50% 이상 권장)','타이어 공기압·바퀴 상태 정상 여부','조이스틱/컨트롤러 정상 작동 확인 (드리프트, 불량 입력 없는지)','속도 설정: 평가 시작 시 최저 속도(1단계)로 초기화','자세 조절 기능(틸트/리클라인) 장착 여부 — NP 항목 해당 여부 미리 기록','모터 분리 레버/버튼 위치 사전 파악','휠체어 폭·길이 측정 후 기록'] },
+      { icon:'👤', title:'대상자 사전 확인', items:['인지 기능: 간단한 지시 이해 및 따를 수 있는지 (MMSE/MoCA 참고)','시력: 3m 거리 물체 인지 가능한지','상지 기능: 조이스틱 조작에 필요한 손·손가락 기능 범위 확인','앉기 균형: 휠체어에서 안전하게 앉은 자세 유지 가능한지','피로도·컨디션: 평가 당일 피로·통증이 심하면 재일정 검토','이전 전동휠체어(스쿠터) 경험 유무 기록','보장구 착용 여부: 안전벨트, 가슴 지지대, 발판 고정 확인'] },
+      { icon:'📋', title:'평가자 준비', items:['WSP 매뉴얼 v5.4.3 숙지, 각 기술 채점 기준 복습','평가 순서: 안전한 기술(전진·회전)부터 → 위험 기술(연석·급경사) 나중에','스포터 역할 명확히 정의 및 개입 기준 사전 합의','평가 중 언어 지시 횟수 제한 원칙 숙지 (Pass 조건에 영향)','기록 담당자 별도 지정 권장 (관찰+기록 동시 수행 시 오류 증가)'] },
+    ]},
+    { label:'PART 2\n안전', color:'#dc2626', bg:'#fef2f2', border:'#fecaca', sections:[
+      { icon:'🦺', title:'스포터 원칙', items:['스포터는 항상 휠체어 핸들 또는 제동 장치에 즉각 접근 가능한 위치','고위험 기술(연석 오르내리기, 급경사, 이동 장애물)은 스포터 2명 배치','스포터는 휠체어 이동 방향에 따라 선제적으로 위치를 이동해야 한다','스포터가 먼저 이동하지 않으면 오히려 장애물이 될 수 있음','스포터 개입은 환자 동의 없이도 즉각 가능 — 안전이 자율성보다 우선'] },
+      { icon:'⚠️', title:'즉시 평가 중단 기준', items:['낙상 또는 낙상 임박 징후 (심한 앞 쏠림, 측면 기울기)','휠체어 제어 불능 상태 (조이스틱 조작과 무관한 이동)','환자가 통증, 호흡곤란, 어지러움 호소','배터리 잔량 부족 경고등 점등','휠체어 기계적 이상 소음 발생','평가 환경 내 예상치 못한 제3자 진입'] },
+      { icon:'🔥', title:'기술별 고위험 순간', items:['후진하기: 출발 직후 캐스터 정렬 전 흔들림 → 스포터 후방 밀착','제자리 회전: 전속력 회전 시 원심력 → 속도 1단계 고정 필수','급경사 오르기: 중간 정지 후 재출발 실패 → 후방 미끄러짐 → 즉각 제동','급경사 내려가기: 앞바퀴 착지 순간 전방 전복 → 스포터 전방 하단 밀착','낮은 연석 내려가기: 앞바퀴 착지 충격 → 하단 스포터 전방 대기','높은 연석 내려가기: 가장 위험 → 스포터 2명 필수, 첫 시도는 치료사 직접 시연 후 진행','이동 장애물 회피: 양쪽 다 이동 중 → 예측 어려움, 스포터 중립 위치에서 관찰','측면 경사: 낮은 쪽으로 기울어짐 → 하단 측면 스포터'] },
+    ]},
+    { label:'PART 3\n채점', color:'#0891b2', bg:'#ecfeff', border:'#a5f3fc', sections:[
+      { icon:'🎯', title:'WST 채점 체계', items:['3점 Advanced Pass: 매우 숙련되고 효율적으로 수행, 안전 문제 없음','2점 Pass: 독립적·안전하게 수행, 불완전하지만 기준 충족','1점 Partial Pass: 평가 기준의 과반 충족, 일부 보조 또는 지시 필요','0점 Fail: 기준 과반 미충족, 안전 문제 또는 수행 거부','NP (No Part): 휠체어 구조상 해당 기술 수행 자체가 불가능','TE (Testing Error): 평가자가 기술을 적절히 평가할 수 없는 상황','【⚠️ 주의】','선수기술이 있는 기술에서 선수기술 Fail 또는 Partial Pass → 해당 기술 자동 Fail','NP는 반드시 휠체어 사양서 확인 후 부여. 셋업 불량·대상자 능력 부족은 NP 사유 아님','예: 기계적 불가능 = NP / 대상자 능력 부족 = 0점'] },
+      { icon:'📌', title:'채점 원칙', items:['채점은 수행 능력(Capacity) 기준 — 평소 수행 빈도나 보호자 평가와 혼동 금지','한 번의 시도로 채점 원칙; 단, Testing Error(TE) 발생 시 재시도 허용','채점 중 언어 지시가 불가피한 경우 → 지시 횟수와 내용을 기록지에 기재','2점(Pass)과 3점(Advanced Pass)의 차이: 동작의 효율성·유연성·안전 — 세부 기준을 반드시 참조','부분 합격(1점) 적용 시 "어떤 기준을 충족했는지" 반드시 코멘트란에 기록','No Part(해당 없음)는 휠체어 기계적 한계일 때만 적용 — 환자 능력 부족은 0점'] },
+      { icon:'❌', title:'자주 틀리는 채점 포인트', items:['후진하기: 어깨 확인(shoulder check) 빠뜨리면 Pass 불가 — 양쪽 각 1회 이상','제자리 회전: 160° 도달 여부와 반경(1.5m) 두 가지 동시 확인','측방 이동: 좌·우 양방향 모두 충족해야 2점 — 한 방향만 되면 1점','여닫이 문: 양방향(앞→뒤, 뒤→앞) 모두 수행해야 함','경사로 오르기: 상단 평탄면에 완전히 올라온 후 정지해야 Pass','연석 내려가기 3점 조건: 앞쏠림(forward lean) 없어야 함','NP 적용: 휠체어 사양서 확인 없이 NP 적용 금지'] },
+      { icon:'📝', title:'코멘트 기록 권장 항목', items:['소요 시간 (특히 전진·후진하기: 기준 없으나 재평가 시 비교 자료)','이동 거리 (기준 미달 시: 예 "전진 6m에서 정지")','도달 각도 (회전 기술: 예 "좌 145°, 우 160°")','언어 지시 내용 및 횟수','특이 행동: 보상 전략 사용 여부 (예: 3점 회전 사용, 몸통 기울기 등)','장비 이상, 환경 요인 등 외적 변수'] },
+      { icon:'🚫', title:'자주 하는 실수 & 절대 금지', items:[
+        '【평가자가 자주 하는 실수】',
+        '언어 지시를 너무 많이 줘서 Pass 조건을 충족시키는 경우 (채점 오염)',
+        '안전을 이유로 과도하게 개입 → 1점인데 2점 기록 오류 발생',
+        '양방향 수행 기술(회전·측방·문)에서 한 방향만 채점하는 실수',
+        'NP를 0점과 혼용 — NP는 휠체어 기계적 불가능에만 적용',
+        '채점 기준 암기에 의존 → 반드시 기록지와 매뉴얼 참조하며 채점',
+        '【평가 중 절대 금지 사항】',
+        '환자가 불안해한다고 고위험 기술(연석 내려가기 등)을 건너뛰면 안 됨 (NP 또는 0점으로 정확히 기록)',
+        '배터리 부족 경고 무시하고 평가 강행 금지',
+        '스포터 없이 연석·경사·이동 장애물 기술 진행 금지',
+        '첫 시도에서 갑자기 최고 속도로 고난도 기술 시도 금지 — 사전 저속 연습 후 평가',
+        '환자가 원한다고 제조사 권장 한계를 초과하는 단차/경사 시도 허용 금지',
+        '평가 중 휴대폰 사용 금지 (스포터 및 기록자 포함)',
+      ] },
+    ]},
+    { label:'PART 4\n활용', color:'#16a34a', bg:'#f0fdf4', border:'#bbf7d0', sections:[
+      { icon:'📊', title:'점수 해석 가이드', items:['80~100%: 고급 사용자 — 지역사회 완전 독립 주행 가능, 심화 환경 훈련 권고','60~79%: 독립 가능 수준 — 일부 환경 제한, 미흡 기술 집중 훈련 후 재평가','40~59%: 부분 독립 — 보호자 근거리 감독 필요, 기본 주행 반복 훈련','20~39%: 보조 의존 — 실내 제한적 사용, 장비 조작·기본 주행 기초부터 재훈련','0~19%: 전동휠체어 안전 사용 불가 — 다른 이동 수단 고려 또는 집중 훈련'] },
+      { icon:'🏋️', title:'0점·1점 기술 훈련 원칙', items:['안전에 직결된 기술 먼저: 후진 어깨 확인, 경사 속도 조절, 연석 하강 안전','빈도 높은 기술 우선: 전진/후진, 문 통과, 전원/속도 조작 — 일상생활 직결','0점 기술: 단순화 전략(최소 조건)에서 재출발 — 바로 반복하면 역효과','1점 기술: 언어 지시 제거를 목표 — "혼자 할 수 있는 루틴" 형성에 집중','3점 기술: 더 어려운 환경으로 이전 (실내 숙달 → 야외 적용)'] },
+      { icon:'🔁', title:'재평가 권장 시점', items:['집중 훈련 10~15회 후 중간 재평가 (진전도 확인 및 훈련 방향 수정)','기능 수준 변화 시: 상지 기능 향상, 인지 개선, 몸통 조절 향상 등','휠체어 변경 또는 컨트롤러 설정 변경 후 (기술 1~6 재평가 필수)','퇴원/지역사회 복귀 전 — 지역사회 기술 집중 재평가'] },
+      { icon:'👨‍👩‍👧', title:'보호자/간병인 교육', items:['스포터 역할: 언제, 어떤 위치에서, 어떻게 개입하는지 시연 교육','비상 시 모터 분리 방법 (기술 5) — 배터리 방전·비상 시 밀기','배터리 관리 루틴: 충전 시기 판단, 충전 연결 방법','속도 설정: 환경별 적정 속도 안내 (실내=저속, 야외=중속)','보조 개입 감소 훈련: 보호자가 과도하게 개입하면 독립성 저해'] },
+    ]},
+  ] : [
+    { label:'PART 1\n준비', color:'#2563eb', bg:'#eff6ff', border:'#bfdbfe', sections:[
+      { icon:'⚙', title:'환경 셋업 체크리스트', items:['평탄하고 미끄럽지 않은 경질 바닥 확보','전진/후진/회전: 10m×1.5m 경로 확보','경사로: 완만(1:12, 약 5°), 급경사(1:6, 약 10°)','연석: 낮은(5cm), 높은(15cm)','계단: 3단 이상','파일런·바닥 테이프·줄자·각도기 준비'] },
+      { icon:'🦽', title:'수동휠체어 사전 확인', items:['타이어 공기압 정상 확인','브레이크 작동 확인','발판·팔걸이 탈착 여부 확인','휠리 훈련 경험 여부 확인','휠체어 폭·길이 측정 후 기록','후방 안티팁 장치 위치 확인 (Advanced 기술 시 재배치)'] },
+      { icon:'👤', title:'대상자 사전 확인', items:['상지 기능: 추진에 필요한 손·어깨 기능 범위 확인','앉기 균형: 안전하게 앉은 자세 유지 가능한지','피로도·컨디션: 평가 당일 피로·통증 심하면 재일정 검토','이전 수동휠체어 경험 유무 기록','보장구 착용 여부: 안전벨트, 발판 고정 확인'] },
+    ]},
+    { label:'PART 2\n안전', color:'#dc2626', bg:'#fef2f2', border:'#fecaca', sections:[
+      { icon:'🦺', title:'스포터 원칙', items:['스포터는 항상 휠체어 핸들에 즉각 접근 가능한 위치','고위험 기술(연석·경사·계단)은 스포터 2명 배치','휠체어 이동 방향에 따라 선제적으로 위치 이동','스포터 개입은 환자 동의 없이도 즉각 가능'] },
+      { icon:'⚠️', title:'즉시 평가 중단 기준', items:['낙상 또는 낙상 임박 징후','환자가 통증·호흡곤란·어지러움 호소','휠리 자세 중 제어 불능','스포터가 개입한 경우','평가 환경 내 예상치 못한 제3자 진입'] },
+    ]},
+    { label:'PART 3\n채점', color:'#0891b2', bg:'#ecfeff', border:'#a5f3fc', sections:[
+      { icon:'🎯', title:'WST 채점 체계', items:['3점 Advanced Pass: 매우 숙련되고 효율적으로 수행','2점 Pass: 독립적·안전하게 수행','1점 Partial Pass: 평가 기준의 과반 충족, 일부 보조 필요','0점 Fail: 기준 과반 미충족','NP: 휠체어 구조상 기술 수행 자체가 불가능','TE: 평가자가 적절히 평가할 수 없는 상황','【⚠️ 주의】','선수기술이 있는 기술에서 선수기술 Fail 또는 Partial Pass → 해당 기술 자동 Fail','NP는 반드시 휠체어 사양서 확인 후 부여. 셋업 불량·대상자 능력 부족은 NP 사유 아님','예: 기계적 불가능 = NP / 대상자 능력 부족 = 0점'] },
+      { icon:'📌', title:'채점 원칙', items:['채점은 수행 능력(Capacity) 기준 — 평소 수행 빈도나 보호자 평가와 혼동 금지','한 번의 시도로 채점 원칙; 단, Testing Error(TE) 발생 시 재시도 허용','채점 중 언어 지시가 불가피한 경우 → 지시 횟수와 내용을 기록지에 기재','2점(Pass)과 3점(Advanced Pass)의 차이: 동작의 효율성·유연성·안전 — 세부 기준을 반드시 참조','부분 합격(1점) 적용 시 "어떤 기준을 충족했는지" 반드시 코멘트란에 기록','No Part(해당 없음)는 휠체어 기계적 한계일 때만 적용 — 환자 능력 부족은 0점'] },
+      { icon:'❌', title:'자주 틀리는 채점 포인트', items:['제자리 회전: 180° 도달 여부와 반경(1.5m) 두 가지 동시 확인','측방 이동: 좌·우 양방향 모두 충족해야 2점','여닫이 문: 양방향(앞→뒤, 뒤→앞) 모두 수행해야 함','경사로 오르기: 상단 평탄면에 완전히 올라온 후 정지해야 Pass','휠리 정지: 30초 유지 여부 엄격히 확인','NP 적용: 휠체어 사양서 확인 없이 NP 적용 금지'] },
+      { icon:'📝', title:'코멘트 기록 권장 항목', items:['소요 시간 (전진·후진: 기준 없으나 재평가 시 비교 자료)','이동 거리 (기준 미달 시 기록)','도달 각도 (회전 기술: 예 "좌 160°, 우 175°")','언어 지시 내용 및 횟수','보상 전략 사용 여부 (예: 몸통 앞숙임, 비대칭 밀기 등)','장비 이상, 환경 요인 등 외적 변수'] },
+      { icon:'🚫', title:'자주 하는 실수 & 절대 금지', items:['스포터 없이 연석·경사·계단 기술 진행 금지','NP를 0점과 혼용 금지','언어 지시 과다로 Pass 조건 충족시키는 행위 금지','양방향 기술에서 한 방향만 채점하는 실수','첫 시도에서 고난도 기술 갑자기 시도 금지','휠리 기술: 안티팁 장치 재배치 없이 시도 금지'] },
+    ]},
+    { label:'PART 4\n활용', color:'#16a34a', bg:'#f0fdf4', border:'#bbf7d0', sections:[
+      { icon:'📊', title:'점수 해석 가이드', items:['80~100%: 고급 사용자 — 지역사회 완전 독립 주행 가능','60~79%: 독립 가능 수준 — 미흡 기술 집중 훈련 후 재평가','40~59%: 부분 독립 — 보호자 근거리 감독 필요','20~39%: 보조 의존 — 기본 주행 기초부터 재훈련','0~19%: 수동휠체어 안전 사용 불가 — 집중 훈련 프로그램'] },
+      { icon:'🔁', title:'재평가 권장 시점', items:['집중 훈련 10~15회 후 중간 재평가','기능 수준 변화 시 (상지 기능 향상, 몸통 조절 향상 등)','휠체어 변경 후','퇴원/지역사회 복귀 전 — 지역사회 기술 집중 재평가'] },
+    ]},
+  ];
+
+  let currentPart = 0;
+
+  function renderParts() {
+    content.innerHTML = `
+      <div style="display:flex;gap:6px;margin-bottom:10px;">
+        ${parts.map((p,i)=>`
+          <button onclick="selectPart(${i})" id="part-btn-${i}"
+            style="flex:1;padding:7px 4px;border-radius:10px;border:1.5px solid ${p.border};
+              background:${i===currentPart?p.color:p.bg};color:${i===currentPart?'#fff':p.color};
+              font-size:18px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR';
+              white-space:pre-line;line-height:1.5;text-align:center;transition:all 0.15s;
+              display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <span style="font-size:9px;opacity:0.8;">${p.label.split('\n')[0]}</span>
+            <span style="font-size:18px;">${p.label.split('\n')[1]}</span>
+          </button>`).join('')}
+      </div>
+      <div id="part-card">
+        ${renderCard(parts[currentPart])}
+      </div>`;
+  }
+
+  function renderCard(p) {
+    return p.sections.map((s,si)=>`
+      <div style="margin-bottom:6px;border:1px solid ${p.border};border-radius:10px;overflow:hidden;">
+        <div onclick="toggleSection(${si})"
+          style="display:flex;align-items:center;justify-content:space-between;
+            padding:10px 12px;background:${p.bg};cursor:pointer;">
+          <span style="font-size:12px;font-weight:700;color:${p.color};">${s.icon} ${s.title}</span>
+          <span id="sec-arrow-${si}" style="color:${p.color};font-size:10px;transition:transform 0.2s;">▼</span>
+        </div>
+        <div id="sec-body-${si}" style="display:none;padding:8px 12px;background:#fff;border-top:1px solid ${p.border};">
+          ${s.items.map(i=> i.startsWith('【') ? `
+            <div style="font-size:11px;font-weight:700;color:${p.color};padding:6px 0 3px;margin-top:4px;border-top:1px solid ${p.border};">${i}</div>` : `
+            <div style="display:flex;gap:5px;padding:3px 0;border-bottom:1px solid #f3f4f6;">
+              <span style="color:${p.color};font-size:9px;flex-shrink:0;margin-top:3px;">•</span>
+              <span style="font-size:11px;line-height:1.5;color:#374151;">${i}</span>
+            </div>`).join('')}
+        </div>
+      </div>`).join('');
+  }
+
+  window.toggleSection = function(si) {
+    const body = document.getElementById('sec-body-'+si);
+    const arrow = document.getElementById('sec-arrow-'+si);
+    if (!body) return;
+    const open = body.style.display !== 'none';
+    body.style.display = open ? 'none' : 'block';
+    if (arrow) arrow.style.transform = open ? '' : 'rotate(180deg)';
+  };
+
+  window.selectPart = function(i) {
+    currentPart = i;
+    renderParts();
+  };
+
+  renderParts();
+}
 function closeSideMenu() {
   const el = document.getElementById('side-menu-overlay');
   if (el) el.style.display='none';
+}
+
+function logout() {
+  if (!confirm('로그아웃 하시겠어요?\n치료사 정보가 초기화됩니다.')) return;
+  localStorage.removeItem('wsp_therapist_masked');
+  localStorage.removeItem('wsp_therapist_raw');
+  state.therapistName = null;
+  state.currentPatientId = null;
+  closeSideMenu();
+  showTherapistSetup();
 }
 
 function toggleGuide(key) {
@@ -3611,7 +2917,7 @@ async function generateReport(patientId,patientName) {
     const latest=evals[0];if(!latest){showToast('평가 기록이 없어요','info');return;}
     const scores=latest.scores||{};
     let text=`═══════════════════════════\nWSP 전동휠체어 평가 보고서\n═══════════════════════════\n환자: ${patientName}\n치료사: ${state.therapistName||'─'}\n평가일: ${latest.evaluatedAt?new Date(latest.evaluatedAt).toLocaleDateString('ko-KR'):'─'}\n───────────────────────────\n총점: ${latest.total||0}/${latest.max||78}점 (${latest.pct||0}%)\n───────────────────────────\n`;
-    SKILLS.forEach(sk=>{const sc=scores[sk.id];const bar=sc?(sc==='NP'?'[NP]':sc==='TE'?'[TE]':`[${'■'.repeat(parseInt(sc))}${'□'.repeat(3-parseInt(sc))}]`):'[  ]';text+=`${String(sk.id).padStart(2,'0')}. ${sk.name.padEnd(12)} ${bar} ${sc||'─'}\n`;});
+    getCurrentSkills().forEach(sk=>{const sc=scores[sk.id];const bar=sc?(sc==='NP'?'[NP]':sc==='TE'?'[TE]':`[${'■'.repeat(parseInt(sc))}${'□'.repeat(3-parseInt(sc))}]`):'[  ]';text+=`${String(sk.id).padStart(2,'0')}. ${sk.name.padEnd(12)} ${bar} ${sc||'─'}\n`;});
     text+=`═══════════════════════════\n`;
     navigator.clipboard.writeText(text).then(()=>showToast('📄 보고서 복사됨!','success')).catch(()=>alert(text));
   }catch(e){showToast('보고서 생성 실패','error');}
@@ -3625,7 +2931,11 @@ function showSkillPickerForTab(tab) {
   modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;
     display:flex;align-items:flex-end;justify-content:center;`;
 
-  const CATS = [
+  const CATS = appMode === 'manual' ? [
+    { label:'🏠 Indoor',    color:'#0284c7', bg:'#f0f9ff', border:'#e0f2fe', ids:[1,2,3,4,5,6,7,8,9,10,13] },
+    { label:'🌆 Community', color:'#d97706', bg:'#fffbeb', border:'#fef3c7', ids:[11,12,14,15,16,17,18,19,20,21] },
+    { label:'⭐ Advanced',  color:'#7c3aed', bg:'#f5f3ff', border:'#ede9fe', ids:[22,23,24,25,26,27,28,29,30] },
+  ] : [
     { label:'⚙ 장비 조작', color:'#7c3aed', bg:'#f5f3ff', border:'#ede9fe', ids:[1,2,3,4,5,6,7] },
     { label:'🚗 기본 주행', color:'#0284c7', bg:'#f0f9ff', border:'#e0f2fe', ids:[8,9,10,11,12,13,14,15,16,18] },
     { label:'🌆 지역사회',  color:'#d97706', bg:'#fffbeb', border:'#fef3c7', ids:[17,19,20,21,22,23,24,25,26] },
@@ -3639,7 +2949,7 @@ function showSkillPickerForTab(tab) {
       <div style="padding:14px 18px 6px; font-size:11px; font-weight:800; color:${cat.color};
         letter-spacing:0.5px;">${cat.label}</div>
       ${cat.ids.map(id => {
-        const sk = SKILLS.find(s => s.id === id);
+        const sk = getCurrentSkills().find(s => s.id === id);
         if (!sk) return '';
         return `<div onclick="openSkillWithTab(${id},'${tab}')"
           style="padding:12px 18px; display:flex; align-items:center; gap:12px; cursor:pointer;
@@ -3697,12 +3007,6 @@ function openSkillFromHome(skillId) {
 }
 
 function openSkillForEval(skillId) {
-  if (!state.currentPatientId) {
-    showToast('환자를 먼저 선택해주세요', 'error');
-    const dot = document.getElementById('patient-required-dot');
-    if (dot) { dot.style.transform='scale(1.5)'; setTimeout(()=>dot.style.transform='scale(1)',400); }
-    return;
-  }
   state.prevScreen = 'landing';
   openSkill(skillId);
   showScreen('skill');
@@ -3744,11 +3048,6 @@ function saveData() {
 window.addEventListener('resize', () => {
   if (state.camActive) resizeCanvas();
 });
-
-// Init calibration canvas size
-const cCanvas = document.getElementById('calib-canvas');
-cCanvas.width = window.innerWidth;
-cCanvas.height = window.innerHeight * 0.5;
 
 // 이미 이름 저장돼 있으면 자동 로그인
 if (state.therapistName) {
