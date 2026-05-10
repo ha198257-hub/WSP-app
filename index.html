@@ -450,94 +450,6 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--c-bg); color: 
     </div>
   </div>
 
-  <!-- 영상 / 애니메이션 탭 -->
-  <div style="display:flex; background:var(--surface); border-bottom:1px solid var(--border);">
-    <button id="tab-vid-btn" onclick="switchMediaTab('vid')"
-      style="flex:1; padding:10px 4px; border:none; background:rgba(0,212,224,0.15); color:var(--accent);
-             font-size:12px; font-weight:700; cursor:pointer; font-family:'Noto Sans KR';
-             border-bottom:2px solid var(--accent); line-height:1.4;">
-      🎬 시범영상
-      <span id="video-timestamp-badge" style="display:none; font-size:9px; color:var(--accent);
-        font-family:var(--mono); background:rgba(0,212,224,0.15); padding:1px 5px;
-        border-radius:6px; margin-left:3px;"></span>
-    </button>
-    <button id="tab-ani-btn" onclick="switchMediaTab('ani')"
-      style="flex:1; padding:10px 4px; border:none; background:none; color:var(--text-dim);
-             font-size:12px; font-weight:500; cursor:pointer; font-family:'Noto Sans KR';
-             border-bottom:2px solid transparent; line-height:1.4;">
-      🎮 동작 애니
-    </button>
-  </div>
-
-  <!-- 영상 영역 -->
-  <div id="media-vid" style="display:none; background:#000; width:100%;
-    position:relative; overflow:hidden;">
-    <!-- 슬롯 탭 -->
-    <div style="display:flex; background:#0d1117; border-bottom:1px solid rgba(255,255,255,0.08);">
-      <button id="vslot-btn-1" onclick="switchVideoSlot(1)"
-        style="flex:1; padding:7px 8px; border:none; border-bottom:2px solid #2563eb; cursor:pointer;
-               font-family:'Noto Sans KR'; font-size:12px; font-weight:700;
-               background:rgba(37,99,235,0.2); color:#60a5fa; transition:all 0.15s;">
-        ▶ 영상 1
-      </button>
-      <button id="vslot-btn-2" onclick="switchVideoSlot(2)"
-        style="flex:1; padding:7px 8px; border:none; border-bottom:2px solid transparent; cursor:pointer;
-               font-family:'Noto Sans KR'; font-size:12px; font-weight:500;
-               background:transparent; color:rgba(255,255,255,0.38); transition:all 0.15s;">
-        ▶ 영상 2
-      </button>
-    </div>
-    <!-- 3:4 세로 비율 wrapper -->
-    <div style="position:relative; width:100%; padding-bottom:133%;">
-      <div class="video-placeholder" id="video-placeholder"
-        style="position:absolute; inset:0; display:flex; flex-direction:column;
-          align-items:center; justify-content:center; gap:8px;">
-        <span style="font-size:36px; opacity:0.4;">▶️</span>
-        <p style="font-size:12px; color:var(--text-dim); text-align:center;">
-          기본 영상이 연결되어 있어요<br>
-          <small>아래 URL 칸에서 변경 가능</small>
-        </p>
-      </div>
-      <div id="video-embed" style="display:none; position:absolute; inset:0;">
-        <iframe id="video-iframe"
-          style="width:100%; height:100%; border:none; display:block;"
-          frameborder="0" allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-        </iframe>
-      </div>
-    </div>
-    <!-- URL 수정 바 -->
-    <div style="background:rgba(0,0,0,0.85); padding:6px 10px;
-      display:flex; gap:6px; align-items:center; border-top:1px solid rgba(255,255,255,0.08);">
-      <input type="text" class="video-url-input" id="video-url-input"
-        placeholder="유튜브 URL 변경..."
-        style="flex:1; font-size:11px; padding:4px 8px;"
-        oninput="onVideoUrlChange()">
-      <button class="video-load-btn" onclick="loadVideo()" style="padding:4px 10px; font-size:11px;">변경</button>
-    </div>
-  </div>
-
-  <!-- 애니메이션 영역 -->
-  <div id="media-ani" style="display:none; background:#060a14; width:100%; aspect-ratio:4/3; position:relative; overflow:hidden;">
-    <canvas id="ani-canvas" style="width:100%; height:100%; display:block;"></canvas>
-    <div style="position:absolute; bottom:8px; right:8px; display:flex; gap:6px;">
-      <button onclick="aniTogglePlay()" id="ani-play-btn"
-        style="padding:5px 10px; background:rgba(0,212,224,0.2); border:1px solid rgba(0,212,224,0.4);
-               color:var(--accent); border-radius:8px; font-size:11px; cursor:pointer;">⏸ 정지</button>
-      <select onchange="aniSetSpeed(this.value)"
-        style="background:rgba(0,0,0,0.6); color:var(--text); border:1px solid rgba(255,255,255,0.2);
-               border-radius:6px; padding:4px 6px; font-size:11px;">
-        <option value="0.5">0.5x</option>
-        <option value="1" selected>1x</option>
-        <option value="2">2x</option>
-      </select>
-    </div>
-    <div id="ani-no-anim" style="position:absolute; inset:0; display:none; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
-      <span style="font-size:32px; opacity:0.3;">🎮</span>
-      <p style="font-size:12px; color:var(--text-dim); text-align:center;">이 기술의 애니메이션은<br>준비 중이에요</p>
-    </div>
-  </div>
-
   <!-- Measure bar -->
   <div class="measure-info-bar" id="measure-bar">
     <span class="measure-tag" id="measure-tag">─</span>
@@ -545,7 +457,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--c-bg); color: 
   </div>
 
   <!-- 카드 탭 -->
-  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:10px 12px; background:var(--surface); border-bottom:1px solid var(--border);">
+  <div id="skill-tab-grid" style="display:grid; grid-template-columns:repeat(5,1fr); gap:6px; padding:10px 12px; background:var(--surface); border-bottom:1px solid var(--border);">
     <button onclick="switchTab('수행')" id="ctab-수행"
       style="padding:8px 4px; border-radius:10px; border:none; cursor:pointer; font-family:'Noto Sans KR';
              font-size:11px; font-weight:700; background:rgba(0,212,224,0.18); color:#00d4e4;
@@ -570,12 +482,26 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--c-bg); color: 
              border:1.5px solid var(--border); transition:all 0.15s;">
       🛡️<br>스포터
     </button>
+    <button onclick="switchTab('시범영상')" id="ctab-시범영상"
+      style="padding:8px 4px; border-radius:10px; border:none; cursor:pointer; font-family:'Noto Sans KR';
+             font-size:11px; font-weight:700; background:rgba(220,38,38,0.1); color:var(--text-dim);
+             border:1.5px solid var(--border); transition:all 0.15s;">
+      🎬<br>시범영상
+    </button>
+    <button onclick="switchTab('애니')" id="ctab-애니"
+      style="display:none; padding:8px 4px; border-radius:10px; border:none; cursor:pointer; font-family:'Noto Sans KR';
+             font-size:11px; font-weight:700; background:rgba(0,100,200,0.1); color:var(--text-dim);
+             border:1.5px solid var(--border); transition:all 0.15s;">
+      🎮<br>동작애니
+    </button>
   </div>
 
   <div id="tab-수행" class="tab-content active"></div>
   <div id="tab-채점" class="tab-content"></div>
   <div id="tab-팁" class="tab-content"></div>
   <div id="tab-스포터" class="tab-content"></div>
+  <div id="tab-시범영상" class="tab-content"></div>
+  <div id="tab-애니" class="tab-content"></div>
 
   <!-- Score -->
   <div class="score-section">
@@ -627,6 +553,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--c-bg); color: 
 <!-- ═══════════════════════════ CALIBRATION ═══════════════════════════ -->
 
 <script>
+
 // ═══════════════════════════════════════════════════════
 //  HOME
 // ═══════════════════════════════════════════════════════
@@ -639,7 +566,6 @@ const state = {
   prevScreen: 'landing',
   scores: {},
   videoUrls: {},
-  currentVideoSlot: 1,
   pxPerCm: null,
   camActive: false,
   timerRunning: false,
@@ -655,7 +581,7 @@ const SKILLS = [
     howto:['전원을 OFF한 상태에서 시작', '컨트롤러를 일반 조작 위치에서 충분히 치운다 (식사·transfer 시 방해 안 되도록)', '전원 켜기 전에 반드시 원래 위치로 복구'],
     score_criteria:['두 동작(이동/복귀) 모두 안전하게 독립적으로 수행해야 합격', '전원 OFF 상태에서 시작·복귀 전 필수 확인', 'NP 부여 없음'],
     tip:['전원 OFF 상태에서만 연습 (급발진 방지)', '이동 → 복구 순서로 단계별 훈련', '색상 테이프로 힘을 가할 위치 표시'],
-    spotter:['위치: 컨트롤러 있는 쪽 옆', '위험: 이동·복구 시 손가락·옷 끼임', '위험: 조이스틱 비의도적 작동에 의한 급발진'],
+    spotter:['위치: 컨트롤러 있는 쪽 옆', '위험: 이동·복구 시 손가락·옷 끼임', '위험: 조이스틱 비의도적 작동에 의한 급발진'], videoUrl:'https://www.youtube.com/watch?v=s4LoNqd0QvM&list=PL2eGvW0pWTt5ZsjRq2R9LFOy9b-YPfWkm',
     verbal:'"컨트롤러를 옆으로 치워 주세요." → "컨트롤러를 원래 위치로 되돌려 주세요."'
   },
   {
@@ -720,7 +646,7 @@ const SKILLS = [
     howto:['적절한 드라이브 모드와 속도 선택', '조이스틱을 전방으로 밀어 전진 (비례 제어)', '진행 방향 전방 주시, 측방 위험도 주의', '정지 시 조이스틱을 천천히 중립으로 복귀'],
     score_criteria:['①10m 전진 ②1.5m 폭 경로 내 유지 ③통제 방식 정지 → 3가지 모두 충족 = 합격', '2/3 충족 = 부분합격', '3점: 부분 낙상 또는 일시적 전복 없어야 함', 'NP 부여 불가'],
     tip:['조이스틱을 천천히 부드럽게 조작', '처음에는 낮은 속도 모드에서 시작 → 점진적 속도 향상', '전완부를 팔걸이에 안정적으로 올려놓고 조이스틱 조작'],
-    spotter:['위치: 컨트롤러 쪽 옆', '체간 조절 어려운 대상: 정지 시 전방 어깨 앞에 손 준비', '위험: 급발진'],
+    spotter:['위치: 컨트롤러 쪽 옆', '체간 조절 어려운 대상: 정지 시 전방 어깨 앞에 손 준비', '위험: 급발진'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=109',
     verbal:'"(경계선을 가리키며) 경계선 안쪽에서 앞으로 이동하여 (지점 가리키며) 여기서 멈춰주세요."'
   },
   {
@@ -729,7 +655,7 @@ const SKILLS = [
     howto:['조이스틱을 후방으로 당겨 후진', '이동 중 양쪽 어깨 확인(shoulder check) 각 1회 이상 수행', '후진 중 조이스틱 방향: \"무릎이 가고 싶은 방향\"', '정지 시 조이스틱을 천천히 중립으로 복귀'],
     score_criteria:['①5m 후진 ②1.5m 폭 유지 ③통제 정지 ④양쪽 어깨 확인 각 1회 → 4가지 모두 충족 = 합격', '2/4 충족 = 부분합격', '⚠ 어깨 확인 빠뜨리면 Pass 불가'],
     tip:['천천히 후진, 어깨 확인 습관화', '후방 카메라·거울 활용 가능하나 어깨 확인 습관 병행', '무릎이 가고 싶은 방향으로 조이스틱 연상'],
-    spotter:['위치: 후방 또는 옆', '위험: 후방 전복, 고정/이동 물체 충돌'],
+    spotter:['위치: 후방 또는 옆', '위험: 후방 전복, 고정/이동 물체 충돌'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=125',
     verbal:'"(경계선을 가리키며) 경계선 안쪽에서 뒤로 이동하여 (지점 가리키며) 여기서 멈춰주세요."'
   },
   {
@@ -747,7 +673,7 @@ const SKILLS = [
     howto:['조이스틱 전후로 조작하며 방향 조절 → 자동차 주차처럼 측면 이동', '4단계 사이클: 전진+가까운 쪽 회전 → 전진+원쪽 정렬 → 후진+가까운 쪽 회전 → 후진+원쪽 정렬', '최소한의 전후방 이동으로 최대 측면 이동 목표', '양방향 모두 시연'],
     score_criteria:['양방향: ①측면 거리 <10cm ②각도 <20° ③전후방 <1.5m → 합격', '3점(AP): 전후방 <1.0m', '부분합격: 한 방향만 충족, 또는 양방향 부분 충족', 'NP 불가'],
     tip:['4단계 사이클 반복 훈련', '거울·카메라로 후방 위치 피드백', '엘리베이터 시뮬레이션 등 실생활 맥락 활용'],
-    spotter:['위치: 휠체어 뒤', '위험: 후진 급정지 시 후방 전복'],
+    spotter:['위치: 휠체어 뒤', '위험: 후진 급정지 시 후방 전복'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=313',
     verbal:'"(목표 지점 가리키며) 이 목표물에 바퀴를 최대한 가깝게 붙여주세요. 앞뒤 이동을 최소화해 주세요."'
   },
   {
@@ -756,7 +682,7 @@ const SKILLS = [
     howto:['전진하면서 조이스틱을 측면으로 조작하여 파일런 주변 회전', '가까운 쪽(near-side) 구동 바퀴가 장애물 통과 지점에 집중', '전륜 구동 기기: 후방 캐스터가 크게 스윙 → 원쪽 공간 확인', '충돌 위협 시 손·발로 막지 말 것 → 신체 보호 영역 내 유지', '양방향 모두 시연'],
     score_criteria:['양방향: ①파일런 접촉 허용하나 2cm↑ 이동 금지 ②앞 바퀴가 결승선 통과 시 완료 ③지면 접촉 부분 1.5m 표시 이내', '3점(AP): 1.0m 이내', '부분합격: 한 방향만 1.5m 충족'],
     tip:['가까운 쪽 구동 바퀴가 장애물 넘어선 후 회전 시작', '\"느리게, 확인하고, 회전\" 순서', '전륜/후륜/중간 구동에 따른 경로 차이 사전 파악'],
-    spotter:['위치: 뒤에서 스포터 스트랩 또는 옆 대기', '위험: 전진 가속 시 후방 전복'],
+    spotter:['위치: 뒤에서 스포터 스트랩 또는 옆 대기', '위험: 전진 가속 시 후방 전복'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=239',
     verbal:'"(고깔을 가리키며) 앞으로 고깔 주위를 최대한 가깝게 지나가 주세요."'
   },
   {
@@ -765,7 +691,7 @@ const SKILLS = [
     howto:['후진하면서 조이스틱을 측면으로 조작하여 파일런 주변 회전', '후진 중 회전 방향: \"무릎(앞쪽)이 가고 싶은 방향\"으로 조이스틱 조작', '안쪽 어깨를 넘겨 확인', '보호자 전방에서 후진 조작 시: 좌우 방향이 반대 → 사전 교육 필수', '양방향 모두 시연'],
     score_criteria:['전진 중 회전의 합격 기준과 동일 적용', '양방향 파일런 2cm 미만 이동, 1.5m 이내'],
     tip:['\"무릎이 가고 싶은 방향으로 조이스틱\" 연상', '안쪽 어깨 확인 습관화', '보호자 전방 조작 시 방향 반직관적 → 사전 충분한 교육'],
-    spotter:['위치: 뒤 또는 옆', '위험: 정지 시 후방 전복, 충돌'],
+    spotter:['위치: 뒤 또는 옆', '위험: 정지 시 후방 전복, 충돌'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=272',
     verbal:'"(고깔을 가리키며) 뒤로 고깔 주위를 최대한 가깝게 지나가 주세요."'
   },
   {
@@ -774,7 +700,7 @@ const SKILLS = [
     howto:['물체 또는 목표를 향해 휠체어를 적절히 위치', '바닥 물체 집기: 전원 OFF 후 집기 (구동 바퀴에 손가락 끼임 방지)', '자세 보정 기능(좌석 거상·전방 틸트·스탠드업) 활용', '머리 위 목표 닿기: 좌석 거상으로 도달 범위 최대화', '보조 도구(reaching aid) 사용 가능'],
     score_criteria:['①바닥 물건 집어 검사자에게 건넴 ②머리 위 목표물에 손 닿음 → 두 과제 모두 = 합격', '부분합격: 두 과제 중 하나만', '0점: 발판에 발 올린 채 일어서려 하면 스포터 개입·불합격'],
     tip:['바닥 물체 집기 전 전원 OFF 필수', '전방 틸트 기능으로 더 쉽게 아래 닿기', '보조 도구(reaching aid) 항상 휴대 권장'],
-    spotter:['위치: 기울어지는 쪽 옆', '위험: 전방·측방 전복 또는 낙상', '위험: 발판에 발 올린 채 일어서기 시도'],
+    spotter:['위치: 기울어지는 쪽 옆', '위험: 전방·측방 전복 또는 낙상', '위험: 발판에 발 올린 채 일어서기 시도'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=376',
     verbal:'"(물체 가리키며) 바닥에서 물체를 집어서 저에게 주세요." → "(머리 위 목표 가리키며) 저 목표물을 만져주세요."'
   },
   {
@@ -783,7 +709,7 @@ const SKILLS = [
     howto:['틸트·리클라인·스탠드업 기능이 있으면 활용 (45° 이상 권장)', '기능 없으면 전방 또는 측방으로 상체를 충분히 기울임', '측방 기울이기: 한쪽씩, 양쪽 모두 완전 압력 제거 목표', '15초 이상 유지 (평가자가 말할 때까지)', '복귀 시 스스로 바로 앉을 수 있어야 함'],
     score_criteria:['①양쪽 좌골 완전 해제 (검사자 손 쉽게 들어갈 정도) ②15초 이상 유지 → 합격', '부분합격: 한쪽만, 불완전 해제, 또는 8~14초', '0점: 완전 해제 8초 미만'],
     tip:['전동휠체어: 틸트·리클라인 기능 적극 활용', '매 25분마다 15초 이상 부분 체중 이동 권장', '전자 기기 알림으로 정기적 체중 이동 습관화'],
-    spotter:['위치: 기울어지는 쪽 옆', '위험: 전방·측방 전복 또는 낙상'],
+    spotter:['위치: 기울어지는 쪽 옆', '위험: 전방·측방 전복 또는 낙상'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=384',
     verbal:'"엉덩이의 압력을 제거하는 방법을 보여주세요. 멈추라고 할 때까지 자세를 유지해 주세요."'
   },
   {
@@ -792,7 +718,7 @@ const SKILLS = [
     howto:['전원을 OFF', 'transfer 방향으로 컨트롤러 치우고, 팔걸이 올리거나 제거', '발판 치우고 발을 바닥에 지지', 'transfer 면에 최대한 가깝게 이동', '측방 transfer: 약한 팔 쪽 앞으로 리드, 머리와 엉덩이 반대 방향', 'transfer 후 발판 복구, 전원 ON 가능 상태로 복원'],
     score_criteria:['①휠체어 준비 ②목표 면으로 이동 ③복귀 ④휠체어 복원 → 4가지 모두 = 합격', '부분합격: 한 방향만 성공', '3점(AP): 전원 미차단 시 불가'],
     tip:['전원 OFF, 팔걸이·발판 치우기, transfer 면에 최대한 가깝게', '\"머리와 엉덩이 반대 방향\" 원칙', 'transfer 전 휠체어가 움직이지 않도록 전원 OFF 확인'],
-    spotter:['위치: 대상자 전방 및 약간 측면', '위험: 전방·측방 전복 또는 낙상', '위험: transfer 면 위에서 떨어짐'],
+    spotter:['위치: 대상자 전방 및 약간 측면', '위험: 전방·측방 전복 또는 낙상', '위험: transfer 면 위에서 떨어짐'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=438',
     verbal:'"(목표면 가리키며) 휠체어에서 저기로 이동해 주세요." → "다시 휠체어로 돌아와 주세요."'
   },
 
@@ -812,7 +738,7 @@ const SKILLS = [
     howto:['밀리는 방향(push door): 문 정면에서 발판 또는 손으로 문 밀며 전진', '당겨지는 방향(pull door): 한 손 손잡이 + 다른 손 조이스틱, 후진하며 문 당김', '자동 닫힘 문: 한 손 손잡이, 다른 손 조이스틱 → 저항에 버틸 필요 없음', '문 통과 후 반드시 닫는다', '문·문틀에 손·팔꿈치가 긁히지 않도록 주의'],
     score_criteria:['양방향 모두: ①열기 ②통과 ③닫기 → 합격', '부분합격: 한 방향만, 또는 열기/닫기 중 하나만', '3점(AP): 일반 기준 준함', 'NP 불가'],
     tip:['당기는 문 → 조이스틱+문 손잡이 동시 조작 훈련', '자동 닫힘 문: 저항 불필요, 속도 조절로 충분', '문 폭이 좁은 경우 팔걸이 제거로 폭 줄이기 검토'],
-    spotter:['위치: 기울어지는 쪽 옆', '위험: 당기기 중 후방·전방·측방 전복 또는 낙상', '위험: 손가락 문·문틀 사이 끼임'],
+    spotter:['위치: 기울어지는 쪽 옆', '위험: 당기기 중 후방·전방·측방 전복 또는 낙상', '위험: 손가락 문·문틀 사이 끼임'], videoUrl:'https://www.youtube.com/watch?v=MpgApLT_EIQ&list=PL2eGvW0pWTt7NK-17iE9jTmxpFhIDrAXo&index=2',
     verbal:'"문을 열고 통과한 후 닫아주세요." → "반대 방향으로 다시 통과해 주세요."'
   },
   {
@@ -821,7 +747,7 @@ const SKILLS = [
     howto:['필요 시 고토크 드라이브 모드로 전환', '경사 시작 지점(floor-incline transition) 주의 (발판 걸림 주의)', '발판 걸릴 경우 다리 거상 기능으로 발판 올림', '경사 오르는 중 틸트를 전방으로 조정 → 전방 시야 확보 및 균형 개선'],
     score_criteria:['①상단 플랫폼까지 모든 바퀴 완전 벗어남 (플랫폼 없으면 2.5m↑) ②측방 경계 이탈 없음 → 합격', '부분합격: 최소 1.5m 이상', '불합격: 1.5m 미만 또는 측방 이탈', 'NP 불가'],
     tip:['대부분 전동휠체어는 5° 충분히 오를 수 있음', '경사 오르기 시 틸트를 전방 조정', '발판이 경사 시작 지점에 걸리면 다리 거상 기능 활용'],
-    spotter:['위치: 경사로 뒤에서 대기', '사이드 슬로프: 낮은 쪽(downhill)', '위험: 후방 전복, 발판 걸림에 의한 전방 전복'],
+    spotter:['위치: 경사로 뒤에서 대기', '사이드 슬로프: 낮은 쪽(downhill)', '위험: 후방 전복, 발판 걸림에 의한 전방 전복'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=523',
     verbal:'"경사로를 올라가 주세요."'
   },
   {
@@ -830,7 +756,7 @@ const SKILLS = [
     howto:['전동휠체어는 경사에서 자동 브레이킹(모터 제동) 작동', '느린 속도로 시작하여 속도 유지에 집중', '하강 중 틸트 조정으로 안정성 향상 및 전방 시야 확보', '하부 경사 끝 지점 주의: 발판·캐스터 걸림 위험', '경사로 끝에서 통제된 방식으로 정지'],
     score_criteria:['①하단 평면까지 모든 바퀴 완전 벗어남 ②통제 정지 ③측방 이탈 없음 → 합격', '부분합격: 통제 상태로 1.5m↑', '불합격: 1.5m 미만, 과속, 측방 이탈'],
     tip:['전동휠체어는 경사에서 자동 속도 제한 (모터 브레이킹)', '하강 시 틸트 조정으로 균형·시야 개선', '보호자: 모터 절대 분리하지 말 것'],
-    spotter:['위치: 경사 전방(하강 방향)에서', '필요 시 2명: 뒤+측면', '위험: 제어 실패 시 급주행, 하부 전환 지점에서 전방 전복'],
+    spotter:['위치: 경사 전방(하강 방향)에서', '필요 시 2명: 뒤+측면', '위험: 제어 실패 시 급주행, 하부 전환 지점에서 전방 전복'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=532',
     verbal:'"경사로를 조절하며 내려가서 (지점 가리키며) 여기서 멈춰주세요."'
   },
   {
@@ -839,7 +765,7 @@ const SKILLS = [
     howto:['선수 기술: 완만한 경사 오르기 합격 필요', '고토크 드라이브 모드로 전환', '경사 시작 지점 주의하며 접근', '경사 오르는 중 틸트를 전방으로 조정하여 시야 확보'],
     score_criteria:['19번과 동일 기준 적용 (10° 경사)', '부분합격: 1.5m 이상, 또는 7.5° 경사 성공', '선수기술 Fail/Partial → 자동 불합격'],
     tip:['고토크 모드 선택, 일정 속도 유지', '발판 걸림 방지: 다리 거상 기능 활용', '완만한 경사(5°) 충분히 익힌 후 시작'],
-    spotter:['위치: 경사로 뒤', '사이드 슬로프: 낮은 쪽', '위험: 후방 전복 (더 높은 위험)'],
+    spotter:['위치: 경사로 뒤', '사이드 슬로프: 낮은 쪽', '위험: 후방 전복 (더 높은 위험)'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=550',
     verbal:'"경사로를 올라가 주세요."'
   },
   {
@@ -848,7 +774,7 @@ const SKILLS = [
     howto:['선수 기술: 완만한 경사 내려가기 합격 필요', '전동휠체어는 자동 브레이킹 작동', '느린 속도로 시작하여 속도 유지', '급주행 방지: 필요 이상의 속도는 위험'],
     score_criteria:['20번과 동일 기준 적용 (10° 경사)', '부분합격: 1.5m 이상, 또는 7.5° 성공', '선수기술 Fail/Partial → 자동 불합격'],
     tip:['전동휠체어: 자동 속도 제한 (브레이킹)', '낮은 컨트롤러 설정으로 시작', '완만한 경사(5°) 충분히 익힌 후 시작'],
-    spotter:['위치: 경사 전방에서 필수 (급주행 방지)', '필요 시 2명', '위험: 제어 실패 시 급주행'],
+    spotter:['위치: 경사 전방에서 필수 (급주행 방지)', '필요 시 2명', '위험: 제어 실패 시 급주행'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=559',
     verbal:'"경사로를 조절하며 내려가서 (지점 가리키며) 여기서 멈춰주세요."'
   },
   {
@@ -857,7 +783,7 @@ const SKILLS = [
     howto:['고토크 드라이브 모드로 전환', '자세 보정(틸트·리클라인)으로 앞바퀴(캐스터) 부하 줄이기', '일정 속도 유지 (반복적 출발·정지 지양)', '모래·진흙: 구동 바퀴 헛돌기 방지 위해 신중한 속도 조절'],
     score_criteria:['①딱딱한 노면→부드러운 노면 완전 이동 ②선행 바퀴 축이 결승선 넘음 → 합격', '부분합격: 1.5m 이상', '불합격: 1.5m 미만'],
     tip:['고토크 모드 + 일정 속도 유지', '자세 보정으로 구동 바퀴에 하중 집중', '중간 구동(mid-wheel drive): 캐스터 파고들기 위험 높음'],
-    spotter:['위치: 옆에서 대기', '위험: 부드러운 표면 진입 시 전방 전복 (캐스터가 박힘)'],
+    spotter:['위치: 옆에서 대기', '위험: 부드러운 표면 진입 시 전방 전복 (캐스터가 박힘)'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=639',
     verbal:'"(목표 지점 가리키며) 저 지점까지 이동해 주세요."'
   },
   {
@@ -866,7 +792,7 @@ const SKILLS = [
     howto:['고토크 드라이브 모드로 전환', '저속으로 장애물에 정면으로 접근 (충격·제어 불가 방지)', '전동 기기: 앞바퀴(캐스터)가 올라가면 연속 전진으로 뒷바퀴도 올라감', '캐스터가 장애물에 걸린 경우: 추가 힘 적용 시 갑자기 팝업 → 필요 이상의 힘 금지', '간격(gap) 장애물: 사선 접근(30~45°)으로 한 번에 한 바퀴씩'],
     score_criteria:['①모든 바퀴가 장애물 완전 통과 → 합격', '부분합격: 선행 바퀴만 넘은 경우', '3점(AP): 과속 접근 불가'],
     tip:['저속 접근 + 지속적인 전진력으로 통과', '드라이브 모드를 고토크로 전환', '자세 보정(틸트)으로 발판 지면 간격 조정'],
-    spotter:['위치: 뒤 + 한 손을 대상자 어깨 앞에 준비', '위험: 앞바퀴 걸릴 때 전방 전복', '위험: 뒷바퀴가 장애물 위에 있을 때 전방 전복'],
+    spotter:['위치: 뒤 + 한 손을 대상자 어깨 앞에 준비', '위험: 앞바퀴 걸릴 때 전방 전복', '위험: 뒷바퀴가 장애물 위에 있을 때 전방 전복'], videoUrl:'https://www.youtube.com/watch?v=bOr0GPeXR2w&list=PL2eGvW0pWTt7XGnTCLGdMfBnV9w_ERZwT&t=649',
     verbal:'"장애물을 넘어가 주세요."'
   },
   {
@@ -1018,13 +944,13 @@ function openSkill(id) {
   // 카테고리 색상 topbar에 적용
   const topbar = document.querySelector('.skill-topbar');
   topbar.style.borderBottom = `2px solid ${cat.color}`;
-  document.getElementById('sk-num').textContent = sk.en;
+  document.getElementById('sk-num').textContent = `#${id}  ${sk.en}`;
   const _sn=document.getElementById('sk-num'); if(_sn) _sn.style.color=cat.color;
   document.getElementById('sk-name').textContent = sk.name;
   const _snm=document.getElementById('sk-name'); if(_snm) _snm.style.color=cat.color;
 
   // Measure bar
-  const _mt = document.getElementById('measure-tag'); if(_mt){ _mt.textContent = sk.keyMeasure || ''; _mt.style.display = sk.keyMeasure ? '' : 'none'; }
+  document.getElementById('measure-tag').textContent = sk.keyMeasure || '특수 측정 없음';
   const prereqEl = document.getElementById('prereq-info');
   if (sk.prereq) {
     const prereqs = Array.isArray(sk.prereq) ? sk.prereq : [sk.prereq];
@@ -1061,31 +987,6 @@ function openSkill(id) {
     }
   } else { prereqEl.innerHTML = ''; }
 
-  // Video — 슬롯 1 기준으로 초기화
-  state.currentVideoSlot = 1;
-  updateVideoSlotTabs();
-  const savedUrl = state.videoUrls[id] !== undefined ? state.videoUrls[id] : (sk.videoUrl || '');
-  const savedUrl2 = state.videoUrls[id+'_b'] !== undefined ? state.videoUrls[id+'_b'] : (sk.videoUrl2 || '');
-  document.getElementById('video-url-input').value = savedUrl;
-  // 영상 탭 뱃지 + 자동 전환
-  if (savedUrl || savedUrl2) {
-    if (sk.videoUrl) {
-      const sec = parseInt(sk.videoUrl.split('t=')[1]) || 0;
-      const min = Math.floor(sec/60), s = sec%60;
-      const badge = document.getElementById('video-timestamp-badge');
-      if(badge){ badge.textContent = `${min}:${s.toString().padStart(2,'0')}`; badge.style.display = 'inline'; }
-    } else {
-      const badge = document.getElementById('video-timestamp-badge');
-      if(badge) badge.style.display = 'none';
-    }
-    switchMediaTab('vid');
-  } else {
-    const badge = document.getElementById('video-timestamp-badge');
-    if(badge) badge.style.display = 'none';
-    switchMediaTab('ani');
-  }
-  if (savedUrl) { loadVideo(); } else { resetVideo(); }
-
   // Tabs
   renderTabs(sk);
   switchTab('수행');
@@ -1093,7 +994,18 @@ function openSkill(id) {
   // Score buttons
   updateScoreButtons();
 
-  // 코멘트 불러오기
+  // 전동/수동에 따라 탭 그리드 조정
+  const tabGrid = document.getElementById('skill-tab-grid');
+  const aniBtn = document.getElementById('ctab-애니');
+  if (tabGrid && aniBtn) {
+    if (appMode === 'powered') {
+      tabGrid.style.gridTemplateColumns = 'repeat(6,1fr)';
+      aniBtn.style.display = 'block';
+    } else {
+      tabGrid.style.gridTemplateColumns = 'repeat(5,1fr)';
+      aniBtn.style.display = 'none';
+    }
+  }
   const commentEl = document.getElementById('skill-comment');
   if (commentEl) {
     commentEl.value = (state.comments && state.comments[id]) || '';
@@ -1109,36 +1021,10 @@ function renderTabs(sk) {
     </div>
     <div class="info-block">
       <h4>수행 방법</h4>
-      <ol>${sk.howto.map(h => `<li>${h}</li>`).join('')}</ol>
+      <ol>${(sk.howto||[]).map(h => `<li>${h}</li>`).join('')}</ol>
     </div>
   `;
-  // 추가 참고 영상 인앱 소형 플레이어 (videoUrlExtra 있을 때)
-  function _ytId(url) {
-    const p = [/youtu\.be\/([^?&]+)/, /youtube\.com\/watch\?v=([^&]+)/, /youtube\.com\/embed\/([^?&]+)/, /youtube\.com\/shorts\/([^?&]+)/];
-    for (const r of p) { const m = url.match(r); if (m) return m[1]; }
-    return null;
-  }
-  const extraLink = sk.videoUrlExtra ? (function() {
-    const vid = _ytId(sk.videoUrlExtra);
-    if (!vid) return '';
-    return `<div style="margin-top:8px; background:var(--c-surface); border:1px solid var(--c-border);
-              border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);">
-        <div style="padding:8px 12px; background:var(--c-surface2); border-bottom:1px solid var(--c-border);
-                    display:flex; align-items:center; gap:6px;">
-          <span style="font-size:13px;">📎</span>
-          <span style="font-size:11px; font-weight:700; color:var(--c-green);">추가 참고 영상</span>
-        </div>
-        <div style="position:relative; width:100%; padding-bottom:42%;">
-          <iframe
-            src="https://www.youtube.com/embed/${vid}?rel=0"
-            style="position:absolute; inset:0; width:100%; height:100%; border:none; display:block;"
-            frameborder="0" allowfullscreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-          </iframe>
-        </div>
-      </div>`;
-  })() : '';
-  document.getElementById('tab-수행').innerHTML = howtoHtml + extraLink;
+  document.getElementById('tab-수행').innerHTML = howtoHtml;
 
   // 채점기준
   const sd = sk.scoreDetail || {};
@@ -1156,7 +1042,7 @@ function renderTabs(sk) {
   const scoreHtml = `
     <div class="info-block" style="margin-bottom:8px">
       <h4>핵심 측정값</h4>
-      <p style="font-family:var(--mono); color:var(--accent); font-size:13px">${sk.keyMeasure}</p>
+      <p style="font-family:var(--mono); color:var(--accent); font-size:13px">${sk.keyMeasure || "─"}</p>
     </div>
     <div class="score-levels">
       ${lvCard(3,'3점 — 우수합격 (Advanced Pass)', sd['3'], '3')}
@@ -1180,7 +1066,7 @@ function renderTabs(sk) {
   const tipHtml = `
     <div class="info-block">
       <h4>훈련 팁</h4>
-      <ul>${sk.tip.map(t => `<li>${t}</li>`).join('')}</ul>
+      <ul>${(sk.tip||[]).map(t => `<li>${t}</li>`).join('')}</ul>
     </div>
   `;
   document.getElementById('tab-팁').innerHTML = tipHtml;
@@ -1189,7 +1075,7 @@ function renderTabs(sk) {
   const spotterHtml = `
     <div class="info-block" style="border-color:rgba(255,159,10,0.3)">
       <h4 style="color:var(--warn)">스포터 위치 및 위험 요소</h4>
-      <ul>${sk.spotter.map(s => `<li>${s}</li>`).join('')}</ul>
+      <ul>${(sk.spotter||[]).map(s => `<li>${s}</li>`).join('')}</ul>
     </div>
     <div class="info-block">
       <h4>즉시 평가 중단 기준</h4>
@@ -1202,23 +1088,138 @@ function renderTabs(sk) {
     </div>
   `;
   document.getElementById('tab-스포터').innerHTML = spotterHtml;
+
+  // 시범영상 탭 - 썸네일 누르면 유튜브로 열기
+  const videoUrl = (state.videoUrls && state.videoUrls[sk.id]) || sk.videoUrl || '';
+  const altUrls = sk.videoUrlAlt || [];
+  const allUrls = videoUrl ? [videoUrl, ...altUrls] : altUrls;
+
+  function ytId(url) {
+    if (!url) return null;
+    const m = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([^&?/]+)/);
+    return m ? m[1] : null;
+  }
+
+  const thumbs = allUrls.map((url, i) => {
+    const id = ytId(url);
+    if (!id) return '';
+    const label = '시범영상';
+    return `
+      <div onclick="window.open('${url}','_blank')"
+        style="cursor:pointer;border-radius:12px;overflow:hidden;
+          border:1.5px solid var(--c-border);box-shadow:var(--shadow-sm);
+          transition:transform 0.15s;" 
+        onmousedown="this.style.transform='scale(0.97)'"
+        onmouseup="this.style.transform='scale(1)'">
+        <div style="position:relative;">
+          <img src="https://img.youtube.com/vi/${id}/mqdefault.jpg" 
+            style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover;">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <div style="width:48px;height:48px;background:rgba(255,0,0,0.85);border-radius:50%;
+              display:flex;align-items:center;justify-content:center;">
+              <span style="color:#fff;font-size:20px;margin-left:3px;">▶</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding:8px 10px;background:var(--c-surface);">
+          <div style="font-size:12px;font-weight:600;color:var(--c-text);">${label}</div>
+          <div style="font-size:10px;color:var(--c-muted);margin-top:2px;">탭하면 유튜브에서 재생</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const videoHtml = allUrls.length === 0 ? `
+    <div style="padding:40px;text-align:center;color:var(--c-muted);background:var(--c-surface2);border-radius:12px;">
+      <div style="font-size:32px;margin-bottom:8px;opacity:0.4;">🎬</div>
+      <div style="font-size:13px;">영상 준비 중</div>
+    </div>` : `
+    <div style="display:grid;grid-template-columns:${allUrls.length === 1 ? '1fr' : '1fr 1fr'};gap:10px;">
+      ${thumbs}
+    </div>`;
+
+  document.getElementById('tab-시범영상').innerHTML = `
+    <div style="padding:4px 0;">
+      ${videoHtml}
+    </div>`;
+
+  // 애니메이션 탭 (전동만)
+  if (appMode === 'powered') {
+    document.getElementById('tab-애니').innerHTML = `
+      <div class="info-block">
+        <h4>🎮 동작 애니메이션</h4>
+        <div style="position:relative;width:100%;padding-bottom:100%;background:#0a0e1a;border-radius:var(--r-md);overflow:hidden;">
+          <canvas id="ani-canvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+        </div>
+      </div>`;
+  }
+  if (appMode === 'powered') setTimeout(() => startAniLoop(), 100);
 }
+
+function extractYtId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([^&?/]+)/);
+  return m ? m[1] : null;
+}
+
+function playVideo(url, el) {
+  const ytId = extractYtId(url);
+  if (!ytId) return;
+  // 선택 표시
+  document.querySelectorAll('#vid-list-area > div > div').forEach(d => d.style.borderColor='transparent');
+  if (el) el.style.borderColor = '#2563eb';
+  // 플레이어
+  const iframe = document.getElementById('vid-player-iframe');
+  const empty = document.getElementById('vid-player-empty');
+  if (iframe) { iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`; iframe.style.display='block'; }
+  if (empty) empty.style.display = 'none';
+}
+
+function showAddVideoForm() {
+  const form = document.getElementById('vid-add-form');
+  if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function addVideo() {
+  const title = document.getElementById('vid-add-title').value.trim() || `영상 ${Date.now()}`;
+  const url = document.getElementById('vid-add-url').value.trim();
+  if (!url) { showToast('URL을 입력해주세요', 'error'); return; }
+  if (!extractYtId(url)) { showToast('유튜브 URL을 확인해주세요', 'error'); return; }
+
+  if (!state.videoUrls) state.videoUrls = {};
+  const cur = state.videoUrls[state.currentSkillId];
+  const list = Array.isArray(cur) ? cur : (cur ? [{ url: cur, title: '시범 영상 1' }] : []);
+  list.push({ url, title });
+  state.videoUrls[state.currentSkillId] = list;
+  saveData();
+  showToast('영상 추가됐어요!', 'success');
+
+  // 탭 리렌더
+  const sk = getCurrentSkills().find(s => s.id === state.currentSkillId);
+  if (sk) renderTabs(sk);
+}
+
+function loadVideo() {
+  // 구버전 호환 - 새 방식 사용
+}
+
+
 
 const TAB_COLORS = {
   '수행': { bg: 'rgba(0,212,224,0.18)', color: '#00d4e4', border: 'rgba(0,212,224,0.5)' },
   '채점': { bg: 'rgba(48,209,88,0.18)', color: '#30d158', border: 'rgba(48,209,88,0.5)' },
   '팁':   { bg: 'rgba(255,159,10,0.18)', color: '#ff9f0a', border: 'rgba(255,159,10,0.5)' },
   '스포터':{ bg: 'rgba(255,69,58,0.18)', color: '#ff453a', border: 'rgba(255,69,58,0.5)' },
+  '시범영상': { bg: 'rgba(220,38,38,0.18)', color: '#dc2626', border: 'rgba(220,38,38,0.5)' },
+  '애니': { bg: 'rgba(0,100,220,0.18)', color: '#2563eb', border: 'rgba(0,100,220,0.5)' },
 };
-const TAB_ICONS = { '수행':'📋', '채점':'🎯', '팁':'💡', '스포터':'🛡️' };
 
 function switchTab(name) {
-  ['수행','채점','팁','스포터'].forEach(t => {
+  ['수행','채점','팁','스포터','시범영상','애니'].forEach(t => {
     const btn = document.getElementById('ctab-'+t);
     const content = document.getElementById('tab-'+t);
     if (!btn || !content) return;
     if (t === name) {
-      const c = TAB_COLORS[t];
+      const c = TAB_COLORS[t] || TAB_COLORS['수행'];
       btn.style.background = c.bg;
       btn.style.color = c.color;
       btn.style.border = `1.5px solid ${c.border}`;
@@ -1238,6 +1239,7 @@ function updateScoreButtons() {
   const score = state.scores[state.currentSkillId];
   ['3','2','1','0','NP','TE'].forEach(s => {
     const btn = document.getElementById('sbtn-'+s);
+    if (!btn) return;
     btn.className = 'score-btn' + (score === s ? ` active-${s}` : '');
   });
 }
@@ -1293,59 +1295,12 @@ function nextSkill() {
 // ═══════════════════════════════════════════════════════
 function onVideoUrlChange() {
   const url = document.getElementById('video-url-input').value;
-  const key = state.currentVideoSlot === 2
-    ? state.currentSkillId + '_b'
-    : state.currentSkillId;
-  state.videoUrls[key] = url;
+  state.videoUrls[state.currentSkillId] = url;
   saveData();
 }
 
-function switchVideoSlot(slot) {
-  state.currentVideoSlot = slot;
-  updateVideoSlotTabs();
-  const id = state.currentSkillId;
-  const sk = getCurrentSkills().find(s => s.id === id);
-  const key = slot === 2 ? id + '_b' : id;
-  const defaultUrl = slot === 2 ? (sk?.videoUrl2 || '') : (sk?.videoUrl || '');
-  const url = state.videoUrls[key] !== undefined ? state.videoUrls[key] : defaultUrl;
-  document.getElementById('video-url-input').value = url;
-  if (url) loadVideo(); else resetVideo();
-}
 
-function updateVideoSlotTabs() {
-  const slot = state.currentVideoSlot;
-  const btn1 = document.getElementById('vslot-btn-1');
-  const btn2 = document.getElementById('vslot-btn-2');
-  if (!btn1 || !btn2) return;
-  if (slot === 1) {
-    btn1.style.background='rgba(37,99,235,0.2)'; btn1.style.color='#60a5fa'; btn1.style.borderBottom='2px solid #2563eb'; btn1.style.fontWeight='700';
-    btn2.style.background='transparent'; btn2.style.color='rgba(255,255,255,0.38)'; btn2.style.borderBottom='2px solid transparent'; btn2.style.fontWeight='500';
-  } else {
-    btn2.style.background='rgba(37,99,235,0.2)'; btn2.style.color='#60a5fa'; btn2.style.borderBottom='2px solid #2563eb'; btn2.style.fontWeight='700';
-    btn1.style.background='transparent'; btn1.style.color='rgba(255,255,255,0.38)'; btn1.style.borderBottom='2px solid transparent'; btn1.style.fontWeight='500';
-  }
-}
 
-function loadVideo() {
-  const url = document.getElementById('video-url-input').value.trim();
-  if (!url) { resetVideo(); return; }
-  const videoId = extractYouTubeId(url);
-  if (!videoId) { resetVideo(); return; }
-  document.getElementById('video-placeholder')&&(document.getElementById('video-placeholder').style.display='none');
-  const embed = document.getElementById('video-embed');
-  embed.style.display = 'block';
-  // 타임스탬프 파싱
-  let src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=0`;
-  const tMatch = url.match(/[?&]t=(\d+)s?/);
-  if (tMatch) src += `&start=${tMatch[1]}`;
-  document.getElementById('video-iframe').src = src;
-}
-
-function resetVideo() {
-  document.getElementById('video-placeholder')&&(document.getElementById('video-placeholder').style.display='flex');
-  document.getElementById('video-embed')&&(document.getElementById('video-embed').style.display='none');
-  document.getElementById('video-iframe').src = '';
-}
 
 function extractYouTubeId(url) {
   const patterns = [
@@ -1366,20 +1321,10 @@ function extractYouTubeId(url) {
 // ═══════════════════════════════════════════════════════
 // ── 미디어 탭 전환 (카메라 ↔ 영상 ↔ 애니메이션) ──
 function switchMediaTab(tab) {
-  const aniBtn = document.getElementById('tab-ani-btn');
-  const aniArea = document.getElementById('media-ani');
-  // 수동 모드: 애니 탭·영역 완전히 제거, 루프 정지
-  if (appMode === 'manual') {
-    if (aniBtn) aniBtn.style.display = 'none';
-    if (aniArea) aniArea.style.display = 'none';
-    stopAniLoop();
-    tab = 'vid';
-  } else {
-    if (aniBtn) aniBtn.style.display = '';
-  }
-
   const vidArea = document.getElementById('media-vid');
+  const aniArea = document.getElementById('media-ani');
   const vidBtn = document.getElementById('tab-vid-btn');
+  const aniBtn = document.getElementById('tab-ani-btn');
 
   if (tab === 'vid') {
     if(vidArea) vidArea.style.display = 'block';
@@ -1390,7 +1335,7 @@ function switchMediaTab(tab) {
     if (url) loadVideo();
   } else {
     if(vidArea) vidArea.style.display = 'none';
-    if(aniArea) { aniArea.style.display = 'block'; }
+    if(aniArea) aniArea.style.display = 'block';
     if(aniBtn) { aniBtn.style.background='rgba(48,209,88,0.15)'; aniBtn.style.color='#30d158'; aniBtn.style.borderBottom='2px solid #30d158'; aniBtn.style.fontWeight='700'; }
     if(vidBtn) { vidBtn.style.background='none'; vidBtn.style.color='var(--text-dim)'; vidBtn.style.borderBottom='2px solid transparent'; vidBtn.style.fontWeight='500'; }
     startAniLoop();
@@ -1407,69 +1352,19 @@ async function toggleCamera() {
   }
 }
 
-async function startCamera() {
-  try {
-    const constraints = {
-      video: { facingMode: state.facing, width: { ideal: 1280 }, height: { ideal: 960 } },
-      audio: false
-    };
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-    const video = document.getElementById('cam-video');
-    video.srcObject = stream;
-    state.camStream = stream;
-    state.camActive = true;
-    document.getElementById('cam-placeholder')&&(document.getElementById('cam-placeholder').style.display='none');
-    document.getElementById('flip-btn')&&(document.getElementById('flip-btn').style.display='flex');
-        video.onloadedmetadata = () => {
-      resizeCanvas();
-      startOverlayLoop();
-    };
-  } catch(err) {
-    alert('카메라 접근 실패: ' + err.message);
-  }
-}
 
 function stopCamera() {
   if (state.camStream) {
     state.camStream.getTracks().forEach(t => t.stop());
     state.camStream = null;
   }
-  if (state.animFrame) { cancelAnimationFrame(state.animFrame); state.animFrame = null; }
   state.camActive = false;
-  document.getElementById('cam-video').srcObject = null;
-  document.getElementById('cam-placeholder')&&(document.getElementById('cam-placeholder').style.display='flex');
-  document.getElementById('flip-btn')&&(document.getElementById('flip-btn').style.display='none');
-  const canvas = document.getElementById('cam-canvas');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-
-async function flipCamera() {
-  state.facing = state.facing === 'environment' ? 'user' : 'environment';
-  stopCamera();
-  await startCamera();
 }
 
-function resizeCanvas() {
-  const video = document.getElementById('cam-video');
-  const canvas = document.getElementById('cam-canvas');
-  const area = document.getElementById('cam-area');
-  canvas.width = area.clientWidth;
-  canvas.height = area.clientHeight;
-}
 
-function startOverlayLoop() {
-  function loop() {
-    if (!state.camActive) return;
-    drawOverlay();
-    state.animFrame = requestAnimationFrame(loop);
-  }
-  loop();
-}
 
-// ═══════════════════════════════════════════════════════
-//  OVERLAY DRAWING
-// ═══════════════════════════════════════════════════════
+
+
 
 function line(ctx, x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
 
@@ -1861,753 +1756,118 @@ function _aniClamp(v,a,b){return Math.max(a,Math.min(b,v));}
 
 
 const ANI_DRAWS = {
-  1:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.52;
-  ctx.save();ctx.strokeStyle='rgba(37,99,235,0.12)';ctx.lineWidth=0.8;
-  const gs=Math.min(W,H)/10;
-  for(let x=0;x<W;x+=gs){ctx.globalAlpha=0.4;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-  for(let y=0;y<H;y+=gs){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-  ctx.globalAlpha=1;ctx.restore();
-  const sw=W*.30,sh=H*.40,rwr=sw*.40;
-  [-1,1].forEach(side=>{
-    const wkx=cx+side*(sw/2+rwr*.18),wky=cy+sh*.08;
-    const wg=ctx.createRadialGradient(wkx,wky,2,wkx,wky,rwr);
-    wg.addColorStop(0,'rgba(37,99,235,0.35)');wg.addColorStop(1,'rgba(37,99,235,0.06)');
-    ctx.beginPath();ctx.arc(wkx,wky,rwr,0,Math.PI*2);ctx.fillStyle=wg;ctx.fill();
-    ctx.strokeStyle='#3b82f6';ctx.lineWidth=3;ctx.stroke();
-    for(let s=0;s<6;s++){const a=s*Math.PI/3;ctx.strokeStyle='rgba(59,130,246,0.35)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(wkx,wky);ctx.lineTo(wkx+Math.cos(a)*rwr*.88,wky+Math.sin(a)*rwr*.88);ctx.stroke();}
-    ctx.beginPath();ctx.arc(wkx,wky,rwr*.1,0,Math.PI*2);ctx.fillStyle='#3b82f6';ctx.fill();
-  });
-  ctx.beginPath();const r2=sw*.15;ctx.moveTo(cx-sw/2+r2,cy-sh/2);ctx.arcTo(cx+sw/2,cy-sh/2,cx+sw/2,cy+sh/2,r2);ctx.arcTo(cx+sw/2,cy+sh/2,cx-sw/2,cy+sh/2,r2);ctx.arcTo(cx-sw/2,cy+sh/2,cx-sw/2,cy-sh/2,r2);ctx.arcTo(cx-sw/2,cy-sh/2,cx+sw/2,cy-sh/2,r2);ctx.closePath();ctx.fillStyle='rgba(37,99,235,0.13)';ctx.fill();ctx.strokeStyle='#2563eb';ctx.lineWidth=2.5;ctx.stroke();
-  const aw=sw*.13,ah=sh*.7,aoy=cy-sh*.3;
-  [-1,1].forEach(side=>{const ax=cx+side*(sw/2)-side*aw+side*aw*.15;ctx.beginPath();ctx.rect(ax-(side===1?aw:0),aoy,aw,ah);ctx.fillStyle='rgba(59,130,246,0.22)';ctx.fill();ctx.strokeStyle='#60a5fa';ctx.lineWidth=1.5;ctx.stroke();});
-  const cr=sw*.10;[cx-sw*.26,cx+sw*.26].forEach(ccx=>{const ccy=cy-sh/2-cr*.2;ctx.beginPath();ctx.arc(ccx,ccy,cr,0,Math.PI*2);ctx.fillStyle='rgba(96,165,250,0.18)';ctx.fill();ctx.strokeStyle='#60a5fa';ctx.lineWidth=2;ctx.stroke();});
-  ctx.beginPath();ctx.ellipse(cx,cy+sh*.08,sw*.18,sh*.24,0,0,Math.PI*2);ctx.fillStyle='rgba(254,214,102,0.15)';ctx.fill();ctx.strokeStyle='rgba(254,214,102,0.45)';ctx.lineWidth=1.5;ctx.stroke();
-  ctx.beginPath();ctx.arc(cx,cy-sh*.22,sw*.09,0,Math.PI*2);ctx.fillStyle='rgba(254,214,102,0.30)';ctx.fill();ctx.strokeStyle='rgba(254,214,102,0.65)';ctx.lineWidth=1.5;ctx.stroke();
-  const ledX=cx-sw*.1,ledY=cy+sh*.1;const ledG=ctx.createRadialGradient(ledX,ledY,1,ledX,ledY,13);ledG.addColorStop(0,'rgba(220,38,38,0.8)');ledG.addColorStop(1,'rgba(220,38,38,0)');ctx.beginPath();ctx.arc(ledX,ledY,13,0,Math.PI*2);ctx.fillStyle=ledG;ctx.fill();ctx.beginPath();ctx.arc(ledX,ledY,6,0,Math.PI*2);ctx.fillStyle='#dc2626';ctx.fill();ctx.strokeStyle='#ff6b6b';ctx.lineWidth=1.5;ctx.stroke();
-  _aniLabel(ctx,'OFF',ledX,ledY+20,'#dc2626',9);
-  const pivX=cx+sw/2+aw*.1,pivY=cy-sh*.18,armLen=W*.20,normalA=-0.28,movedA=1.18;
-  let ctrlA,phaseText,phaseCol;
-  if(T<0.12){ctrlA=normalA;phaseText='전원 OFF 확인';phaseCol='#dc2626';}
-  else if(T<0.46){const p=_aniEase((T-0.12)/0.34);ctrlA=normalA+(movedA-normalA)*p;phaseText='컨트롤러 이동 중...';phaseCol='#f59e0b';}
-  else if(T<0.60){ctrlA=movedA;phaseText='이동 완료  ✓';phaseCol='#30d158';}
-  else if(T<0.88){const p=_aniEase((T-0.60)/0.28);ctrlA=movedA+(normalA-movedA)*p;phaseText='원래 위치로 복귀';phaseCol='#60a5fa';}
-  else{ctrlA=normalA;phaseText='복귀 완료  ✓';phaseCol='#30d158';}
-  const ctrlX=pivX+Math.cos(ctrlA)*armLen,ctrlY=pivY+Math.sin(ctrlA)*armLen*.72;
-  const isMoving=(T>0.12&&T<0.46)||(T>0.60&&T<0.88);
-  ctx.save();ctx.setLineDash([5,5]);ctx.strokeStyle='rgba(251,191,36,0.25)';ctx.lineWidth=1.5;ctx.beginPath();for(let a=normalA;a<=movedA;a+=0.06){const hx=pivX+Math.cos(a)*armLen*.88,hy=pivY+Math.sin(a)*armLen*.63;a===normalA?ctx.moveTo(hx,hy):ctx.lineTo(hx,hy);}ctx.stroke();ctx.setLineDash([]);ctx.restore();
-  ctx.beginPath();ctx.arc(pivX,pivY,5,0,Math.PI*2);ctx.fillStyle='#f59e0b';ctx.fill();
-  ctx.strokeStyle=isMoving?'#f59e0b':'#60a5fa';ctx.lineWidth=4.5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(pivX,pivY);ctx.lineTo(ctrlX,ctrlY);ctx.stroke();ctx.lineCap='butt';
-  ctx.save();ctx.translate(ctrlX,ctrlY);ctx.rotate(ctrlA+Math.PI*.05);
-  const bw=32,bh=22;const bg2=ctx.createLinearGradient(-bw/2,-bh/2,bw/2,bh/2);bg2.addColorStop(0,'rgba(29,78,216,0.85)');bg2.addColorStop(1,'rgba(37,99,235,0.55)');
-  ctx.shadowColor=isMoving?'#f59e0b':'#3b82f6';ctx.shadowBlur=10;
-  ctx.beginPath();ctx.moveTo(-bw/2+5,-bh/2);ctx.arcTo(bw/2,-bh/2,bw/2,bh/2,5);ctx.arcTo(bw/2,bh/2,-bw/2,bh/2,5);ctx.arcTo(-bw/2,bh/2,-bw/2,-bh/2,5);ctx.arcTo(-bw/2,-bh/2,bw/2,-bh/2,5);ctx.closePath();ctx.fillStyle=bg2;ctx.fill();ctx.strokeStyle=isMoving?'#f59e0b':'#60a5fa';ctx.lineWidth=2;ctx.shadowBlur=0;ctx.stroke();
-  ctx.beginPath();ctx.arc(-4,0,7,0,Math.PI*2);ctx.fillStyle='rgba(147,197,253,0.9)';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.stroke();ctx.beginPath();ctx.arc(-4,0,3,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
-  [[bw*.28,-5],[bw*.28,4]].forEach(([bx,by])=>{ctx.beginPath();ctx.arc(bx,by,3,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fill();});
-  ctx.restore();
-  _aniLabel(ctx,phaseText,W/2,H-22,phaseCol,12);
-  _aniLabel(ctx,'#1 컨트롤러 위치 조정',W/2,20,'#00d4e0',13);
-},
-  2:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.2,'rgba(37,99,235,0.05)');
-  // 컨트롤러 박스
-  const bw=W*.52,bh=H*.48,bx=cx-bw/2,by=cy-bh/2;
-  const bg=ctx.createLinearGradient(bx,by,bx+bw,by+bh);bg.addColorStop(0,'rgba(15,23,42,0.95)');bg.addColorStop(1,'rgba(30,41,59,0.9)');
-  ctx.shadowColor='rgba(0,212,224,0.3)';ctx.shadowBlur=20;
-  ctx.beginPath();ctx.moveTo(bx+12,by);ctx.arcTo(bx+bw,by,bx+bw,by+bh,12);ctx.arcTo(bx+bw,by+bh,bx,by+bh,12);ctx.arcTo(bx,by+bh,bx,by,12);ctx.arcTo(bx,by,bx+bw,by,12);ctx.closePath();ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle='rgba(0,212,224,0.5)';ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
-  // 조이스틱
-  const jx=cx-bw*.18,jy=cy+bh*.05,jr=bh*.16;
-  const jg=ctx.createRadialGradient(jx,jy,2,jx,jy,jr);jg.addColorStop(0,'rgba(37,99,235,0.5)');jg.addColorStop(1,'rgba(37,99,235,0.1)');
-  ctx.beginPath();ctx.arc(jx,jy,jr,0,Math.PI*2);ctx.fillStyle=jg;ctx.fill();ctx.strokeStyle='#3b82f6';ctx.lineWidth=2;ctx.stroke();
-  // 조이스틱 스틱 - 중립 여부
-  const phase=T;
-  const isNeutral=phase<0.15||phase>0.85||(phase>0.42&&phase<0.58);
-  const jsx=isNeutral?0:Math.sin(phase*10)*jr*.3,jsy=isNeutral?0:Math.cos(phase*8)*jr*.3;
-  ctx.beginPath();ctx.arc(jx+jsx,jy+jsy,jr*.35,0,Math.PI*2);ctx.fillStyle=isNeutral?'#60a5fa':'#f59e0b';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
-  const neutCol=isNeutral?'#30d158':'#f59e0b';
-  _aniLabel(ctx,isNeutral?'중립 ✓':'중립 확인!',jx,jy+jr+14,neutCol,10);
-  // 전원 버튼
-  const px=cx+bw*.2,py=cy-bh*.05,pr=bh*.13;
-  // ON/OFF 상태
-  let pwrOn;
-  if(phase<0.15){pwrOn=false;}
-  else if(phase<0.30){const p=(phase-0.15)/0.15;pwrOn=p>0.5;}
-  else if(phase<0.58){pwrOn=true;}
-  else if(phase<0.70){const p=(phase-0.58)/0.12;pwrOn=p<0.5;}
-  else{pwrOn=false;}
-  const btnCol=pwrOn?'#16a34a':'#dc2626';
-  const btnG=ctx.createRadialGradient(px,py,2,px,py,pr);btnG.addColorStop(0,pwrOn?'rgba(22,163,74,0.8)':'rgba(220,38,38,0.8)');btnG.addColorStop(1,pwrOn?'rgba(22,163,74,0.1)':'rgba(220,38,38,0.1)');
-  ctx.shadowColor=btnCol;ctx.shadowBlur=pwrOn?18:8;
-  ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);ctx.fillStyle=btnG;ctx.fill();ctx.strokeStyle=btnCol;ctx.lineWidth=2.5;ctx.stroke();ctx.shadowBlur=0;
-  // 전원 심볼
-  ctx.strokeStyle='#fff';ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(px,py,pr*.55,-Math.PI*.7,Math.PI*.7);ctx.stroke();ctx.beginPath();ctx.moveTo(px,py-pr*.7);ctx.lineTo(px,py-pr*.25);ctx.stroke();
-  _aniLabel(ctx,pwrOn?'ON':'OFF',px,py+pr+14,btnCol,10);
-  // LED 인디케이터
-  const ldx=cx+bw*.2,ldy=cy+bh*.22;
-  const ldG=ctx.createRadialGradient(ldx,ldy,1,ldx,ldy,10);ldG.addColorStop(0,pwrOn?'rgba(22,163,74,1)':'rgba(220,38,38,0.9)');ldG.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.beginPath();ctx.arc(ldx,ldy,10,0,Math.PI*2);ctx.fillStyle=ldG;ctx.fill();ctx.beginPath();ctx.arc(ldx,ldy,5,0,Math.PI*2);ctx.fillStyle=pwrOn?'#22c55e':'#ef4444';ctx.fill();
-  // 상태 텍스트
-  let stxt,scol;
-  if(phase<0.15){stxt='조이스틱 중립 확인';scol='#f59e0b';}
-  else if(phase<0.30){stxt='전원 켜는 중...';scol='#60a5fa';}
-  else if(phase<0.42){stxt='전원 ON ✓  정상 작동';scol='#30d158';}
-  else if(phase<0.58){stxt='전원 OFF 전 중립 확인';scol='#f59e0b';}
-  else if(phase<0.70){stxt='전원 끄는 중...';scol='#60a5fa';}
-  else{stxt='전원 OFF ✓  안전 상태';scol='#dc2626';}
-  _aniLabel(ctx,stxt,W/2,H-22,scol,12);
-  _aniLabel(ctx,'#2 전원 켜기/끄기',W/2,20,'#00d4e0',13);
-},
-  3:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.25,'rgba(37,99,235,0.05)');
-  // 휠체어 측면 (단순화)
-  _aniWC(ctx,cx-W*.05,cy,1.1,'#2563eb',1,0);
-  // 배터리 바
-  const bx=W*.12,by=H*.15,bw2=W*.3,bh2=H*.12;
-  ctx.strokeStyle='rgba(0,212,224,0.5)';ctx.lineWidth=2;ctx.strokeRect(bx,by,bw2,bh2);
-  ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(bx,by,bw2,bh2);
-  ctx.beginPath();ctx.rect(bx+bw2,by+bh2*.25,6,bh2*.5);ctx.fillStyle='rgba(0,212,224,0.5)';ctx.fill();
-  // 배터리 레벨 애니메이션
-  const phase=T;
-  let batLv;
-  if(phase<0.2){batLv=0.25;}
-  else if(phase<0.7){batLv=0.25+((phase-0.2)/0.5)*0.6;}
-  else{batLv=0.85;}
-  const batCol=batLv<0.3?'#ef4444':batLv<0.6?'#f59e0b':'#22c55e';
-  ctx.fillStyle=batCol;ctx.fillRect(bx+3,by+3,Math.max(0,(bw2-6)*batLv),bh2-6);
-  ctx.shadowColor=batCol;ctx.shadowBlur=8;ctx.shadowBlur=0;
-  _aniLabel(ctx,Math.round(batLv*100)+'%',bx+bw2/2,by+bh2/2+5,batCol,12);
-  // 충전 케이블
-  const portX=cx+W*.18,portY=cy-H*.05;
-  const plugging=phase>0.05&&phase<0.25;
-  const plugged=phase>=0.25;
-  // 포트
-  ctx.strokeStyle='rgba(0,212,224,0.7)';ctx.lineWidth=3;ctx.beginPath();ctx.arc(portX,portY,10,0,Math.PI*2);ctx.stroke();ctx.fillStyle='rgba(0,212,224,0.15)';ctx.fill();
-  // 케이블
-  const cableStartX=portX+W*.25,cableStartY=portY-H*.1;
-  const connX=plugged?portX:portX+W*.12*(1-Math.min((phase/0.25),1));
-  const connY=plugged?portY:portY-H*.05*(1-Math.min((phase/0.25),1));
-  ctx.strokeStyle=plugged?'#22c55e':'#60a5fa';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cableStartX,cableStartY);ctx.bezierCurveTo(cableStartX-W*.05,cableStartY+H*.08,connX+W*.05,connY-H*.05,connX,connY);ctx.stroke();ctx.lineCap='butt';
-  // 커넥터
-  ctx.fillStyle=plugged?'#22c55e':'#60a5fa';ctx.beginPath();ctx.arc(connX,connY,7,0,Math.PI*2);ctx.fill();
-  if(plugged&&phase<0.65){const spark=((phase-0.25)*6)%1;ctx.globalAlpha=1-spark;ctx.strokeStyle='#ffd700';ctx.lineWidth=2;ctx.beginPath();ctx.arc(portX,portY,10+spark*12,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;}
-  let stxt,scol;
-  if(phase<0.05){stxt='충전 전 전원 OFF 확인';scol='#dc2626';}
-  else if(phase<0.25){stxt='충전 케이블 연결 중...';scol='#60a5fa';}
-  else if(phase<0.7){stxt='충전 중... '+Math.round(batLv*100)+'%';scol='#22c55e';}
-  else{stxt='충전 완료 ✓  케이블 분리';scol='#30d158';}
-  _aniLabel(ctx,stxt,W/2,H-22,scol,12);
-  _aniLabel(ctx,'#3 배터리 충전',W/2,20,'#00d4e0',13);
-},
-  4:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.25,'rgba(220,38,38,0.04)');
-  // 휠체어 측면
-  _aniWC(ctx,cx,cy,1.1,'#2563eb',1,0);
-  // 후륜 클로즈업 영역
-  const wrx=cx-W*.09,wry=cy+H*.09,wrr=W*.15;
-  ctx.save();ctx.globalAlpha=0.15;ctx.beginPath();ctx.arc(wrx,wry,wrr+15,0,Math.PI*2);ctx.fillStyle='#f59e0b';ctx.fill();ctx.restore();
-  // 레버
-  const lx=wrx+wrr*.7,ly=wry-wrr*.5;
-  const phase=T;
-  let leverAngle,disengaged;
-  if(phase<0.2){leverAngle=0;disengaged=false;}
-  else if(phase<0.4){const p=_aniEase((phase-0.2)/0.2);leverAngle=p*Math.PI*.4;disengaged=false;}
-  else if(phase<0.6){leverAngle=Math.PI*.4;disengaged=true;}
-  else if(phase<0.8){const p=_aniEase((phase-0.6)/0.2);leverAngle=(1-p)*Math.PI*.4;disengaged=true;}
-  else{leverAngle=0;disengaged=false;}
-  // 레버 그리기
-  ctx.save();ctx.translate(lx,ly);ctx.rotate(leverAngle);
-  ctx.strokeStyle=disengaged?'#f59e0b':'#60a5fa';ctx.lineWidth=6;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-30);ctx.stroke();
-  ctx.beginPath();ctx.arc(0,-30,6,0,Math.PI*2);ctx.fillStyle=disengaged?'#f59e0b':'#60a5fa';ctx.fill();
-  ctx.restore();
-  // 레버 피벗
-  ctx.beginPath();ctx.arc(lx,ly,5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
-  // 바퀴 회전 (분리 시 자유 회전)
-  if(disengaged){
-    const spinAngle=phase*Math.PI*8;
-    for(let s=0;s<6;s++){const a=spinAngle+s*Math.PI/3;ctx.strokeStyle='rgba(251,191,36,0.4)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(wrx,wry);ctx.lineTo(wrx+Math.cos(a)*wrr*.8,wry+Math.sin(a)*wrr*.8);ctx.stroke();}
-    _aniLabel(ctx,'자유 회전!',wrx,wry-wrr-8,'#f59e0b',10);
-  }
-  // 경고
-  ctx.save();ctx.globalAlpha=0.7+Math.sin(T*8)*0.3;
-  _aniLabel(ctx,'⚠ 경사로에서 분리 절대 금지',W/2,H*.15,'#dc2626',11);
-  ctx.restore();
-  let stxt,scol;
-  if(phase<0.2){stxt='모터 연결 상태 확인';scol='#60a5fa';}
-  else if(phase<0.4){stxt='모터 분리 중... (레버 당기기)';scol='#f59e0b';}
-  else if(phase<0.6){stxt='분리 완료 - 수동 주행 가능';scol='#f59e0b';}
-  else if(phase<0.8){stxt='모터 재연결 중...';scol='#60a5fa';}
-  else{stxt='연결 완료 ✓  전동 주행 복귀';scol='#30d158';}
-  _aniLabel(ctx,stxt,W/2,H-22,scol,12);
-  _aniLabel(ctx,'#4 모터 분리/연결',W/2,20,'#00d4e0',13);
-},
-  5:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.2,'rgba(37,99,235,0.05)');
-  // 컨트롤러 디스플레이
-  const dw=W*.58,dh=H*.52,dx=cx-dw/2,dy=cy-dh/2;
-  const dg=ctx.createLinearGradient(dx,dy,dx+dw,dy+dh);dg.addColorStop(0,'rgba(10,18,35,0.97)');dg.addColorStop(1,'rgba(20,30,55,0.95)');
-  ctx.shadowColor='rgba(0,212,224,0.25)';ctx.shadowBlur=18;
-  ctx.beginPath();ctx.moveTo(dx+14,dy);ctx.arcTo(dx+dw,dy,dx+dw,dy+dh,14);ctx.arcTo(dx+dw,dy+dh,dx,dy+dh,14);ctx.arcTo(dx,dy+dh,dx,dy,14);ctx.arcTo(dx,dy,dx+dw,dy,14);ctx.closePath();ctx.fillStyle=dg;ctx.fill();ctx.strokeStyle='rgba(0,212,224,0.45)';ctx.lineWidth=2;ctx.stroke();ctx.shadowBlur=0;
-  const modes=[{icon:'🐢',name:'표준',col:'#22c55e'},{icon:'🚀',name:'고성능',col:'#ef4444'},{icon:'🏔',name:'고토크',col:'#f59e0b'},{icon:'🌿',name:'절약',col:'#60a5fa'}];
-  const mi=Math.floor(T*modes.length)%modes.length;
-  const modeT=(T*modes.length)%1;
-  modes.forEach((m,i)=>{
-    const mx=dx+dw*(i+0.5)/modes.length,my=cy-dh*.05;
-    const isActive=i===mi;
-    const r3=dw*.1;
-    const bg3=ctx.createRadialGradient(mx,my,2,mx,my,r3);
-    bg3.addColorStop(0,isActive?m.col+'44':'rgba(30,41,59,0.8)');bg3.addColorStop(1,isActive?m.col+'11':'rgba(15,23,42,0.4)');
-    ctx.shadowColor=isActive?m.col:'transparent';ctx.shadowBlur=isActive?15:0;
-    ctx.beginPath();ctx.arc(mx,my,r3,0,Math.PI*2);ctx.fillStyle=bg3;ctx.fill();ctx.strokeStyle=isActive?m.col:'rgba(96,165,250,0.25)';ctx.lineWidth=isActive?2.5:1;ctx.stroke();ctx.shadowBlur=0;
-    ctx.font=(isActive?'22px':'18px')+' sans-serif';ctx.textAlign='center';ctx.fillText(m.icon,mx,my+7);
-    _aniLabel(ctx,m.name,mx,my+r3+14,isActive?m.col:'#546e7a',9);
-    if(isActive){_aniPulse(ctx,mx,my,r3+4,m.col,T);}
-  });
-  // 현재 모드 표시
-  const cm=modes[mi];
-  ctx.font='bold 13px "Share Tech Mono"';ctx.textAlign='center';ctx.fillStyle=cm.col;ctx.fillText('현재: '+cm.name+' 모드',cx,dy+dh*.82);
-  // 화살표 선택 표시
-  const selX=dx+dw*(mi+0.5)/modes.length,selY=cy-dh*.05+dw*.12;
-  ctx.strokeStyle=cm.col;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(selX,selY+5);ctx.lineTo(selX-7,selY+15);ctx.lineTo(selX+7,selY+15);ctx.closePath();ctx.stroke();
-  _aniLabel(ctx,'상황별 적합 모드 선택',W/2,H-22,'#60a5fa',12);
-  _aniLabel(ctx,'#5 드라이브 모드 선택',W/2,20,'#00d4e0',13);
-},
-  6:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.2,'rgba(37,99,235,0.05)');
-  // 속도 다이얼 배경
-  const dr=H*.28,dx2=cx,dy2=cy-H*.04;
-  ctx.beginPath();ctx.arc(dx2,dy2,dr,0,Math.PI*2);ctx.fillStyle='rgba(10,18,35,0.9)';ctx.fill();ctx.strokeStyle='rgba(0,212,224,0.35)';ctx.lineWidth=3;ctx.stroke();
-  // 속도 눈금 (0~100%)
-  const levels=[{pct:0,lbl:'0',col:'#546e7a'},{pct:0.25,lbl:'25%',col:'#22c55e'},{pct:0.5,lbl:'50%',col:'#60a5fa'},{pct:0.75,lbl:'75%',col:'#f59e0b'},{pct:1.0,lbl:'MAX',col:'#ef4444'}];
-  const startA=Math.PI*.75,sweepA=Math.PI*1.5;
-  levels.forEach(lv=>{
-    const a=startA+lv.pct*sweepA;
-    const ix=dx2+Math.cos(a)*(dr-6),iy=dy2+Math.sin(a)*(dr-6);
-    const ox=dx2+Math.cos(a)*(dr+8),oy=dy2+Math.sin(a)*(dr+8);
-    ctx.strokeStyle=lv.col;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(ix,iy);ctx.lineTo(ox,oy);ctx.stroke();
-    const lx2=dx2+Math.cos(a)*(dr+20),ly2=dy2+Math.sin(a)*(dr+20);
-    ctx.font='bold 10px "Share Tech Mono"';ctx.textAlign='center';ctx.fillStyle=lv.col;ctx.fillText(lv.lbl,lx2,ly2+3);
-  });
-  // 속도 아크 (진행)
-  const phase=T;
-  let spd;
-  if(phase<0.3){spd=0.25;}
-  else if(phase<0.5){const p=_aniEase((phase-0.3)/0.2);spd=0.25+p*0.5;}
-  else if(phase<0.7){spd=0.75;}
-  else if(phase<0.85){const p=_aniEase((phase-0.7)/0.15);spd=0.75-p*0.5;}
-  else{spd=0.25;}
-  const endA=startA+spd*sweepA;
-  const spdCol=spd<0.4?'#22c55e':spd<0.7?'#60a5fa':spd<0.9?'#f59e0b':'#ef4444';
-  ctx.beginPath();ctx.arc(dx2,dy2,dr-12,startA,endA);ctx.strokeStyle=spdCol;ctx.lineWidth=8;ctx.stroke();
-  // 바늘
-  const needleA=startA+spd*sweepA;
-  ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(dx2,dy2);ctx.lineTo(dx2+Math.cos(needleA)*(dr-18),dy2+Math.sin(needleA)*(dr-18));ctx.stroke();ctx.lineCap='butt';
-  ctx.beginPath();ctx.arc(dx2,dy2,8,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
-  // 중앙 속도 표시
-  ctx.font='bold 22px "Share Tech Mono"';ctx.textAlign='center';ctx.fillStyle=spdCol;ctx.fillText(Math.round(spd*100)+'%',dx2,dy2+10);
-  // 아이콘
-  ctx.font='20px sans-serif';ctx.textAlign='center';
-  ctx.fillText('🐢',dx2-dr*.7,dy2+dr*.3);ctx.fillText('🐇',dx2+dr*.7,dy2+dr*.3);
-  let stxt;
-  if(spd<0.35){stxt='낮은 속도 - 좁은 공간 적합';}
-  else if(spd<0.65){stxt='중간 속도 - 실내 주행';}
-  else if(spd<0.85){stxt='높은 속도 - 지역사회 이동';}
-  else{stxt='최대 속도 - 개방 공간';}
-  _aniLabel(ctx,stxt,W/2,H-22,spdCol,12);
-  _aniLabel(ctx,'#6 속도 선택',W/2,20,'#00d4e0',13);
-},
-  7:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.28,'rgba(37,99,235,0.06)');
-  const phase=T;
-  // 틸트 각도 계산
-  let tiltAngle,reclineAngle,liftH,stxt,scol;
-  if(phase<0.25){const p=_aniEase(phase/0.25);tiltAngle=p*25;reclineAngle=0;liftH=0;stxt='틸트 기능 (뒤로 기울기)';scol='#60a5fa';}
-  else if(phase<0.5){const p=_aniEase((phase-0.25)/0.25);tiltAngle=25*(1-p);reclineAngle=p*35;liftH=0;stxt='리클라인 기능 (등받이 조절)';scol='#f59e0b';}
-  else if(phase<0.75){const p=_aniEase((phase-0.5)/0.25);tiltAngle=0;reclineAngle=35*(1-p);liftH=p*H*.1;stxt='좌석 거상 기능 (높이 조절)';scol='#22c55e';}
-  else{const p=_aniEase((phase-0.75)/0.25);tiltAngle=0;reclineAngle=0;liftH=H*.1*(1-p);stxt='원위치 복귀';scol='#00d4e0';}
-  // 휠체어 그리기 (변형 포함)
-  ctx.save();ctx.translate(cx,cy-liftH);ctx.rotate(-tiltAngle*Math.PI/180);
-  _aniWC(ctx,0,0,1.1,'#2563eb',1,T);
-  // 등받이 별도 (리클라인)
-  if(reclineAngle>1){
-    ctx.save();ctx.rotate(reclineAngle*Math.PI/180*.3);
-    ctx.strokeStyle='rgba(96,165,250,0.7)';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-10,-25);ctx.lineTo(-10,-62);ctx.stroke();ctx.lineCap='butt';
-    ctx.restore();
-  }
-  ctx.restore();
-  // 기능 인디케이터
-  const iw=W*.28;
-  [[tiltAngle/25,'틸트','#60a5fa',W*.1],[reclineAngle/35,'리클라인','#f59e0b',W*.1+W*.32],[liftH/(H*.1),'좌석 거상','#22c55e',W*.1+W*.64]].forEach(([lv,lbl,col,bx3])=>{
-    const bh3=H*.25,by3=H*.6;
-    ctx.fillStyle='rgba(30,41,59,0.7)';ctx.fillRect(bx3,by3,iw*.7,bh3);ctx.strokeStyle='rgba(96,165,250,0.2)';ctx.lineWidth=1;ctx.strokeRect(bx3,by3,iw*.7,bh3);
-    ctx.fillStyle=col+'44';ctx.fillRect(bx3,by3+bh3*(1-lv),iw*.7,bh3*lv);
-    ctx.fillStyle=col;ctx.fillRect(bx3,by3+bh3*(1-lv)-2,iw*.7,3);
-    _aniLabel(ctx,lbl,bx3+iw*.35,by3+bh3+14,col,8);
-    ctx.font='bold 10px "Share Tech Mono"';ctx.textAlign='center';ctx.fillStyle=col;ctx.fillText(Math.round(lv*100)+'%',bx3+iw*.35,by3+bh3*.5+5);
-  });
-  _aniLabel(ctx,stxt,W/2,H-22,scol,12);
-  _aniLabel(ctx,'#7 자세 보정 기능 조작',W/2,20,'#00d4e0',13);
-},
-  8:(ctx,W,H,T)=>{
-  const vx=W*.5,vy=H*.22,fy=H*.88,pw=W*.36,lx=vx-pw/2,rx=vx+pw/2;
-  _aniFloor(ctx,W,H,vx,vy);
-  // 경로 면
-  ctx.save();ctx.globalAlpha=0.07;ctx.fillStyle='#00d4e0';ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(rx,fy);ctx.lineTo(vx+pw*.06,vy+8);ctx.lineTo(vx-pw*.06,vy+8);ctx.closePath();ctx.fill();ctx.restore();
-  // 경계선
-  ctx.strokeStyle='rgba(0,212,224,0.3)';ctx.lineWidth=2;ctx.setLineDash([8,5]);
-  ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(vx-pw*.06,vy+12);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(rx,fy);ctx.lineTo(vx+pw*.06,vy+12);ctx.stroke();ctx.setLineDash([]);
-  // 거리 마커
-  for(let i=1;i<=10;i++){const p=i/10,w=pw*(1-p*.8),y=fy-(fy-vy-12)*p;
-    const isEnd=i===10,is5=i===5;
-    ctx.strokeStyle=isEnd?'rgba(255,159,10,0.9)':is5?'rgba(0,212,224,0.5)':'rgba(0,212,224,0.18)';
-    ctx.lineWidth=isEnd?2.5:1;ctx.setLineDash(isEnd?[]:[4,4]);
-    ctx.beginPath();ctx.moveTo(vx-w/2,y);ctx.lineTo(vx+w/2,y);ctx.stroke();ctx.setLineDash([]);
-    if(isEnd||i%2===0){_aniLabel(ctx,i+'m',rx+22,y+4,isEnd?'#ff9f0a':'#546e7a',9);}
-  }
-  // 시작선
-  ctx.strokeStyle='rgba(0,212,224,0.5)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(lx-10,fy);ctx.lineTo(rx+10,fy);ctx.stroke();
-  _aniLabel(ctx,'START',vx,fy+15,'#546e7a',9);
-  // 정지 표시
-  _aniPulse(ctx,vx,vy+18,12,'#ff9f0a',T);_aniLabel(ctx,'STOP 정지',vx,vy+46,'#ff9f0a',9);
-  // 휠체어
-  const prog=T,wcY=fy-(fy-vy-28)*prog;
-  ctx.save();ctx.globalAlpha=0.12;ctx.strokeStyle='#00d4e0';ctx.lineWidth=18;ctx.beginPath();ctx.moveTo(vx,fy-8);ctx.lineTo(vx,wcY);ctx.stroke();ctx.restore();
-  const sc=1-prog*.45;_aniWC(ctx,vx,wcY,sc*.9,'#00d4e0',1,T);
-  _aniArrow(ctx,lx-18,fy*.65+vy*.35,lx-18,vy+28,'rgba(0,212,224,0.45)','전진',T);
-  _aniLabel(ctx,'1.5m 폭 이내 유지',vx,H-22,'#00d4e0',11);
-  _aniLabel(ctx,'#8 전진하기  10m',W/2,20,'#00d4e0',13);
-},
-  9:(ctx,W,H,T)=>{
-  const vx=W*.5,vy=H*.22,fy=H*.88,pw=W*.36,lx=vx-pw/2,rx=vx+pw/2;
-  _aniFloor(ctx,W,H,vx,vy,'rgba(191,90,242,0.06)');
-  ctx.save();ctx.globalAlpha=0.07;ctx.fillStyle='#bf5af2';ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(rx,fy);ctx.lineTo(vx+pw*.06,vy+8);ctx.lineTo(vx-pw*.06,vy+8);ctx.closePath();ctx.fill();ctx.restore();
-  ctx.strokeStyle='rgba(191,90,242,0.3)';ctx.lineWidth=2;ctx.setLineDash([8,5]);
-  ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(vx-pw*.06,vy+12);ctx.stroke();ctx.beginPath();ctx.moveTo(rx,fy);ctx.lineTo(vx+pw*.06,vy+12);ctx.stroke();ctx.setLineDash([]);
-  for(let i=1;i<=5;i++){const p=i/5,w=pw*(1-p*.8),y=fy-(fy-vy-12)*p;
-    const isEnd=i===5;ctx.strokeStyle=isEnd?'rgba(255,159,10,0.9)':'rgba(191,90,242,0.25)';ctx.lineWidth=isEnd?2.5:1;ctx.setLineDash(isEnd?[]:[4,4]);ctx.beginPath();ctx.moveTo(vx-w/2,y);ctx.lineTo(vx+w/2,y);ctx.stroke();ctx.setLineDash([]);
-    _aniLabel(ctx,i+'m',rx+22,y+4,isEnd?'#ff9f0a':'#546e7a',9);}
-  _aniLabel(ctx,'START(위)',vx,vy+46,'#bf5af2',9);
-  ctx.strokeStyle='rgba(191,90,242,0.5)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(lx-10,fy);ctx.lineTo(rx+10,fy);ctx.stroke();_aniLabel(ctx,'STOP 정지',vx,fy+15,'#ff9f0a',9);
-  // 휠체어 후진
-  const prog=T,wcY=vy+30+(fy-28-vy-30)*prog;
-  const sc=0.5+prog*.5;
-  ctx.save();ctx.globalAlpha=0.12;ctx.strokeStyle='#bf5af2';ctx.lineWidth=18;ctx.beginPath();ctx.moveTo(vx,vy+30);ctx.lineTo(vx,wcY);ctx.stroke();ctx.restore();
-  _aniWC(ctx,vx,wcY,sc*.9,'#bf5af2',-1,T);
-  // 어깨 확인
-  const cp=(T*1.4)%1;const showCheck=cp<0.5;
-  ctx.save();ctx.globalAlpha=showCheck?0.9:0.3;
-  ctx.font='20px sans-serif';ctx.textAlign='center';
-  ctx.fillText(showCheck?'👀':'',vx+(showCheck?-36:36),wcY-48);ctx.restore();
-  ctx.save();ctx.strokeStyle='rgba(255,159,10,0.5)';ctx.lineWidth=1.5;ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(vx,wcY-38);ctx.lineTo(vx+(showCheck?-55:55),wcY-48);ctx.stroke();ctx.setLineDash([]);ctx.restore();
-  _aniArrow(ctx,lx-18,vy+40,lx-18,fy*.65+vy*.35,'rgba(191,90,242,0.45)','후진',T);
-  _aniLabel(ctx,'⚠ 양쪽 어깨 확인 필수',W/2,H-22,'#ff9f0a',11);
-  _aniLabel(ctx,'#9 후진하기  5m',W/2,20,'#bf5af2',13);
-},
-  10:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.52,sc=Math.min(W,H)*.3;
-  _aniFloor(ctx,W,H,cx,H*.1,'rgba(0,212,224,0.04)');
-  // 반경 존 (3개)
-  [[sc,'#ef4444','Fail 1.5m'],[sc*.67,'#30d158','Pass 1.0m'],[sc*.4,'#4d8fff','AP 0.6m']].forEach(([r,col,lbl])=>{
-    const fg=ctx.createRadialGradient(cx,cy,r*.3,cx,cy,r);fg.addColorStop(0,col+'06');fg.addColorStop(1,col+'14');
-    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=fg;ctx.fill();ctx.strokeStyle=col+'80';ctx.lineWidth=2;ctx.setLineDash(r===sc?[]:[5,4]);ctx.stroke();ctx.setLineDash([]);
-    _aniLabel(ctx,lbl,cx+r+3,cy,col,9);
-  });
-  // 십자선
-  ctx.strokeStyle='rgba(255,255,255,0.07)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx-sc*1.1,cy);ctx.lineTo(cx+sc*1.1,cy);ctx.stroke();ctx.beginPath();ctx.moveTo(cx,cy-sc*1.1);ctx.lineTo(cx,cy+sc*1.1);ctx.stroke();
-  // 회전 호
-  const ang=T*Math.PI*2.5,mr=sc*.58;
-  ctx.beginPath();ctx.arc(cx,cy,mr,-Math.PI/2,-Math.PI/2+ang);ctx.strokeStyle='#30d158';ctx.lineWidth=3.5;ctx.stroke();
-  // 진행 점
-  const tx2=cx+Math.cos(-Math.PI/2+ang)*mr,ty2=cy+Math.sin(-Math.PI/2+ang)*mr;
-  ctx.beginPath();ctx.arc(tx2,ty2,6,0,Math.PI*2);ctx.fillStyle='#30d158';ctx.fill();
-  // 휠체어
-  _aniWCTop(ctx,cx,cy,2.0,'#00d4e0',ang*1.3);
-  _aniLabel(ctx,'양방향 160도 이상 회전',W/2,H-22,'#30d158',11);
-  _aniLabel(ctx,'#10 제자리 회전',W/2,20,'#00d4e0',13);
-},
-  11:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.1,'rgba(0,212,224,0.04)');
-  // 주차 공간
-  const sw2=W*.55,sh2=H*.35,sx=cx-sw2/2,sy=cy-sh2/2;
-  ctx.strokeStyle='rgba(255,159,10,0.5)';ctx.lineWidth=2;
-  ctx.strokeRect(sx,sy,sw2,sh2);
-  // 목표 벽
-  ctx.strokeStyle='rgba(255,69,58,0.7)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(sx+sw2,sy);ctx.lineTo(sx+sw2,sy+sh2);ctx.stroke();
-  _aniLabel(ctx,'목표 측면 <10cm',sx+sw2+4,cy,'#ef4444',9);
-  // 4단계 이동
-  const phase=T;
-  let wcx,wcy,wcAngle;
-  if(phase<0.25){const p=_aniEase(phase/0.25);wcx=_aniLerp(sx+W*.12,sx+sw2-W*.12,p);wcy=cy;wcAngle=0;}
-  else if(phase<0.5){const p=_aniEase((phase-0.25)/0.25);wcx=sx+sw2-W*.12;wcy=_aniLerp(cy,sy+sh2*.2,p);wcAngle=0;}
-  else if(phase<0.75){const p=_aniEase((phase-0.5)/0.25);wcx=_aniLerp(sx+sw2-W*.12,sx+sw2-W*.06,p);wcy=sy+sh2*.2;wcAngle=0;}
-  else{const p=_aniEase((phase-0.75)/0.25);wcx=sx+sw2-W*.06;wcy=_aniLerp(sy+sh2*.2,cy,p);wcAngle=0;}
-  // 이동 경로
-  ctx.strokeStyle='rgba(0,212,224,0.2)';ctx.lineWidth=1.5;ctx.setLineDash([4,5]);ctx.beginPath();ctx.moveTo(sx+W*.12,cy);ctx.lineTo(sx+sw2-W*.06,cy);ctx.stroke();ctx.setLineDash([]);
-  // 측면 거리 표시
-  const gap=sx+sw2-wcx;ctx.strokeStyle='rgba(255,159,10,0.5)';ctx.lineWidth=1;ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(wcx+W*.04,wcy);ctx.lineTo(sx+sw2,wcy);ctx.stroke();ctx.setLineDash([]);
-  if(gap<W*.12){_aniLabel(ctx,Math.round(gap/W*150)+'cm',wcx+gap/2+W*.04,wcy-12,(gap<W*.05?'#30d158':'#f59e0b'),9);}
-  _aniWCTop(ctx,wcx,wcy,1.8,'#00d4e0',wcAngle);
-  _aniLabel(ctx,'측면 이동 <10cm · 각도 <20°',W/2,H-22,'#00d4e0',11);
-  _aniLabel(ctx,'#11 측면 이동',W/2,20,'#00d4e0',13);
-},
-  12:(ctx,W,H,T)=>{
-  const cx=W*.5,cy=H*.48,sc=Math.min(W,H)*.28;
-  _aniFloor(ctx,W,H,cx,H*.1,'rgba(0,212,224,0.04)');
-  [[sc,'#ef4444','Fail 1.5m'],[sc*.67,'#30d158','Pass 1.0m']].forEach(([r,col,lbl])=>{
-    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=col+'08';ctx.fill();ctx.strokeStyle=col+'60';ctx.lineWidth=2;ctx.setLineDash(r===sc?[]:[5,4]);ctx.stroke();ctx.setLineDash([]);
-    _aniLabel(ctx,lbl,cx+r+3,cy,col,9);
-  });
-  // 파일런
-  ctx.beginPath();ctx.arc(cx,cy,8,0,Math.PI*2);ctx.fillStyle='#ff6b35';ctx.fill();ctx.strokeStyle='#ff9f0a';ctx.lineWidth=2;ctx.stroke();
-  ctx.font='16px sans-serif';ctx.textAlign='center';ctx.fillText('🔶',cx,cy-16);
-  // 휠체어 경로
-  const ang=T*Math.PI*2.2,r2=sc*.62;
-  const wx3=cx+Math.cos(ang-Math.PI/2)*r2,wy3=cy+Math.sin(ang-Math.PI/2)*r2;
-  ctx.beginPath();ctx.arc(cx,cy,r2,0,Math.PI*2);ctx.strokeStyle='rgba(0,212,224,0.15)';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);
-  // 진행 호
-  ctx.beginPath();ctx.arc(cx,cy,r2,-Math.PI/2,-Math.PI/2+ang);ctx.strokeStyle='#00d4e0';ctx.lineWidth=3;ctx.stroke();
-  _aniWCTop(ctx,wx3,wy3,1.7,'#00d4e0',ang);
-  _aniLabel(ctx,'파일런 2cm 미만 이동 · 앞바퀴 결승선 통과',W/2,H-22,'#00d4e0',10);
-  _aniLabel(ctx,'#12 전진 중 회전',W/2,20,'#00d4e0',13);
-},
-  13:(ctx,W,H,T)=>{
-  const cx=W*.5,cy=H*.48,sc=Math.min(W,H)*.28;
-  _aniFloor(ctx,W,H,cx,H*.1,'rgba(191,90,242,0.04)');
-  [[sc,'#ef4444','Fail 1.5m'],[sc*.67,'#30d158','Pass 1.0m']].forEach(([r,col,lbl])=>{
-    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=col+'08';ctx.fill();ctx.strokeStyle=col+'60';ctx.lineWidth=2;ctx.setLineDash(r===sc?[]:[5,4]);ctx.stroke();ctx.setLineDash([]);
-    _aniLabel(ctx,lbl,cx+r+3,cy,col,9);
-  });
-  ctx.beginPath();ctx.arc(cx,cy,8,0,Math.PI*2);ctx.fillStyle='#ff6b35';ctx.fill();ctx.strokeStyle='#ff9f0a';ctx.lineWidth=2;ctx.stroke();
-  ctx.font='16px sans-serif';ctx.textAlign='center';ctx.fillText('🔶',cx,cy-16);
-  const ang=-T*Math.PI*2.2,r2=sc*.62;
-  const wx3=cx+Math.cos(ang-Math.PI/2)*r2,wy3=cy+Math.sin(ang-Math.PI/2)*r2;
-  ctx.beginPath();ctx.arc(cx,cy,r2,0,Math.PI*2);ctx.strokeStyle='rgba(191,90,242,0.15)';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);
-  ctx.beginPath();ctx.arc(cx,cy,r2,-Math.PI/2,-Math.PI/2+ang,true);ctx.strokeStyle='#bf5af2';ctx.lineWidth=3;ctx.stroke();
-  _aniWCTop(ctx,wx3,wy3,1.7,'#bf5af2',ang+Math.PI);
-  // 어깨 확인
-  const cp=(T*2)%1;
-  ctx.save();ctx.globalAlpha=cp<0.5?0.9:0.2;ctx.font='18px sans-serif';ctx.textAlign='center';ctx.fillText('👀',wx3+(cp<0.5?28:-28),wy3-32);ctx.restore();
-  _aniLabel(ctx,'⚠ 어깨 확인 · 파일런 2cm 미만',W/2,H-22,'#bf5af2',10);
-  _aniLabel(ctx,'#13 후진 중 회전',W/2,20,'#bf5af2',13);
-},
-  14:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.25,'rgba(0,212,224,0.06)');
-  _aniWC(ctx,cx,cy,1.0,'#00d4e0',1,T);
-  const phase=T;
-  // Task 1: 바닥 물체 (phase 0~0.5)
-  const obj1Y=cy+H*.25,obj1X=cx+W*.2;
-  ctx.beginPath();ctx.arc(obj1X,obj1Y,10,0,Math.PI*2);ctx.fillStyle='rgba(255,159,10,0.8)';ctx.fill();ctx.strokeStyle='#ff9f0a';ctx.lineWidth=2;ctx.stroke();
-  ctx.font='14px sans-serif';ctx.textAlign='center';ctx.fillText('📦',obj1X,obj1Y+5);
-  if(phase<0.5){
-    const p=_aniEase(Math.min(phase/0.4,1));
-    const armX=_aniLerp(cx+15,obj1X-5,p),armY=_aniLerp(cy+10,obj1Y+2,p);
-    ctx.strokeStyle='rgba(254,214,102,0.8)';ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cx+15,cy+8);ctx.lineTo(armX,armY);ctx.stroke();ctx.lineCap='butt';
-    if(phase>0.38){_aniLabel(ctx,'집기 ✓',obj1X,obj1Y-18,'#30d158',10);}
-    _aniLabel(ctx,'① 바닥 물체 집기',W/2,H-22,'#ff9f0a',11);
-  }
-  // Task 2: 높은 목표 (phase 0.5~1.0)
-  const tgtY=cy-H*.32,tgtX=cx+W*.18;
-  ctx.strokeStyle='rgba(255,69,58,0.6)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(tgtX-12,tgtY);ctx.lineTo(tgtX+12,tgtY);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(tgtX,tgtY-10);ctx.lineTo(tgtX,tgtY+10);ctx.stroke();
-  _aniLabel(ctx,'1.5m',tgtX+18,tgtY,'#ef4444',9);
-  if(phase>=0.5){
-    const p=_aniEase(Math.min((phase-0.5)/0.35,1));
-    const armX2=_aniLerp(cx+15,tgtX-5,p),armY2=_aniLerp(cy-10,tgtY+5,p);
-    ctx.strokeStyle='rgba(254,214,102,0.8)';ctx.lineWidth=3;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cx+15,cy-10);ctx.lineTo(armX2,armY2);ctx.stroke();ctx.lineCap='butt';
-    if(phase>0.88){_aniLabel(ctx,'닿기 ✓',tgtX,tgtY-18,'#30d158',10);}
-    _aniLabel(ctx,'② 머리 위 목표 닿기  1.5m',W/2,H-22,'#ef4444',11);
-  }
-  _aniLabel(ctx,'#14 물체 집기/닿기',W/2,20,'#00d4e0',13);
-},
-  15:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.28,'rgba(0,212,224,0.05)');
-  const phase=T;
-  let tiltDeg=0,stxt,scol;
-  if(phase<0.15){tiltDeg=0;stxt='초기 착석 자세';scol='#546e7a';}
-  else if(phase<0.45){const p=_aniEase((phase-0.15)/0.30);tiltDeg=p*35;stxt='틸트 기능으로 압력 완화 중';scol='#60a5fa';}
-  else if(phase<0.70){tiltDeg=35;stxt='15초 이상 유지 중... ✓';scol='#30d158';}
-  else if(phase<0.90){const p=_aniEase((phase-0.70)/0.20);tiltDeg=(1-p)*35;stxt='원위치 복귀';scol='#00d4e0';}
-  else{tiltDeg=0;stxt='압력 완화 완료';scol='#30d158';}
-  ctx.save();ctx.translate(cx,cy);ctx.rotate(-tiltDeg*Math.PI/180);
-  _aniWC(ctx,0,0,1.1,'#2563eb',1,T);ctx.restore();
-  // 압력 인디케이터
-  const prgX=W*.12,prgY=H*.28,prgH=H*.44;
-  ctx.fillStyle='rgba(30,41,59,0.8)';ctx.fillRect(prgX,prgY,20,prgH);ctx.strokeStyle='rgba(96,165,250,0.3)';ctx.lineWidth=1;ctx.strokeRect(prgX,prgY,20,prgH);
-  const pressLevel=1-(tiltDeg/35)*0.95;
-  const pCol=pressLevel>0.5?'#ef4444':pressLevel>0.2?'#f59e0b':'#22c55e';
-  ctx.fillStyle=pCol;ctx.fillRect(prgX+3,prgY+3+prgH*(1-pressLevel)*0.97,(14),prgH*pressLevel*0.97);
-  _aniLabel(ctx,'압력',prgX+10,prgY+prgH+14,pCol,8);
-  // 타이머 (유지 중)
-  if(phase>0.45&&phase<0.70){
-    const elapsed=Math.round((phase-0.45)/0.25*15);
-    _aniPulse(ctx,W*.82,H*.35,20,'#30d158',T);
-    ctx.font='bold 16px "Share Tech Mono"';ctx.textAlign='center';ctx.fillStyle='#30d158';ctx.fillText(elapsed+'s',W*.82,H*.35+6);
-    _aniLabel(ctx,'15초',W*.82,H*.35+30,'#30d158',9);
-  }
-  ctx.fillStyle='rgba(100,100,150,0.2)';ctx.fillRect(cx-W*.22,cy+H*.18,W*.44,8);
-  _aniLabel(ctx,'양쪽 좌골 완전 해제',cx,cy+H*.34,'rgba(255,255,255,0.4)',9);
-  _aniLabel(ctx,stxt,W/2,H-22,scol,12);
-  _aniLabel(ctx,'#15 체중 이동 (압력 완화)',W/2,20,'#00d4e0',13);
-},
-  16:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.52;
-  _aniFloor(ctx,W,H,cx,H*.28,'rgba(0,212,224,0.05)');
-  // 침대/매트
-  const mx=cx+W*.12,my=cy-H*.08,mw=W*.3,mh=H*.32;
-  const mg=ctx.createLinearGradient(mx,my,mx+mw,my+mh);mg.addColorStop(0,'rgba(34,197,94,0.2)');mg.addColorStop(1,'rgba(22,163,74,0.1)');
-  ctx.fillStyle=mg;ctx.fillRect(mx,my,mw,mh);ctx.strokeStyle='rgba(34,197,94,0.5)';ctx.lineWidth=2;ctx.strokeRect(mx,my,mw,mh);
-  _aniLabel(ctx,'MAT',mx+mw/2,my+mh/2+5,'rgba(34,197,94,0.7)',10);
-  // 휠체어 위치
-  const phase=T;
-  let wcx,wcy,stxt,scol;
-  if(phase<0.15){wcx=cx-W*.08;wcy=cy;stxt='전원 OFF · 팔걸이/발판 정리';scol='#dc2626';}
-  else if(phase<0.45){const p=_aniEase((phase-0.15)/0.30);wcx=_aniLerp(cx-W*.08,cx+W*.04,p);wcy=cy;stxt='MAT 쪽으로 최대한 접근';scol='#f59e0b';}
-  else if(phase<0.65){wcx=cx+W*.04;wcy=cy;stxt='이동 완료 ✓ (→)';scol='#30d158';}
-  else if(phase<0.85){const p=_aniEase((phase-0.65)/0.20);wcx=_aniLerp(cx+W*.04,cx-W*.08,p);wcy=cy;stxt='휠체어로 복귀 중 (←)';scol='#60a5fa';}
-  else{wcx=cx-W*.08;wcy=cy;stxt='복귀 완료 ✓  휠체어 복원';scol='#30d158';}
-  _aniWC(ctx,wcx,wcy,1.0,'#2563eb',1,T);
-  // 사람 실루엣 이동
-  if(phase>0.45&&phase<0.65){
-    const p=_aniEase((phase-0.45)/0.20);
-    const px2=_aniLerp(wcx+12,mx+mw*.3,p),py2=cy-H*.05;
-    ctx.beginPath();ctx.arc(px2,py2,12,0,Math.PI*2);ctx.fillStyle='rgba(254,214,102,0.6)';ctx.fill();ctx.strokeStyle='rgba(254,214,102,0.8)';ctx.lineWidth=1.5;ctx.stroke();
-  }
-  _aniLabel(ctx,stxt,W/2,H-22,scol,12);
-  _aniLabel(ctx,'#16 수평 이동 (transfer)',W/2,20,'#00d4e0',13);
-},
-  17:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.45;
-  _aniFloor(ctx,W,H,cx,H*.28,'rgba(0,212,224,0.05)');
-  _aniWC(ctx,cx,cy,1.0,'#2563eb',1,T);
-  const floorY=cy+H*.28;
-  // 바닥선
-  ctx.strokeStyle='rgba(0,212,224,0.3)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W*.1,floorY);ctx.lineTo(W*.9,floorY);ctx.stroke();
-  const phase=T;
-  let stxt,scol;
-  if(phase<0.2){stxt='전원 OFF · 발판 제거';scol='#dc2626';}
-  else if(phase<0.5){
-    const p=_aniEase((phase-0.2)/0.30);
-    const px2=cx+W*.15,py2=_aniLerp(cy-H*.05,floorY-12,p);
-    ctx.beginPath();ctx.arc(px2,py2,12,0,Math.PI*2);ctx.fillStyle='rgba(254,214,102,0.6)';ctx.fill();ctx.strokeStyle='rgba(254,214,102,0.8)';ctx.lineWidth=1.5;ctx.stroke();
-    stxt='바닥으로 내려가는 중...';scol='#f59e0b';
-  }else if(phase<0.65){
-    ctx.beginPath();ctx.arc(cx+W*.15,floorY-12,12,0,Math.PI*2);ctx.fillStyle='rgba(254,214,102,0.6)';ctx.fill();ctx.strokeStyle='rgba(254,214,102,0.8)';ctx.lineWidth=1.5;ctx.stroke();
-    stxt='바닥 도달 ✓  안전 자세 확인';scol='#30d158';
-  }else if(phase<0.90){
-    const p=_aniEase((phase-0.65)/0.25);
-    const px2=cx+W*.15,py2=_aniLerp(floorY-12,cy-H*.05,p);
-    ctx.beginPath();ctx.arc(px2,py2,12,0,Math.PI*2);ctx.fillStyle='rgba(254,214,102,0.6)';ctx.fill();ctx.strokeStyle='rgba(254,214,102,0.8)';ctx.lineWidth=1.5;ctx.stroke();
-    stxt='휠체어로 복귀 중...';scol='#60a5fa';
-  }else{stxt='복귀 완료 ✓  (선수기술: #16 합격 필요)';scol='#30d158';}
-  _aniLabel(ctx,stxt,W/2,H-22,scol,12);
-  _aniLabel(ctx,'#17 바닥 이동',W/2,20,'#00d4e0',13);
-},
-  18:(ctx,W,H,T)=>{
-  const cx=W/2,cy=H*.5;
-  _aniFloor(ctx,W,H,cx,H*.1,'rgba(0,212,224,0.04)');
-  // 문 프레임 (80cm)
-  const fw=W*.32,fh=H*.65,fx=cx-fw/2,fy=cy-fh*.55;
-  ctx.strokeStyle='rgba(120,120,150,0.5)';ctx.lineWidth=3;ctx.strokeRect(fx-8,fy-10,fw+16,fh+10);
-  _aniLabel(ctx,'80cm',cx,fy-18,'#60a5fa',9);
-  // 문 (열리는 방향 애니)
-  const phase=T;
-  let doorOpen,wcY,stxt,scol,dir;
-  if(phase<0.5){
-    dir=1;const p=_aniEase(Math.min(phase/0.35,1)>0.5?1:_aniEase(phase/0.35)*2);
-    doorOpen=Math.min(phase/0.35,1)*0.9;
-    wcY=_aniLerp(cy+H*.25,cy-H*.25,Math.min(phase/0.4,1));
-    stxt=phase<0.35?'문 밀며 통과 중 →':'문 닫기';scol='#60a5fa';
-  }else{
-    dir=-1;doorOpen=Math.max(0,(0.7-(phase-0.5)/0.35)*0.9);
-    wcY=_aniLerp(cy-H*.25,cy+H*.25,Math.min((phase-0.5)/0.4,1));
-    stxt=phase<0.85?'← 당기며 복귀':'닫기 완료 ✓';scol='#30d158';
-  }
-  // 문판
-  const doorW=fw*.95,doorAngle=doorOpen*Math.PI/2;
-  ctx.save();ctx.translate(fx+3,fy);ctx.rotate(doorAngle);
-  ctx.fillStyle='rgba(139,90,43,0.35)';ctx.fillRect(0,0,doorW,fh);ctx.strokeStyle='rgba(180,130,70,0.6)';ctx.lineWidth=2;ctx.strokeRect(0,0,doorW,fh);
-  // 손잡이
-  ctx.beginPath();ctx.arc(doorW*.8,fh*.45,5,0,Math.PI*2);ctx.fillStyle='rgba(220,200,100,0.8)';ctx.fill();ctx.restore();
-  // 휠체어
-  _aniWC(ctx,cx,wcY,0.9,'#00d4e0',dir,T);
-  // 폭 표시
-  ctx.strokeStyle='rgba(0,212,224,0.3)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(fx,cy);ctx.lineTo(fx+fw,cy);ctx.stroke();ctx.setLineDash([]);
-  _aniLabel(ctx,stxt,W/2,H-22,scol,12);
-  _aniLabel(ctx,'#18 여닫이 문 통과  80cm',W/2,20,'#00d4e0',13);
-},
-  19:(ctx,W,H,T)=>{
-  const fy=H*.82,ang=5*Math.PI/180,il=W*.62;
-  _aniFloor(ctx,W,H,W*.2,H*.3,'rgba(0,212,224,0.05)');
-  // 경사로
-  const sx=W*.15,sy=fy,ex=sx+il*Math.cos(ang),ey=sy-il*Math.sin(ang);
-  ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.lineTo(ex,fy);ctx.closePath();
-  const ig=ctx.createLinearGradient(sx,sy,ex,ey);ig.addColorStop(0,'rgba(37,99,235,0.15)');ig.addColorStop(1,'rgba(37,99,235,0.35)');
-  ctx.fillStyle=ig;ctx.fill();ctx.strokeStyle='rgba(37,99,235,0.6)';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
-  // 각도 표시
-  ctx.strokeStyle='rgba(255,159,10,0.6)';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(sx,sy,35,Math.PI-0.1,-ang,true);ctx.stroke();
-  _aniLabel(ctx,'5°',sx+42,sy-12,'#ff9f0a',10);
-  // 평탄면
-  ctx.strokeStyle='rgba(0,212,224,0.35)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(W*.92,ey);ctx.stroke();
-  _aniLabel(ctx,'상단 평면',W*.75,ey-12,'#00d4e0',9);
-  // 휠체어
-  const prog=T,dx=il*prog,wcx=sx+dx*Math.cos(ang),wcy=sy-dx*Math.sin(ang);
-  ctx.save();ctx.translate(wcx,wcy);ctx.rotate(-ang);_aniWC(ctx,0,0,0.9,'#00d4e0',1,T);ctx.restore();
-  _aniLabel(ctx,'발판 걸림 주의 · 고토크 모드 전환',W/2,H-22,'#f59e0b',11);
-  _aniLabel(ctx,'#19 완만한 경사 오르기  5°',W/2,20,'#00d4e0',13);
-},
-  20:(ctx,W,H,T)=>{
-  const fy=H*.82,ang=5*Math.PI/180,il=W*.62;
-  _aniFloor(ctx,W,H,W*.8,H*.3,'rgba(191,90,242,0.05)');
-  const ex=W*.85,ey=fy,sx=ex-il*Math.cos(ang),sy=ey-il*Math.sin(ang);
-  ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.lineTo(sx,ey);ctx.closePath();
-  const ig=ctx.createLinearGradient(sx,sy,ex,ey);ig.addColorStop(0,'rgba(191,90,242,0.35)');ig.addColorStop(1,'rgba(191,90,242,0.15)');
-  ctx.fillStyle=ig;ctx.fill();ctx.strokeStyle='rgba(191,90,242,0.6)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
-  ctx.strokeStyle='rgba(255,159,10,0.6)';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(ex,ey,35,Math.PI+ang,-0.1,true);ctx.stroke();
-  _aniLabel(ctx,'5°',ex-50,ey-12,'#ff9f0a',10);
-  ctx.strokeStyle='rgba(191,90,242,0.35)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W*.1,sy);ctx.lineTo(sx,sy);ctx.stroke();
-  _aniLabel(ctx,'상단 평면',W*.22,sy-12,'#bf5af2',9);
-  const prog=T,dx=il*prog,wcx=sx+dx*Math.cos(ang),wcy=sy-il*Math.sin(ang)+dx*Math.sin(ang);
-  ctx.save();ctx.translate(wcx,wcy);ctx.rotate(ang);_aniWC(ctx,0,0,0.9,'#bf5af2',1,T);ctx.restore();
-  _aniLabel(ctx,'자동 브레이킹 · 통제된 정지',W/2,H-22,'#bf5af2',11);
-  _aniLabel(ctx,'#20 완만한 경사 내려가기  5°',W/2,20,'#bf5af2',13);
-},
-  21:(ctx,W,H,T)=>{
-  const fy=H*.82,ang=10*Math.PI/180,il=W*.58;
-  _aniFloor(ctx,W,H,W*.2,H*.3,'rgba(255,159,10,0.05)');
-  const sx=W*.15,sy=fy,ex=sx+il*Math.cos(ang),ey=sy-il*Math.sin(ang);
-  ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.lineTo(ex,fy);ctx.closePath();
-  const ig=ctx.createLinearGradient(sx,sy,ex,ey);ig.addColorStop(0,'rgba(255,159,10,0.15)');ig.addColorStop(1,'rgba(255,159,10,0.4)');
-  ctx.fillStyle=ig;ctx.fill();ctx.strokeStyle='rgba(255,159,10,0.7)';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
-  ctx.strokeStyle='rgba(255,159,10,0.6)';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(sx,sy,40,Math.PI-0.15,-ang,true);ctx.stroke();
-  _aniLabel(ctx,'10°',sx+50,sy-16,'#ff9f0a',11);
-  ctx.strokeStyle='rgba(255,159,10,0.35)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(W*.92,ey);ctx.stroke();
-  const prog=T,dx=il*prog,wcx=sx+dx*Math.cos(ang),wcy=sy-dx*Math.sin(ang);
-  ctx.save();ctx.translate(wcx,wcy);ctx.rotate(-ang);_aniWC(ctx,0,0,0.9,'#ff9f0a',1,T);ctx.restore();
-  _aniLabel(ctx,'⚠ 선수기술 #19 합격 필요 · 후방 전복 주의',W/2,H-22,'#ef4444',10);
-  _aniLabel(ctx,'#21 급경사 오르기  10°',W/2,20,'#ff9f0a',13);
-},
-  22:(ctx,W,H,T)=>{
-  const fy=H*.82,ang=10*Math.PI/180,il=W*.58;
-  _aniFloor(ctx,W,H,W*.8,H*.3,'rgba(255,69,58,0.05)');
-  const ex=W*.85,ey=fy,sx=ex-il*Math.cos(ang),sy=ey-il*Math.sin(ang);
-  ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.lineTo(sx,ey);ctx.closePath();
-  const ig=ctx.createLinearGradient(sx,sy,ex,ey);ig.addColorStop(0,'rgba(255,69,58,0.4)');ig.addColorStop(1,'rgba(255,69,58,0.15)');
-  ctx.fillStyle=ig;ctx.fill();ctx.strokeStyle='rgba(255,69,58,0.7)';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
-  ctx.strokeStyle='rgba(255,159,10,0.6)';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(ex,ey,45,Math.PI+ang,-0.1,true);ctx.stroke();
-  _aniLabel(ctx,'10°',ex-58,ey-18,'#ff9f0a',11);
-  ctx.strokeStyle='rgba(255,69,58,0.3)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(W*.1,sy);ctx.lineTo(sx,sy);ctx.stroke();
-  const prog=T,dx=il*prog,wcx=sx+dx*Math.cos(ang),wcy=sy-il*Math.sin(ang)+dx*Math.sin(ang);
-  ctx.save();ctx.translate(wcx,wcy);ctx.rotate(ang);_aniWC(ctx,0,0,0.9,'#ef4444',1,T);ctx.restore();
-  _aniLabel(ctx,'⚠ 선수기술 #20 합격 필요 · 급주행 금지',W/2,H-22,'#ef4444',10);
-  _aniLabel(ctx,'#22 급경사 내려가기  10°',W/2,20,'#ef4444',13);
-},
-  23:(ctx,W,H,T)=>{
-  const vx=W*.5,vy=H*.25,fy=H*.85,pw=W*.38,lx=vx-pw/2,rx=vx+pw/2;
-  _aniFloor(ctx,W,H,vx,vy,'rgba(0,212,224,0.04)');
-  // 딱딱한 노면 (아래쪽)
-  ctx.fillStyle='rgba(37,99,235,0.08)';ctx.fillRect(0,fy*0.72,W,H-fy*0.72);
-  ctx.strokeStyle='rgba(37,99,235,0.3)';ctx.lineWidth=1;
-  for(let x=0;x<W;x+=18){ctx.beginPath();ctx.moveTo(x,fy*0.72);ctx.lineTo(x,H);ctx.stroke();}
-  _aniLabel(ctx,'딱딱한 노면',W*.2,H*.92,'#546e7a',9);
-  // 부드러운 노면 (위쪽)
-  const softY=fy*0.45;ctx.fillStyle='rgba(139,90,43,0.12)';ctx.fillRect(0,softY,W,fy*0.72-softY);
-  ctx.strokeStyle='rgba(139,90,43,0.25)';ctx.lineWidth=0.8;
-  for(let x=0;x<W;x+=12){for(let y=softY;y<fy*0.72;y+=10){ctx.beginPath();ctx.arc(x+(y%20)*0.5,y,2,0,Math.PI*2);ctx.stroke();}}
-  _aniLabel(ctx,'부드러운 노면 (짐 매트 5cm)',vx,softY-8,'#8b5e2a',9);
-  // 경계선
-  ctx.strokeStyle='rgba(255,159,10,0.6)';ctx.lineWidth=2.5;ctx.setLineDash([8,5]);ctx.beginPath();ctx.moveTo(0,fy*0.72);ctx.lineTo(W,fy*0.72);ctx.stroke();ctx.setLineDash([]);
-  // 결승선
-  ctx.strokeStyle='rgba(0,212,224,0.5)';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(lx-5,vy+8);ctx.lineTo(rx+5,vy+8);ctx.stroke();ctx.setLineDash([]);
-  _aniLabel(ctx,'2.5m 이상',vx,vy-4,'#00d4e0',9);
-  // 휠체어
-  const prog=T,wcY=fy*0.82-(fy*0.82-vy-24)*prog;
-  const isOnSoft=wcY<fy*0.72;
-  const wcCol=isOnSoft?'#f59e0b':'#00d4e0';
-  if(isOnSoft){const bounce=Math.sin(T*20)*2;_aniWC(ctx,vx+bounce,wcY+bounce*.5,0.9,wcCol,1,T);}
-  else{_aniWC(ctx,vx,wcY,0.9,wcCol,1,T);}
-  _aniLabel(ctx,'고토크 모드 · 일정 속도 유지',W/2,H-22,'#f59e0b',11);
-  _aniLabel(ctx,'#23 부드러운 노면 주행',W/2,20,'#00d4e0',13);
-},
-  24:(ctx,W,H,T)=>{
-  const fy=H*.82,ox=W*.5,ow=W*.06,oh=H*.055;
-  _aniFloor(ctx,W,H,W*.5,H*.25,'rgba(255,159,10,0.05)');
-  // 지면
-  ctx.fillStyle='rgba(37,99,235,0.08)';ctx.fillRect(0,fy,W,H-fy);ctx.strokeStyle='rgba(37,99,235,0.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,fy);ctx.lineTo(W,fy);ctx.stroke();
-  // 장애물
-  const og=ctx.createLinearGradient(ox-ow/2,fy-oh,ox+ow/2,fy);og.addColorStop(0,'rgba(255,159,10,0.9)');og.addColorStop(1,'rgba(220,120,0,0.7)');
-  ctx.fillStyle=og;ctx.fillRect(ox-ow/2,fy-oh,ow,oh);ctx.strokeStyle='#ff9f0a';ctx.lineWidth=2;ctx.strokeRect(ox-ow/2,fy-oh,ow,oh);
-  _aniLabel(ctx,'3.8cm',ox,fy-oh-8,'#ff9f0a',9);_aniLabel(ctx,'7.6cm',ox,fy+14,'#546e7a',9);
-  // 높이 표시
-  ctx.strokeStyle='rgba(255,159,10,0.5)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ox+ow/2+5,fy-oh);ctx.lineTo(ox+ow/2+15,fy-oh);ctx.moveTo(ox+ow/2+10,fy-oh);ctx.lineTo(ox+ow/2+10,fy);ctx.moveTo(ox+ow/2+5,fy);ctx.lineTo(ox+ow/2+15,fy);ctx.stroke();
-  // 휠체어 (장애물 넘기)
-  const prog=T;
-  let wcx,wcy,tiltA;
-  if(prog<0.35){wcx=W*.18+(ox-W*.22)*prog/0.35;wcy=fy-20;tiltA=0;}
-  else if(prog<0.55){const p=(prog-0.35)/0.20;wcx=ox-ow*.3+ow*.8*p;wcy=fy-20-oh*Math.sin(p*Math.PI);tiltA=-p*8*Math.PI/180;}
-  else if(prog<0.70){const p=(prog-0.55)/0.15;wcx=ox+ow*.5+W*.05*p;wcy=fy-oh-4;tiltA=-8*Math.PI/180*(1-p);}
-  else{wcx=ox+ow*.5+W*.05+(W*.7-ox-ow*.5-W*.05)*(prog-0.70)/0.30;wcy=fy-20;tiltA=0;}
-  ctx.save();ctx.translate(wcx,wcy);ctx.rotate(tiltA);_aniWC(ctx,0,0,0.9,'#ff9f0a',1,T);ctx.restore();
-  _aniArrow(ctx,W*.14,fy*.6+H*.25*.4,W*.14,fy*.4+H*.25*.6,'rgba(255,159,10,0.4)','전진',T);
-  _aniLabel(ctx,'저속 정면 접근 · 모든 바퀴 완전 통과',W/2,H-22,'#ff9f0a',10);
-  _aniLabel(ctx,'#24 장애물 넘기  3.8cm',W/2,20,'#ff9f0a',13);
-},
-  25:(ctx,W,H,T)=>{
-  const fy=H*.82,cx2=W*.55,ch=H*.075;
-  _aniFloor(ctx,W,H,W*.3,H*.25,'rgba(255,159,10,0.05)');
-  // 연석 아래 지면
-  ctx.fillStyle='rgba(37,99,235,0.08)';ctx.fillRect(0,fy,cx2,H-fy);
-  ctx.strokeStyle='rgba(37,99,235,0.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,fy);ctx.lineTo(cx2,fy);ctx.stroke();
-  // 연석 위 지면
-  ctx.fillStyle='rgba(37,99,235,0.15)';ctx.fillRect(cx2,fy-ch,W-cx2,H-(fy-ch));
-  ctx.strokeStyle='rgba(37,99,235,0.4)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx2,fy-ch);ctx.lineTo(W,fy-ch);ctx.stroke();
-  // 연석 면
-  const cg=ctx.createLinearGradient(cx2,fy-ch,cx2+W*.03,fy);cg.addColorStop(0,'rgba(96,165,250,0.5)');cg.addColorStop(1,'rgba(37,99,235,0.3)');
-  ctx.fillStyle=cg;ctx.fillRect(cx2,fy-ch,W*.03,ch);ctx.strokeStyle='#3b82f6';ctx.lineWidth=2;ctx.strokeRect(cx2,fy-ch,W*.03,ch);
-  _aniLabel(ctx,'5cm',cx2-22,fy-ch/2,'#3b82f6',9);
-  // 휠체어
-  const prog=T;
-  let wcx,wcy,tiltA;
-  if(prog<0.4){wcx=W*.15+(cx2-W*.2)*prog/0.4;wcy=fy-22;tiltA=0;}
-  else if(prog<0.65){const p=(prog-0.4)/0.25;wcx=cx2-W*.05+W*.07*p;wcy=fy-22-ch*Math.sin(p*Math.PI)*(1-p*.3);tiltA=-p*10*Math.PI/180;}
-  else{wcx=cx2+W*.02+(W*.75-cx2-W*.02)*(prog-0.65)/0.35;wcy=fy-ch-22;tiltA=0;}
-  ctx.save();ctx.translate(wcx,wcy);ctx.rotate(tiltA);_aniWC(ctx,0,0,0.9,'#ff9f0a',1,T);ctx.restore();
-  _aniArrow(ctx,W*.12,fy*.6+H*.25*.4,W*.12,fy*.35+H*.25*.65,'rgba(255,159,10,0.4)','저속 접근',T);
-  _aniLabel(ctx,'모든 바퀴 상단 진입 · 고토크 모드',W/2,H-22,'#ff9f0a',10);
-  _aniLabel(ctx,'#25 낮은 연석 오르기  5cm',W/2,20,'#ff9f0a',13);
-},
-  26:(ctx,W,H,T)=>{
-  const fy=H*.82,cx2=W*.42,ch=H*.075;
-  _aniFloor(ctx,W,H,W*.7,H*.25,'rgba(191,90,242,0.05)');
-  // 연석 위 (왼쪽)
-  ctx.fillStyle='rgba(37,99,235,0.15)';ctx.fillRect(0,fy-ch,cx2,H-(fy-ch));
-  ctx.strokeStyle='rgba(37,99,235,0.35)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,fy-ch);ctx.lineTo(cx2,fy-ch);ctx.stroke();
-  // 연석 아래 (오른쪽)
-  ctx.fillStyle='rgba(37,99,235,0.07)';ctx.fillRect(cx2+W*.03,fy,W-cx2-W*.03,H-fy);
-  ctx.strokeStyle='rgba(37,99,235,0.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx2+W*.03,fy);ctx.lineTo(W,fy);ctx.stroke();
-  // 연석 면
-  ctx.fillStyle='rgba(96,165,250,0.35)';ctx.fillRect(cx2,fy-ch,W*.03,ch);ctx.strokeStyle='#3b82f6';ctx.lineWidth=2;ctx.strokeRect(cx2,fy-ch,W*.03,ch);
-  _aniLabel(ctx,'5cm',cx2-22,fy-ch/2,'#3b82f6',9);
-  // 휠체어 (연석 내려가기)
-  const prog=T;
-  let wcx,wcy,tiltA;
-  if(prog<0.35){wcx=W*.12+(cx2-W*.15)*prog/0.35;wcy=fy-ch-22;tiltA=0;}
-  else if(prog<0.65){const p=(prog-0.35)/0.30;wcx=cx2+W*.015+W*.06*p;wcy=(fy-ch-22)+ch*Math.sin(p*Math.PI)*(1-p*.3)+ch*p;tiltA=p*8*Math.PI/180;}
-  else{wcx=cx2+W*.075+(W*.82-cx2-W*.075)*(prog-0.65)/0.35;wcy=fy-22;tiltA=0;}
-  ctx.save();ctx.translate(wcx,wcy);ctx.rotate(tiltA);_aniWC(ctx,0,0,0.9,'#bf5af2',1,T);ctx.restore();
-  _aniArrow(ctx,W*.1,fy-ch*.5,W*.1,fy+H*.04,'rgba(191,90,242,0.4)','저속',T);
-  _aniLabel(ctx,'통제된 roll-off · 멈추지 않고 연속 이동',W/2,H-22,'#bf5af2',10);
-  _aniLabel(ctx,'#26 낮은 연석 내려가기  5cm',W/2,20,'#bf5af2',13);
-},
+  8:(ctx,W,H,T)=>{ // #8 전진
+    const vy=H*.28,vx=W*.5,fy=H*.85,pathW=W*.38,lx=vx-pathW/2,rx=vx+pathW/2;
+    _aniFloor(ctx,W,H,vx,vy);
+    ctx.save();ctx.globalAlpha=0.06;ctx.fillStyle='#00d4e0';ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(rx,fy);ctx.lineTo(vx+pathW*.08,vy+10);ctx.lineTo(vx-pathW*.08,vy+10);ctx.closePath();ctx.fill();ctx.restore();
+    ctx.strokeStyle='rgba(0,212,224,0.35)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(vx-pathW*.08,vy+15);ctx.stroke();ctx.beginPath();ctx.moveTo(rx,fy);ctx.lineTo(vx+pathW*.08,vy+15);ctx.stroke();
+    for(let i=1;i<=10;i++){const pct=i/10,myW=pathW*(1-pct*.8),my=fy-(fy-vy-15)*pct;ctx.strokeStyle=i===10?'rgba(255,159,10,0.7)':'rgba(0,212,224,0.2)';ctx.lineWidth=i===10?2.5:1;ctx.setLineDash(i===10?[]:[4,4]);ctx.beginPath();ctx.moveTo(vx-myW/2,my);ctx.lineTo(vx+myW/2,my);ctx.stroke();ctx.setLineDash([]);if(i===10||i%2===0)_aniLabel(ctx,i+'m',rx+28,my+4,i===10?'#ff9f0a':'#546e7a',10);}
+    ctx.strokeStyle='rgba(0,212,224,0.4)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(lx-15,fy);ctx.lineTo(rx+15,fy);ctx.stroke();
+    _aniLabel(ctx,'START',vx,fy+16,'#546e7a',10);_aniPulse(ctx,vx,vy+22,14,'#ff9f0a',T);_aniLabel(ctx,'정지!',vx,vy+50,'#ff9f0a',10);
+    const prog=T,wcY=fy-(fy-vy-30)*prog,ps=1-prog*.5;
+    ctx.save();ctx.globalAlpha=0.15;ctx.strokeStyle='#00d4e0';ctx.lineWidth=20;ctx.beginPath();ctx.moveTo(vx,fy-10);ctx.lineTo(vx,wcY);ctx.stroke();ctx.restore();
+    _aniWC(ctx,vx,wcY,ps*.85,'#00d4e0',1,T);_aniArrow(ctx,lx-20,fy*.6+vy*.4,lx-20,vy+30,'rgba(0,212,224,0.4)','전진',T);
+    _aniLabel(ctx,'#8 전진하기',W/2,22,'#00d4e0',13);
+  },
+  9:(ctx,W,H,T)=>{ // #9 후진
+    const vy=H*.28,vx=W*.5,fy=H*.85,pathW=W*.38,lx=vx-pathW/2,rx=vx+pathW/2;
+    _aniFloor(ctx,W,H,vx,vy);
+    ctx.save();ctx.globalAlpha=0.06;ctx.fillStyle='#bf5af2';ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(rx,fy);ctx.lineTo(vx+pathW*.08,vy+10);ctx.lineTo(vx-pathW*.08,vy+10);ctx.closePath();ctx.fill();ctx.restore();
+    ctx.strokeStyle='rgba(191,90,242,0.35)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(vx-pathW*.08,vy+15);ctx.stroke();ctx.beginPath();ctx.moveTo(rx,fy);ctx.lineTo(vx+pathW*.08,vy+15);ctx.stroke();
+    for(let i=1;i<=5;i++){const pct=i/5,myW=pathW*(1-pct*.8),my=fy-(fy-vy-15)*pct;ctx.strokeStyle=i===5?'rgba(255,159,10,0.7)':'rgba(191,90,242,0.2)';ctx.lineWidth=i===5?2.5:1;ctx.setLineDash(i===5?[]:[4,4]);ctx.beginPath();ctx.moveTo(vx-myW/2,my);ctx.lineTo(vx+myW/2,my);ctx.stroke();ctx.setLineDash([]);_aniLabel(ctx,i+'m',rx+28,my+4,i===5?'#ff9f0a':'#546e7a',10);}
+    const prog=T,startY=vy+30,endY=fy-5,wcY=startY+(endY-startY)*prog,ps=0.5+prog*.5;
+    ctx.save();ctx.globalAlpha=0.15;ctx.strokeStyle='#bf5af2';ctx.lineWidth=20;ctx.beginPath();ctx.moveTo(vx,startY);ctx.lineTo(vx,wcY);ctx.stroke();ctx.restore();
+    _aniLabel(ctx,'START(위)',vx,vy+50,'#bf5af2',10);ctx.strokeStyle='rgba(191,90,242,0.4)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(lx-15,fy);ctx.lineTo(rx+15,fy);ctx.stroke();_aniLabel(ctx,'정지!',vx,fy+16,'#ff9f0a',10);
+    const cp=(T*(800/1000))%1;
+    ctx.save();ctx.globalAlpha=Math.abs(Math.sin(cp*Math.PI*2))*.9;ctx.font='22px sans-serif';ctx.textAlign='center';
+    ctx.fillText('👀',vx-(cp<.5?38:0),wcY-52);ctx.fillText('👀',vx+(cp>=.5?38:0),wcY-52);ctx.restore();
+    _aniWC(ctx,vx,wcY,ps*.85,'#bf5af2',-1,T);_aniArrow(ctx,lx-20,vy+40,lx-20,fy*.6+vy*.4,'rgba(191,90,242,0.4)','후진',T);
+    _aniLabel(ctx,'⚠ 양쪽 어깨 확인!',vx,H-18,'#ff9f0a',11);_aniLabel(ctx,'#9 후진하기',W/2,22,'#bf5af2',13);
+  },
+  10:(ctx,W,H,T)=>{ // #10 제자리 회전
+    const cx=W/2,cy=H*.52,sc=Math.min(W,H)*.32;
+    _aniFloor(ctx,W,H,cx,H*.1,'rgba(0,212,224,0.04)');
+    ctx.beginPath();ctx.arc(cx,cy,sc,0,Math.PI*2);ctx.fillStyle='rgba(255,69,58,0.04)';ctx.fill();ctx.strokeStyle='rgba(255,69,58,0.5)';ctx.lineWidth=2.5;ctx.stroke();_aniLabel(ctx,'Fail 1.5m',cx+sc+4,cy,'#ff453a',10);
+    ctx.beginPath();ctx.arc(cx,cy,sc*.667,0,Math.PI*2);ctx.fillStyle='rgba(48,209,88,0.04)';ctx.fill();ctx.strokeStyle='rgba(48,209,88,0.5)';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.stroke();ctx.setLineDash([]);_aniLabel(ctx,'Pass 1.0m',cx+sc*.667+4,cy-16,'#30d158',10);
+    ctx.beginPath();ctx.arc(cx,cy,sc*.4,0,Math.PI*2);ctx.fillStyle='rgba(0,102,255,0.06)';ctx.fill();ctx.strokeStyle='rgba(0,102,255,0.5)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);_aniLabel(ctx,'AP 0.6m',cx+sc*.4+4,cy+16,'#4d8fff',10);
+    ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx-sc*1.1,cy);ctx.lineTo(cx+sc*1.1,cy);ctx.stroke();ctx.beginPath();ctx.moveTo(cx,cy-sc*1.1);ctx.lineTo(cx,cy+sc*1.1);ctx.stroke();
+    const ang=T*Math.PI*2*1.3,mr=sc*.58;
+    ctx.beginPath();ctx.arc(cx,cy,mr,-Math.PI/2,-Math.PI/2+ang);ctx.strokeStyle='#30d158';ctx.lineWidth=3;ctx.stroke();
+    const wa=-Math.PI/2+ang;_aniWCTop(ctx,cx+mr*Math.cos(wa),cy+mr*Math.sin(wa),0.9,'#00d4e0',wa+Math.PI/2);
+    _aniLabel(ctx,'#10 제자리 회전',W/2,22,'#00d4e0',13);
+  },
+  12:(ctx,W,H,T)=>{ // #12 슬라럼 전진
+    _aniFloor(ctx,W,H,W/2,H*.1,'rgba(0,212,224,0.05)');
+    const cx=W/2,sy=H*.88,ey=H*.1,vStep=(sy-ey)/4;
+    const pylons=[{x:cx+W*.22,y:sy-vStep},{x:cx-W*.18,y:sy-vStep*2},{x:cx+W*.14,y:sy-vStep*3}];
+    const pathFwd=[{x:cx,y:sy-10}];
+    pylons.forEach((p,i)=>{const off=(i%2===0?-1:1)*W*.1;pathFwd.push({x:p.x+off,y:p.y+vStep*.35});pathFwd.push({x:p.x-off*.3,y:p.y});pathFwd.push({x:p.x+off*.5,y:p.y-vStep*.25});});
+    pathFwd.push({x:cx,y:ey+25});
+    ctx.strokeStyle='rgba(0,212,224,0.18)';ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(pathFwd[0].x,pathFwd[0].y);for(let i=1;i<pathFwd.length;i++){const pv=pathFwd[i-1],cu=pathFwd[i];ctx.quadraticCurveTo(pv.x,pv.y,(pv.x+cu.x)/2,(pv.y+cu.y)/2);}ctx.stroke();ctx.setLineDash([]);
+    pylons.forEach((p,i)=>{const ps=(1-i*.15)*.9,pulse=.7+.3*Math.sin(T*Math.PI*8+i*1.8),pH=28*ps;ctx.save();ctx.translate(p.x,p.y);const cg=ctx.createLinearGradient(0,-pH,0,8*ps);cg.addColorStop(0,`rgba(255,159,10,${pulse})`);cg.addColorStop(1,'rgba(255,100,0,0.3)');ctx.fillStyle=cg;ctx.beginPath();ctx.moveTo(0,-pH);ctx.lineTo(-10*ps,8*ps);ctx.lineTo(10*ps,8*ps);ctx.closePath();ctx.fill();ctx.restore();});
+    const prog=T,tot=pathFwd.length-1,si=Math.min(Math.floor(prog*tot),tot-1),sf=(prog*tot)-si;
+    const p1=pathFwd[si],p2=pathFwd[Math.min(si+1,tot)];
+    const wx=p1.x+(p2.x-p1.x)*sf,wy=p1.y+(p2.y-p1.y)*sf,ang=Math.atan2(p2.y-p1.y,p2.x-p1.x)+Math.PI/2;
+    ctx.save();ctx.globalAlpha=.15;ctx.strokeStyle='#00d4e0';ctx.lineWidth=16;ctx.beginPath();ctx.moveTo(pathFwd[0].x,pathFwd[0].y);for(let i=1;i<=si;i++)ctx.lineTo(pathFwd[i].x,pathFwd[i].y);ctx.lineTo(wx,wy);ctx.stroke();ctx.restore();
+    _aniWCTop(ctx,wx,wy,(.6+prog*.3)*1.1,'#00d4e0',ang);
+    _aniLabel(ctx,'START',cx,sy+14,'#546e7a',10);_aniLabel(ctx,'FINISH',cx,ey+8,'#ff9f0a',10);_aniLabel(ctx,'#12 전진 중 회전 (슬라럼)',W/2,22,'#00d4e0',13);
+  },
+  13:(ctx,W,H,T)=>{ // #13 슬라럼 후진 (역순)
+    _aniFloor(ctx,W,H,W/2,H*.1,'rgba(191,90,242,0.04)');
+    const cx=W/2,sy=H*.88,ey=H*.1,vStep=(sy-ey)/4;
+    const pylons=[{x:cx+W*.22,y:sy-vStep},{x:cx-W*.18,y:sy-vStep*2},{x:cx+W*.14,y:sy-vStep*3}];
+    const pathFwd=[{x:cx,y:sy-10}];
+    pylons.forEach((p,i)=>{const off=(i%2===0?-1:1)*W*.1;pathFwd.push({x:p.x+off,y:p.y+vStep*.35});pathFwd.push({x:p.x-off*.3,y:p.y});pathFwd.push({x:p.x+off*.5,y:p.y-vStep*.25});});
+    pathFwd.push({x:cx,y:ey+25});
+    const path=[...pathFwd].reverse();
+    ctx.strokeStyle='rgba(191,90,242,0.18)';ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(path[0].x,path[0].y);for(let i=1;i<path.length;i++){const pv=path[i-1],cu=path[i];ctx.quadraticCurveTo(pv.x,pv.y,(pv.x+cu.x)/2,(pv.y+cu.y)/2);}ctx.stroke();ctx.setLineDash([]);
+    pylons.forEach((p,i)=>{const ps=(1-i*.15)*.9,pulse=.7+.3*Math.sin(T*Math.PI*8+i*1.8),pH=28*ps;ctx.save();ctx.translate(p.x,p.y);const cg=ctx.createLinearGradient(0,-pH,0,8*ps);cg.addColorStop(0,`rgba(255,159,10,${pulse})`);cg.addColorStop(1,'rgba(255,100,0,0.3)');ctx.fillStyle=cg;ctx.beginPath();ctx.moveTo(0,-pH);ctx.lineTo(-10*ps,8*ps);ctx.lineTo(10*ps,8*ps);ctx.closePath();ctx.fill();ctx.restore();});
+    const prog=T,tot=path.length-1,si=Math.min(Math.floor(prog*tot),tot-1),sf=(prog*tot)-si;
+    const p1=path[si],p2=path[Math.min(si+1,tot)];
+    const wx=p1.x+(p2.x-p1.x)*sf,wy=p1.y+(p2.y-p1.y)*sf;
+    ctx.save();ctx.globalAlpha=.12;ctx.strokeStyle='#bf5af2';ctx.lineWidth=16;ctx.beginPath();ctx.moveTo(path[0].x,path[0].y);for(let i=1;i<=si;i++)ctx.lineTo(path[i].x,path[i].y);ctx.lineTo(wx,wy);ctx.stroke();ctx.restore();
+    _aniWCTop(ctx,wx,wy,(.9-prog*.3)*1.1,'#bf5af2',Math.PI);
+    const cp=(T*1.2)%1;ctx.save();ctx.globalAlpha=Math.abs(Math.sin(cp*Math.PI*2))*.85;ctx.font='22px sans-serif';ctx.textAlign='center';ctx.fillText('👀',wx+(cp<.5?-30:30),wy-28);ctx.restore();
+    _aniLabel(ctx,'← 후진 START',cx,ey+8,'#bf5af2',10);_aniLabel(ctx,'어깨 확인!',cx,sy+16,'#ff9f0a',11);_aniLabel(ctx,'#13 후진 중 회전 (슬라럼)',W/2,22,'#bf5af2',13);
+  },
+  19:(ctx,W,H,T)=>{ // #19 경사 오르기
+    const rx=W*.1,re=W*.88,rh=H*.55,fy=H*.85;
+    const rg=ctx.createLinearGradient(rx,fy,re,fy-rh);rg.addColorStop(0,'#1e3a5f');rg.addColorStop(1,'#2a5080');
+    ctx.fillStyle=rg;ctx.beginPath();ctx.moveTo(rx,fy);ctx.lineTo(re,fy-rh);ctx.lineTo(re,fy-rh+18);ctx.lineTo(rx+4,fy+4);ctx.closePath();ctx.fill();
+    ctx.strokeStyle='#ff9f0a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(rx,fy);ctx.lineTo(re,fy-rh);ctx.stroke();
+    const steps=8;for(let i=1;i<steps;i++){const pct=i/steps,gx=rx+(re-rx)*pct,gy=fy-rh*pct;ctx.strokeStyle=`rgba(255,159,10,${.06+pct*.04})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx,fy+4);ctx.stroke();}
+    ctx.fillStyle='#1a3a5f';ctx.fillRect(re,0,W-re,fy-rh+4);ctx.strokeStyle='#ff9f0a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(re,fy-rh);ctx.lineTo(W,fy-rh);ctx.stroke();
+    ctx.fillStyle='#141e2e';ctx.fillRect(0,fy,W,H-fy);
+    const mk=rx+(re-rx)*.58,my=fy-rh*.58;ctx.strokeStyle='rgba(48,209,88,0.7)';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(mk-12,my+6);ctx.lineTo(mk+12,my-6);ctx.stroke();ctx.setLineDash([]);_aniLabel(ctx,'2.5m ✓',mk+28,my-10,'#30d158',10);
+    const ang=Math.atan(rh/(re-rx));
+    ctx.save();ctx.translate(rx+55,fy);ctx.strokeStyle='#ff9f0a';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(44,0);ctx.stroke();ctx.beginPath();ctx.arc(0,0,32,-ang,0);ctx.stroke();ctx.fillStyle='#ff9f0a';ctx.font='bold 12px "Share Tech Mono"';ctx.textAlign='left';ctx.fillText('5°',34,-8);ctx.restore();
+    const prog=T,wx=_aniLerp(rx-20,re+20,prog),wy=Math.max(fy-rh,_aniLerp(fy,fy-rh,prog)),wcAng=-ang*_aniClamp(Math.sin(prog*Math.PI),0,1);
+    ctx.save();ctx.translate(wx,wy-5);ctx.rotate(wcAng);_aniWC(ctx,0,0,_aniLerp(.85,.65,prog),prog>.5?'#30d158':'#ff9f0a',1,T);ctx.restore();
+    _aniArrow(ctx,rx+30,fy-30,re-20,fy-rh+25,'rgba(255,159,10,0.35)','오르기 ▲',T);_aniLabel(ctx,'고토크 모드 · 일정속도!',W/2,H-18,'#ff9f0a',11);_aniLabel(ctx,'#19 경사 오르기 (5°)',W/2,22,'#ff9f0a',13);
+  },
+  24:(ctx,W,H,T)=>{ // #24 장애물
+    const fy=H*.72,ox=W*.55,oh=H*.09,ow=W*.05;
+    const fg=ctx.createLinearGradient(0,fy,0,H);fg.addColorStop(0,'#1e293b');fg.addColorStop(1,'#0d1422');ctx.fillStyle=fg;ctx.fillRect(0,fy,W,H-fy);ctx.strokeStyle='rgba(0,212,224,0.25)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,fy);ctx.lineTo(W,fy);ctx.stroke();
+    const og=ctx.createLinearGradient(ox-ow/2,fy-oh,ox+ow/2,fy);og.addColorStop(0,'rgba(255,69,58,0.4)');og.addColorStop(1,'rgba(255,69,58,0.15)');ctx.fillStyle=og;ctx.fillRect(ox-ow/2,fy-oh,ow,oh);ctx.strokeStyle='#ff453a';ctx.lineWidth=3;ctx.strokeRect(ox-ow/2,fy-oh,ow,oh);
+    _aniLabel(ctx,'H 3.8cm',ox+ow/2+32,fy-oh/2+4,'#ff453a',10);_aniLabel(ctx,'W 7.6cm',ox,fy+18,'#ff9f0a',10);
+    const prog=T;let wx=W*.1,wy=fy-5;
+    if(prog<.38){wx=_aniLerp(W*.1,ox-ow/2-36,prog/.38);_aniArrow(ctx,W*.12,fy-26,ox-ow/2-20,fy-26,'rgba(0,212,224,0.4)','저속접근',T);}
+    else if(prog<.62){const pp=(prog-.38)/.24;wx=_aniLerp(ox-ow/2-36,ox+ow/2+36,pp);wy=fy-5-Math.sin(pp*Math.PI)*oh*1.6;_aniLabel(ctx,'넘는 중!',ox,fy-oh-26,'#ff9f0a',11);}
+    else{wx=_aniLerp(ox+ow/2+36,W*.9,(prog-.62)/.38);_aniLabel(ctx,'✓ 통과!',W*.78,fy-36,'#30d158',11);}
+    _aniWC(ctx,wx,wy,.82,prog>.55?'#30d158':'#00d4e0',1,T);_aniLabel(ctx,'#24 장애물 넘기',W/2,22,'#ff9f0a',13);
+  },
+  25:(ctx,W,H,T)=>{ // #25 연석 오르기
+    const fy=H*.72,cx2=W*.55,ch=H*.11;
+    const fg=ctx.createLinearGradient(0,fy,0,H);fg.addColorStop(0,'#1e293b');fg.addColorStop(1,'#0d1422');ctx.fillStyle=fg;ctx.fillRect(0,fy,W,H-fy);ctx.strokeStyle='rgba(0,212,224,0.25)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,fy);ctx.lineTo(cx2,fy);ctx.stroke();
+    const cg=ctx.createLinearGradient(cx2,fy-ch,cx2,fy);cg.addColorStop(0,'rgba(255,69,58,0.3)');cg.addColorStop(1,'rgba(255,69,58,0.1)');ctx.fillStyle=cg;ctx.fillRect(cx2,fy-ch,W-cx2,ch);ctx.strokeStyle='#ff453a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(cx2,fy);ctx.lineTo(cx2,fy-ch);ctx.lineTo(W,fy-ch);ctx.stroke();
+    const ug=ctx.createLinearGradient(cx2,0,cx2,fy-ch);ug.addColorStop(0,'#0d1422');ug.addColorStop(1,'#1e3a5f');ctx.fillStyle=ug;ctx.fillRect(cx2,0,W-cx2,fy-ch);
+    _aniLabel(ctx,'5cm',cx2-30,fy-ch/2+4,'#ff453a',10);_aniLabel(ctx,'1.5m 접근',(W*.08+cx2)/2,fy+16,'#546e7a',10);
+    const prog=T;let wx,wy;
+    if(prog<.38){wx=_aniLerp(W*.08,cx2-32,prog/.38);wy=fy-5;_aniArrow(ctx,W*.1,fy-26,cx2-18,fy-26,'rgba(255,159,10,0.4)','저속접근',T);}
+    else if(prog<.65){const pp=(prog-.38)/.27;wx=_aniLerp(cx2-32,cx2+38,pp);wy=pp<.48?_aniLerp(fy-5,fy-ch-5,pp/.48):fy-ch-5;_aniLabel(ctx,'앞바퀴→뒷바퀴!',cx2,fy-ch-28,'#ff9f0a',11);}
+    else{wx=_aniLerp(cx2+38,W*.88,(prog-.65)/.35);wy=fy-ch-5;_aniLabel(ctx,'✓ 완전 진입!',W*.72,fy-ch-28,'#30d158',11);}
+    _aniWC(ctx,wx,wy,.82,prog>.6?'#30d158':'#ff9f0a',1,T);_aniLabel(ctx,'#25 연석 오르기 (5cm)',W/2,22,'#ff9f0a',13);
+  },
 };
 
 // ═══════════════════════════════════════════════════════
@@ -2617,123 +1877,123 @@ const SKILLS_MANUAL = [
   { id:1,  name:'전진하기',                    en:'Rolls forward',                              cat:'기본 기술', prereq:null,
     howto:['평탄한 바닥에서 출발선에 정지', '10m 전진 후 정지선에 멈춤', '폭 1.5m 이내 유지'],
     score_criteria:['Pass: 10m 전진, 1.5m 폭 유지, 통제된 정지','AP: 직선로에서 효율적으로'], tip:['균형잡힌 밀기 동작','리듬감 있게'], spotter:['뒤에서 스포터 스트랩 잡기', '가속 시 후방 전복 주의'],
-    verbal:'"빨간 선 밖을 넘어가지 말고 전방에 있는 빨간 선까지 이동해서 멈추세요."', videoUrl:'https://youtu.be/rKcjGmPfhkY', videoUrl2:'https://youtu.be/YbN0QIted1w', scoreDetail:{3:['효율적·안전하게'],2:['10m 전진, 1.5m 이내'],1:['부분 수행'],0:['수행 불가']}},
+    verbal:'"빨간 선 밖을 넘어가지 말고 전방에 있는 빨간 선까지 이동해서 멈추세요."', videoUrl:'https://youtu.be/YbN0QIted1w', videoUrlAlt:[], scoreDetail:{3:['효율적·안전하게'],2:['10m 전진, 1.5m 이내'],1:['부분 수행'],0:['수행 불가']}},
   { id:2,  name:'후진하기',                    en:'Rolls backward',                             cat:'기본 기술', prereq:null,
     howto:['출발선에서 후진 5m','어깨 확인 필수','폭 1.5m 이내'],
     score_criteria:['Pass: 5m 후진, 어깨 확인'], tip:['양쪽 번갈아 어깨 확인'], spotter:['뒤에서 스포터 스트랩 잡기', '정지 시 후방 전복 주의'],
-    verbal:'"빨간 선 밖을 넘어가지 말고 후방에 있는 빨간 선까지 이동해서 멈추세요."', videoUrl:'https://youtu.be/kRH1Kr4nZco', videoUrl2:'https://youtu.be/z37b1Wo_8gE', scoreDetail:{3:['효율적'],2:['5m 후진'],1:['부분'],0:['불가']}},
+    verbal:'"빨간 선 밖을 넘어가지 말고 후방에 있는 빨간 선까지 이동해서 멈추세요."', videoUrl:'https://youtu.be/z37b1Wo_8gE', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['5m 후진'],1:['부분'],0:['불가']}},
   { id:3,  name:'제자리 회전',                 en:'Turns in place',                             cat:'기본 기술', prereq:null,
     howto:['제자리에서 160° 이상 회전','양방향 모두'],
     score_criteria:['Pass: 1.5m 반경','AP: 1.0m 반경'], tip:['한손 앞, 한손 뒤로 밀기'], spotter:['휠체어 옆에서 대기', '측방 전복 주의'],
-    verbal:'"가능한 한 좁은 원을 그리면서 휠체어를 180도 회전시켜보세요."', videoUrl:'https://youtu.be/fPNv9m1z3Wk', videoUrl2:'https://youtu.be/tV0DliH_z5U', scoreDetail:{3:['1.0m'],2:['1.5m'],1:['부분'],0:['불가']}},
+    verbal:'"가능한 한 좁은 원을 그리면서 휠체어를 180도 회전시켜보세요."', videoUrl:'https://youtu.be/tV0DliH_z5U', videoUrlAlt:[], scoreDetail:{3:['1.0m'],2:['1.5m'],1:['부분'],0:['불가']}},
   { id:4,  name:'전진 중 회전',                en:'Turns while moving forward',                 cat:'기본 기술', prereq:null,
     howto:['슬라럼 코스 전진','파일런 사이 통과'],
     score_criteria:['Pass: 1.5m 이내'], tip:['속도 조절'], spotter:['휠체어 옆에서 대기', '측방 전복 주의'],
-    verbal:'"앞으로 최대한 고깔에 가깝게 돌아서(8자 모양) 제자리로 돌아오세요."', videoUrl:'https://youtu.be/D2KNa0FHlEg', videoUrl2:'https://youtu.be/aSWTMJAl-v8', scoreDetail:{3:['효율적'],2:['통과'],1:['부분'],0:['불가']}},
+    verbal:'"앞으로 최대한 고깔에 가깝게 돌아서(8자 모양) 제자리로 돌아오세요."', videoUrl:'https://youtu.be/aSWTMJAl-v8', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['통과'],1:['부분'],0:['불가']}},
   { id:5,  name:'후진 중 회전',                en:'Turns while moving backward',                cat:'기본 기술', prereq:null,
     howto:['슬라럼 코스 후진','어깨 확인'],
     score_criteria:['Pass: 1.5m 이내'], tip:['어깨 확인 필수'], spotter:['휠체어 옆에서 대기', '측방 전복 주의'],
-    verbal:'"뒤로 최대한 고깔에 가깝게 돌아서(8자 모양) 제자리로 돌아오세요."', videoUrl:'https://youtu.be/oFsCMHM1iTo', videoUrl2:'https://youtu.be/7FUw70kBQ8g', scoreDetail:{3:['효율적'],2:['통과'],1:['부분'],0:['불가']}},
+    verbal:'"뒤로 최대한 고깔에 가깝게 돌아서(8자 모양) 제자리로 돌아오세요."', videoUrl:'https://youtu.be/7FUw70kBQ8g', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['통과'],1:['부분'],0:['불가']}},
   { id:6,  name:'측면 이동',                   en:'Maneuvers sideways',                         cat:'기본 기술', prereq:null,
     howto:['옆으로 1.5m 이동','양방향'],
     score_criteria:['Pass: 1.5m 폭'], tip:['양쪽 모두 연습'], spotter:['휠체어 옆, 기울어지는 쪽', '측방 전복 주의'],
-    verbal:'"반대편 빨간 선에 바퀴를 붙여보세요. 최대한 앞뒤로 움직임이 적게 해보세요."', videoUrl:'https://youtu.be/zOIyAsdu-_E', videoUrl2:'https://youtu.be/hyNLO_uB87k', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"반대편 빨간 선에 바퀴를 붙여보세요. 최대한 앞뒤로 움직임이 적게 해보세요."', videoUrl:'https://youtu.be/hyNLO_uB87k', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:7,  name:'물체 집기/닿기',              en:'Reaches objects',                            cat:'기본 기술', prereq:null,
     howto:['바닥에서 물체 집기','바닥+1.5m 높이'],
     score_criteria:['Pass: 두 위치 모두'], tip:['균형 유지하며'], spotter:['앞, 약간 옆에서 대기', '전방 전복·낙상 주의', '대상 표면 전복 주의'],
-    verbal:'"바닥에 있는 물건을 집어서 저에게 주세요." → "벽에 표시되어 있는 붉은 부분을 만지세요."', videoUrl:'https://youtu.be/pajgVyykXH8', videoUrl2:'https://youtu.be/AFjfKDQ1X4Q', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"바닥에 있는 물건을 집어서 저에게 주세요." → "벽에 표시되어 있는 붉은 부분을 만지세요."', videoUrl:'https://youtu.be/AFjfKDQ1X4Q', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:8,  name:'자세 조절 기능 조작',          en:'Operates body positioning options',          cat:'기본 기술', prereq:null,
     howto:['등받이/발판 조절','각도 변경'],
     score_criteria:['Pass: 독립적 조작'], tip:['익숙해질 때까지 반복'], spotter:['휠체어 옆에서 대기', '자세 변경 시 측방 전복 주의'],
-    verbal:'\"주로 전동휠체어에서만 평가합니다.\"', videoUrl:'https://youtu.be/ihbfahuHKAM', videoUrl2:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'\"주로 전동휠체어에서만 평가합니다.\"', videoUrl:'', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:9,  name:'체중 이동',                   en:'Shifts weight',                              cat:'기본 기술', prereq:null,
     howto:['15초 이상 체중 이동 유지','압력 완화 목적'],
     score_criteria:['Pass: 15초 이상'], tip:['규칙적으로 시행'], spotter:['옆, 기울어지는 쪽', '전방 낙상 주의'],
-    verbal:'"엉덩이에 가해지는 압력을 낮추는 방법을 보여주세요. "정지"할 때까지 멈춰주세요."', videoUrl:'https://youtu.be/HblzaFVq63A', videoUrl2:'https://youtu.be/Ih0isj7DbWE', scoreDetail:{3:['효율적'],2:['15초↑'],1:['부분'],0:['불가']}},
+    verbal:'"엉덩이에 가해지는 압력을 낮추는 방법을 보여주세요. "정지"할 때까지 멈춰주세요."', videoUrl:'https://youtu.be/Ih0isj7DbWE', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['15초↑'],1:['부분'],0:['불가']}},
   { id:10, name:'평면 이동 (transfer)',         en:'Performs level transfers',                   cat:'기본 기술', prereq:null,
     howto:['평면 이동 (침대↔휠체어)','양방향'],
     score_criteria:['Pass: 양방향 독립'], tip:['발판 먼저 올리기'], spotter:['앞에서 대기 (단일 스포터)', '2인 시: 1명은 환자, 1명은 대상 표면 담당', '전방·측방 전복 주의'],
-    verbal:'"MAT로 몸을 옮겨 앉으시고 다시 휠체어로 돌아오세요."', videoUrl:'https://youtu.be/5yN6zWPOq9Q', videoUrl2:'https://youtu.be/_gRU6-mGd1k', scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
+    verbal:'"MAT로 몸을 옮겨 앉으시고 다시 휠체어로 돌아오세요."', videoUrl:'https://youtu.be/_gRU6-mGd1k', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
   { id:11, name:'휠체어 접기/펴기',             en:'Folds and unfolds wheelchair',               cat:'기본 기술', prereq:null,
     howto:['휠체어 접기','다시 펴기'],
     score_criteria:['Pass: 독립적 접기/펴기'], tip:['순서 익히기'], spotter:['옆, 기울어지는 쪽 (단일 스포터)', '2인 시: 1명은 휠체어, 1명은 휠체어 전복 방지', '부품 낙하·하지 부상 주의'],
-    verbal:'"휠체어를 접고 부품들을 최대한 분해하였다가 다시 조립해 주세요."', videoUrl:'https://youtu.be/-0ctxTLbdnc', videoUrl2:'https://youtu.be/gf51onBq21Y', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
-  { id:12, name:'바닥 이동', videoUrlExtra:'https://youtu.be/x0hUvWHdzQA',                    en:'Performs ground transfers',                  cat:'기본 기술', prereq:10,
+    verbal:'"휠체어를 접고 부품들을 최대한 분해하였다가 다시 조립해 주세요."', videoUrl:'https://youtu.be/gf51onBq21Y', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+  { id:12, name:'바닥 이동',                    en:'Performs ground transfers',                  cat:'기본 기술', prereq:10,
     howto:['바닥으로 내려가기','다시 올라오기'],
     score_criteria:['Pass: 양방향 독립'], tip:['#10 통과 후 시행'], spotter:['휠체어 옆, 기울어지는 쪽', '전방 낙상 주의', '부품 낙하 주의'],
-    verbal:'"휠체어에서 바닥으로 내려왔다가 다시 올라오세요."', videoUrl:'https://youtu.be/cwXA0jOSKkM', videoUrl2:'https://youtu.be/0Z73iwn67oI', scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
+    verbal:'"휠체어에서 바닥으로 내려왔다가 다시 올라오세요."', videoUrl:'https://youtu.be/0Z73iwn67oI', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
   { id:13, name:'여닫이 문 통과',               en:'Gets through hinged door',                   cat:'기본 기술', prereq:null,
     howto:['여닫이 문 열고 통과','양방향'],
     score_criteria:['Pass: 양방향 독립'], tip:['문 잡으며 진입'], spotter:['휠체어 옆에서 대기', '문 통과 시 측방 전복 주의'],
-    verbal:'"문을 통과하고 닫아주세요. 다시 문을 열고 돌아오세요."', videoUrl:'https://youtu.be/ILZM02i1qYY', videoUrl2:'https://youtu.be/8JLMFw6FImw', scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
+    verbal:'"문을 통과하고 닫아주세요. 다시 문을 열고 돌아오세요."', videoUrl:'https://youtu.be/8JLMFw6FImw', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['양방향'],1:['부분'],0:['불가']}},
   { id:14, name:'완만한 경사 오르기',           en:'Ascends slight incline',                     cat:'경사로', prereq:null,
     howto:['5° 경사 오르기','2.5m 이상'],
     score_criteria:['Pass: 독립적 오르기'], tip:['앞으로 기울기'], spotter:['뒤에서 스트랩 잡기, 측면 경사 시 낮은 쪽', '가속 시 후방 전복 주의', '경사 하단 전방 전복 주의'],
-    verbal:'"경사로를 올라가서 중간 쯤에서 멈춰주세요."', videoUrl:'https://youtu.be/vK1UoUCzvu8', videoUrl2:'https://youtu.be/XILkt5l0hBo', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"경사로를 올라가서 중간 쯤에서 멈춰주세요."', videoUrl:'https://youtu.be/XILkt5l0hBo', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:15, name:'완만한 경사 내려가기',         en:'Descends slight incline',                    cat:'경사로', prereq:null,
     howto:['5° 경사 내려가기','통제된 속도'],
     score_criteria:['Pass: 통제된 하강'], tip:['뒤로 내려가기 권장'], spotter:['뒤에서 스트랩 잡기 (단일 스포터)', '2인 시: 1명 뒤, 1명 앞 아래에서 대기', '측면 경사 시 낮은 쪽', '후방·전방 전복 주의'],
-    verbal:'"휠체어를 조절해서 경사로를 내려간 후 멈춰주세요."', videoUrl:'https://youtu.be/sqFQn_ql4Xc', videoUrl2:'https://youtu.be/b5MeTx8GTVk', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"휠체어를 조절해서 경사로를 내려간 후 멈춰주세요."', videoUrl:'https://youtu.be/b5MeTx8GTVk', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:16, name:'가파른 경사 오르기',           en:'Ascends steep incline',                      cat:'경사로', prereq:14,
     howto:['10° 경사 오르기'],
     score_criteria:['Pass: 독립적 오르기','선수기술: #14 2점↑'], tip:['체중 이동'], spotter:['뒤에서 스트랩 잡기, 측면 경사 시 낮은 쪽', '가속 시 후방 전복 주의', '경사 하단 전방 전복 주의'],
-    verbal:'"경사로를 올라가서 중간 쯤에서 멈춰주세요."', videoUrl:'https://youtu.be/zgzK-ot3miY', videoUrl2:'https://youtu.be/1kyozkMzWEM', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"경사로를 올라가서 중간 쯤에서 멈춰주세요."', videoUrl:'https://youtu.be/1kyozkMzWEM', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:17, name:'가파른 경사 내려가기',         en:'Descends steep incline',                     cat:'경사로', prereq:15,
     howto:['10° 경사 내려가기'],
     score_criteria:['Pass: 통제된 하강','선수기술: #15 2점↑'], tip:['뒤로 내려가기'], spotter:['뒤에서 스트랩 잡기 (단일 스포터)', '2인 시: 1명 뒤, 1명 앞 아래에서 대기', '측면 경사 시 낮은 쪽', '후방·전방 전복 주의'],
-    verbal:'"휠체어를 조절해서 경사로를 내려간 후 멈춰주세요."', videoUrl:'https://youtu.be/vo0rqp92KGA', videoUrl2:'https://youtu.be/Ax8e7KsRf9s', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"휠체어를 조절해서 경사로를 내려간 후 멈춰주세요."', videoUrl:'https://youtu.be/Ax8e7KsRf9s', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:18, name:'부드러운 표면 이동',           en:'Rolls on soft surface',                      cat:'지역사회', prereq:null,
     howto:['잔디/카펫 등 부드러운 표면','2.5m 이상'],
     score_criteria:['Pass: 2.5m 이상'], tip:['강하게 밀기'], spotter:['뒤에서 스트랩 잡기', '가속 시 후방 전복 주의', '장애물 충돌 주의'],
-    verbal:'"마지막 지점까지 이동하세요."', videoUrl:'https://youtu.be/vt61VFgfb8M', videoUrl2:'https://youtu.be/8wKj-C1FWls', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"마지막 지점까지 이동하세요."', videoUrl:'https://youtu.be/8wKj-C1FWls', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:19, name:'장애물 넘기',                  en:'Gets over obstacle',                         cat:'지역사회', prereq:null,
     howto:['3.8cm 높이 장애물 넘기'],
     score_criteria:['Pass: 모든 바퀴 통과'], tip:['앞바퀴 들기'], spotter:['뒤, 양손 push-handle 근처', '2인 시: 1명 뒤, 1명 장애물 옆', '후방 전복 주의', '전방 전복·낙상 주의'],
-    verbal:'"문턱을 넘어가세요."', videoUrl:'https://youtu.be/hG13z3j2-Ok', videoUrl2:'https://youtu.be/2Uu49HBFWF8', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"문턱을 넘어가세요."', videoUrl:'https://youtu.be/2Uu49HBFWF8', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:20, name:'낮은 연석 오르기',             en:'Ascends low curb',                           cat:'지역사회', prereq:null,
     howto:['5cm 연석 오르기'],
     score_criteria:['Pass: 독립적 오르기'], tip:['앞바퀴 들어 올리기'], spotter:['뒤, 양손 push-handle 근처', '2인 시: 1명 뒤, 1명 연석 옆', '후방 전복 주의', '전방 전복·낙상 주의'],
-    verbal:'"연석을 올라가세요."', videoUrl:'https://youtu.be/iv7rAP8Djac', videoUrl2:'https://youtu.be/VILaXnc6jRA', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"연석을 올라가세요."', videoUrl:'https://youtu.be/VILaXnc6jRA', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:21, name:'낮은 연석 내려가기',           en:'Descends low curb',                          cat:'지역사회', prereq:null,
     howto:['5cm 연석 내려가기'],
     score_criteria:['Pass: 통제된 하강'], tip:['뒤로 내려가기'], spotter:['전진 시: 뒤, 또는 낮은 쪽', '후진 시: 낮은 쪽에서 push-handle 근처', '전방·후방 전복 주의'],
-    verbal:'"연석을 내려가세요."', videoUrl:'https://youtu.be/2eKlDEAgMI0', videoUrl2:'https://youtu.be/4yNjwIawH-c', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"연석을 내려가세요."', videoUrl:'https://youtu.be/4yNjwIawH-c', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:22, name:'높은 연석 오르기',             en:'Ascends high curb',                          cat:'지역사회', prereq:20,
     howto:['15cm 연석 오르기'],
     score_criteria:['Pass: 독립적 오르기','선수기술: #20 2점↑'], tip:['휠리 자세로'], spotter:['뒤, 양손 push-handle 또는 rigidizer bar 근처', '2인 시: 1명 뒤, 1명 연석 옆 아래', '후방 전복 주의', '전방 전복·낙상 주의'],
-    verbal:'"연석을 올라가세요."', videoUrl:'https://youtu.be/ENw_P6gnaTw', videoUrl2:'https://youtu.be/4yNjwIawH-c', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"연석을 올라가세요."', videoUrl:'https://youtu.be/4yNjwIawH-c', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:23, name:'높은 연석 내려가기',           en:'Descends high curb',                         cat:'지역사회', prereq:21,
     howto:['15cm 연석 내려가기'],
     score_criteria:['Pass: 통제된 하강','선수기술: #21 2점↑'], tip:['앞바퀴 들고 내려가기'], spotter:['전진 시: 뒤에서 대기', '후진 시: 낮은 쪽에서 push-handle 근처', '2인 시: 연석 옆에도 배치', '전방·후방 전복 주의'],
-    verbal:'"연석을 내려가세요."', videoUrl:'https://youtu.be/S_1hcIXMp7k', videoUrl2:'https://youtu.be/-ulhQkBSAFA', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"연석을 내려가세요."', videoUrl:'https://youtu.be/-ulhQkBSAFA', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:24, name:'정지 휠리',                    en:'Performs stationary wheelie',                cat:'휠리 기술', prereq:null,
     howto:['앞바퀴 들고 정지 유지','3초 이상'],
     score_criteria:['Pass: 3초 이상 유지'], tip:['무게중심 뒤로'], spotter:['뒤에서 스트랩 잡기 (기본)', '또는 앞·옆에서 크라우칭 자세로 하방 압력 준비', '후방 전복 주의'],
-    verbal:'"멈추라고 할 때까지 휠라이 자세를 유지하세요. 최대한 시작지점에 위치하도록 노력하세요."', videoUrl:'https://youtu.be/mmh91B19rJY', videoUrl2:'https://youtu.be/H6QeHn_wshI', scoreDetail:{3:['효율적'],2:['3초↑'],1:['부분'],0:['불가']}},
+    verbal:'"멈추라고 할 때까지 휠라이 자세를 유지하세요. 최대한 시작지점에 위치하도록 노력하세요."', videoUrl:'https://youtu.be/H6QeHn_wshI', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['3초↑'],1:['부분'],0:['불가']}},
   { id:25, name:'휠리 자세 회전',               en:'Turns in place in wheelie position',         cat:'휠리 기술', prereq:24,
     howto:['앞바퀴 든 채 회전'],
     score_criteria:['Pass: 독립적 회전','선수기술: #24 2점↑'], tip:['균형 유지'], spotter:['#24 정지 휠리와 동일한 위치', '후방·측방 전복 주의'],
-    verbal:'"휠라이 자세를 취한 후 최대한 좁은 범위 내에서 180도 회전하세요."', videoUrl:'https://youtu.be/aWNiHLEILGg', videoUrl2:'https://youtu.be/g8UtrOQM1Q0', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"휠라이 자세를 취한 후 최대한 좁은 범위 내에서 180도 회전하세요."', videoUrl:'https://youtu.be/g8UtrOQM1Q0', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:26, name:'휠리 자세 전진/후진',          en:'Rolls forward and backward in wheelie position', cat:'휠리 기술', prereq:24,
     howto:['앞바퀴 든 채 전진/후진'],
     score_criteria:['Pass: 양방향','선수기술: #24 2점↑'], tip:['속도 조절'], spotter:['#24 정지 휠리와 동일한 위치', '후방 전복 주의'],
-    verbal:'"휠라이 자세를 취한 후 멈추라고 할 때까지 앞으로 이동하세요. 다시 멈추라고 할 때까지 뒤로 이동하세요."', videoUrl:'https://youtu.be/ClFjt0x8Hq8', videoUrl2:'https://youtu.be/1qgL1ZxnVLg', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"휠라이 자세를 취한 후 멈추라고 할 때까지 앞으로 이동하세요. 다시 멈추라고 할 때까지 뒤로 이동하세요."', videoUrl:'https://youtu.be/1qgL1ZxnVLg', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:27, name:'휠리 자세로 높은 연석 내려가기', en:'Descends high curb in wheelie position',   cat:'휴리 기술', prereq:[24,26],
     howto:['휠리 자세로 15cm 연석 하강'],
     score_criteria:['Pass: 통제된 하강','선수기술: #26 2점↑'], tip:['앞바퀴 든 채 유지'], spotter:['뒤, 양손 push-handle 근처', '2인 시: 1명 뒤, 1명 연석 옆 아래', '후방·전방 전복 주의'],
-    verbal:'"휠라이 자세를 취한 후 연석을 내려가세요."', videoUrl:'https://youtu.be/hnKQHVivNeM', videoUrl2:'https://youtu.be/-aQpB_m8yZY', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"휠라이 자세를 취한 후 연석을 내려가세요."', videoUrl:'https://youtu.be/-aQpB_m8yZY', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:28, name:'휠리 자세로 가파른 경사 내려가기', en:'Descends steep incline in wheelie position', cat:'휠리 기술', prereq:null,
     howto:['휠리 자세로 10° 경사 하강'],
     score_criteria:['Pass: 통제된 하강'], tip:['앞바퀴 든 채 천천히'], spotter:['#24 정지 휠리 및 경사 내려가기와 동일한 위치', '후방·전방 전복 주의'],
-    verbal:'"휠라이 자세를 취한 후 경사로를 내려가서 멈추세요."', videoUrl:'https://youtu.be/jK9wvmSqazw', videoUrl2:'https://youtu.be/_FMNtNR6Vqg', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"휠라이 자세를 취한 후 경사로를 내려가서 멈추세요."', videoUrl:'https://youtu.be/_FMNtNR6Vqg', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:29, name:'계단 오르기',                  en:'Ascends stairs',                             cat:'휠리 기술', prereq:[10,12],
     howto:['계단 오르기 (휠체어 밖 또는 안)'],
     score_criteria:['Pass: 독립적 오르기','선수기술: #10, #12 2점↑'], tip:['안전 최우선'], spotter:['최소 1명은 계단 아래쪽', '1명 아래 (wheelchair 고정), 1명 위 (push-handle 담당)', '전방·후방·측방 전복 및 계단 추락 주의'],
-    verbal:'"휠체어를 가지고 계단을 올라가세요."', videoUrl:'https://youtu.be/5JDGg5Sh9eY', videoUrl2:'https://youtu.be/8l8e4F0Lrkg', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"휠체어를 가지고 계단을 올라가세요."', videoUrl:'https://youtu.be/8l8e4F0Lrkg', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
   { id:30, name:'계단 내려가기',                en:'Descends stairs',                            cat:'휠리 기술', prereq:[10,12],
     howto:['계단 내려가기'],
     score_criteria:['Pass: 통제된 하강','선수기술: #10, #12 2점↑'], tip:['안전 최우선'], spotter:['#29 계단 오르기와 동일', '후진 하강 시: 뒤에서 push-handle 담당', '전방 휠리로 하강 시: 최소 2명 스포터 필요', '전방·후방·측방 전복 및 추락 주의'],
-    verbal:'"휠체어를 가지고 계단을 내려가세요."', videoUrl:'https://youtu.be/3sVBaoi2PuQ', videoUrl2:'https://youtu.be/0aYhmWdW5ro', scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
+    verbal:'"휠체어를 가지고 계단을 내려가세요."', videoUrl:'https://youtu.be/0aYhmWdW5ro', videoUrlAlt:[], scoreDetail:{3:['효율적'],2:['완료'],1:['부분'],0:['불가']}},
 ];
 
 // 현재 모드 (전동/수동)
@@ -2962,7 +2222,26 @@ function saveTherapistName() {
 
 state.therapistName = localStorage.getItem('wsp_therapist_masked') || null;
 
-state.therapistName = localStorage.getItem('wsp_therapist_masked') || null;
+// ═══════════════════════════════════════════════════════
+//  앱 시작
+// ═══════════════════════════════════════════════════════
+(function init() {
+  if (state.therapistName) {
+    showLoggedInUI();
+  } else {
+    // 로그인 폼 보이기
+    const lf = document.getElementById('login-form');
+    if (lf) lf.style.display = 'block';
+  }
+  // 모드 버튼 초기화
+  const pwBtn = document.getElementById('mode-btn-powered');
+  const mnBtn = document.getElementById('mode-btn-manual');
+  if (pwBtn) {
+    pwBtn.style.background = 'linear-gradient(135deg,#2563eb,#1d4ed8)';
+    pwBtn.style.color = '#fff'; pwBtn.style.border = 'none';
+    pwBtn.style.boxShadow = '0 4px 14px rgba(37,99,235,0.4)';
+  }
+})();
 
 // ═══════════════════════════════════════════════════════
 //  TOAST
@@ -3039,7 +2318,7 @@ async function showLandingPatientPicker() {
   if (!window._fbReady) { showToast('Firebase 연결 중...', 'info'); return; }
   const {collection, getDocs, query, orderBy} = window._fbFuncs;
   try {
-    const q = query(collection(window._db,'patients'), orderBy('createdAt','desc'));
+    const q = query(collection(window._db,'therapists',state.therapistName||'unknown','patients'), orderBy('createdAt','desc'));
     const snap = await getDocs(q);
     const patients = [];
     snap.forEach(d => patients.push({id:d.id,...d.data()}));
@@ -3170,7 +2449,7 @@ async function registerInlinePatient() {
   if (!window._fbReady) { showToast('Firebase 연결 중...', 'error'); return; }
   const {doc, setDoc} = window._fbFuncs;
   try {
-    await setDoc(doc(window._db,'patients',id), {
+    await setDoc(doc(window._db,'therapists',state.therapistName||'unknown','patients',id), {
       name: masked, therapist: state.therapistName||'─',
       createdAt: now.toISOString(), updatedAt: now.toISOString(), latestPct: null
     });
@@ -3199,25 +2478,6 @@ function selectLandingPatient(id, name) {
 // ═══════════════════════════════════════════════════════
 //  FIREBASE 연동
 // ═══════════════════════════════════════════════════════
-const _fbScript = document.createElement('script');
-_fbScript.type = 'module';
-_fbScript.textContent = `
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, orderBy, query, where, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-  const app = initializeApp({
-    apiKey:"AIzaSyAindXaColYWGU4DCI3S_61wKBXTTejIeQ",
-    authDomain:"wsp-jdragon.firebaseapp.com",
-    projectId:"wsp-jdragon",
-    storageBucket:"wsp-jdragon.firebasestorage.app",
-    messagingSenderId:"602745296201",
-    appId:"1:602745296201:web:ac94798934c54db9d3f698"
-  });
-  const db = getFirestore(app);
-  window._db=db; window._fbFuncs={doc,setDoc,getDoc,collection,addDoc,getDocs,orderBy,query,where,updateDoc};
-  window._fbReady=true; window.dispatchEvent(new Event('fbReady'));
-`;
-document.head.appendChild(_fbScript);
-
 window.addEventListener('fbReady', () => {
   const badge = document.getElementById('fb-status-badge');
   if (badge) { badge.textContent='☁ 연결됨'; badge.style.background='#f0fff4'; badge.style.color='#00a040'; badge.style.borderColor='#c0f0d0'; }
@@ -3231,7 +2491,7 @@ async function saveToFirebase() {
   if (!confirm('서버에 저장하시겠습니까?')) return;
   const {doc,setDoc}=window._fbFuncs;
   try {
-    await setDoc(doc(window._db,'patients',state.currentPatientId),{name:state.currentPatientName||'이름없음',scores:state.scores,comments:state.comments||{},pxPerCm:state.pxPerCm,videoUrls:state.videoUrls,updatedAt:new Date().toISOString()},{merge:true});
+    await setDoc(doc(window._db,'therapists',state.therapistName||'unknown','patients',state.currentPatientId),{name:state.currentPatientName||'이름없음',scores:state.scores,comments:state.comments||{},pxPerCm:state.pxPerCm,videoUrls:state.videoUrls,updatedAt:new Date().toISOString()},{merge:true});
     showToast('☁ 클라우드 저장 완료!','success');
   } catch(e) { showToast('저장 실패: '+e.message,'error'); }
 }
@@ -3239,7 +2499,7 @@ async function saveToFirebase() {
 async function silentSaveToFirebase() {
   if (!window._fbReady||!state.currentPatientId) return;
   const {doc,setDoc}=window._fbFuncs;
-  try { await setDoc(doc(window._db,'patients',state.currentPatientId),{name:state.currentPatientName||'이름없음',scores:state.scores,updatedAt:new Date().toISOString()},{merge:true}); }
+  try { await setDoc(doc(window._db,'therapists',state.therapistName||'unknown','patients',state.currentPatientId),{name:state.currentPatientName||'이름없음',scores:state.scores,updatedAt:new Date().toISOString()},{merge:true}); }
   catch(e) { console.error('자동저장 실패:',e); }
 }
 
@@ -3247,7 +2507,7 @@ async function loadPatientFromFirebase(patientId) {
   if (!window._fbReady) return;
   const {doc,getDoc}=window._fbFuncs;
   try {
-    const snap = await getDoc(doc(window._db,'patients',patientId));
+    const snap = await getDoc(doc(window._db,'therapists',state.therapistName||'unknown','patients',patientId));
     if (snap.exists()) {
       const data = snap.data();
       state.scores=data.scores||{}; state.videoUrls=data.videoUrls||{}; state.comments=data.comments||{};
@@ -3265,7 +2525,7 @@ async function saveEvalHistory() {
   const pct=max>0?Math.round(total/max*100):0;
   try {
     await addDoc(collection(window._db,'patients',state.currentPatientId,'evaluations'),{scores:{...state.scores},total,max,pct,therapist:state.therapistName||'─',evaluatedAt:new Date().toISOString()});
-    await updateDoc(doc(window._db,'patients',state.currentPatientId),{latestPct:pct,updatedAt:new Date().toISOString()});
+    await updateDoc(doc(window._db,'therapists',state.therapistName||'unknown','patients',state.currentPatientId),{latestPct:pct,updatedAt:new Date().toISOString()});
     showToast(`📋 ${pct}% 이력 저장!`,'success');
   } catch(e) { showToast('이력 저장 실패','error'); }
 }
@@ -3476,7 +2736,7 @@ function loadSidePatientList() {
     return;
   }
   const {collection, getDocs, orderBy, query} = window._fbFuncs;
-  const q = query(collection(window._db,'patients'), orderBy('createdAt','desc'));
+  const q = query(collection(window._db,'therapists',state.therapistName||'unknown','patients'), orderBy('createdAt','desc'));
   getDocs(q).then(snap => {
     if (snap.empty) { list.innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:12px;padding:10px 0;">등록된 환자 없음</div>'; return; }
     list.innerHTML = snap.docs.map(d => {
@@ -3504,6 +2764,76 @@ function selectPatientFromSide(id, name) {
   showLoggedInUI();
 }
 
+function saveData() {
+  if (!state.currentPatientId) return;
+  const key = 'wsp_scores_' + state.currentPatientId + '_' + appMode;
+  localStorage.setItem(key, JSON.stringify({
+    scores: state.scores,
+    comments: state.comments || {},
+    videoUrls: state.videoUrls || {}
+  }));
+}
+
+function loadData(patientId) {
+  const key = 'wsp_scores_' + patientId + '_' + appMode;
+  const saved = localStorage.getItem(key);
+  if (saved) {
+    const data = JSON.parse(saved);
+    state.scores = data.scores || {};
+    state.comments = data.comments || {};
+    state.videoUrls = data.videoUrls || {};
+  } else {
+    state.scores = {};
+    state.comments = {};
+    state.videoUrls = {};
+  }
+}
+
+function showNewPatientForm() {
+  const name = prompt('새 환자 이름을 입력하세요:');
+  if (!name || !name.trim()) return;
+  const diag = prompt('진단명 (선택):') || '';
+  const id = 'pt_' + Date.now();
+  state.currentPatientId = id;
+  state.currentPatientName = name.trim();
+  state.scores = {};
+  state.comments = {};
+  state.videoUrls = {};
+  localStorage.setItem('wsp_patient_' + id, JSON.stringify({ name: name.trim(), diagnosis: diag, id }));
+  closeSideMenu();
+  showLoggedInUI();
+  showToast('환자 등록됐어요!', 'success');
+}
+
+function clearCurrentScore() {
+  if (!state.currentSkillId) return;
+  delete state.scores[state.currentSkillId];
+  saveData();
+  updateScoreButtons();
+}
+
+</script>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, orderBy, query, where, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+  try {
+    const app = initializeApp({
+      apiKey:"AIzaSyAindXaColYWGU4DCI3S_61wKBXTTejIeQ",
+      authDomain:"wsp-jdragon.firebaseapp.com",
+      projectId:"wsp-jdragon",
+      storageBucket:"wsp-jdragon.firebasestorage.app",
+      messagingSenderId:"602745296201",
+      appId:"1:602745296201:web:ac94798934c54db9d3f698"
+    });
+    const db = getFirestore(app);
+    window._db = db;
+    window._fbFuncs = { doc, setDoc, getDoc, collection, addDoc, getDocs, orderBy, query, where, updateDoc };
+    window._fbReady = true;
+    window.dispatchEvent(new Event('fbReady'));
+  } catch(e) {
+    console.warn('Firebase init 실패:', e);
+  }
 </script>
 </body>
 </html>
